@@ -1,0 +1,133 @@
+<script>
+
+// Wraps the entire process of calling Azure, including generating an Esri token.
+function predict() {
+
+    // Extract the longitude/latitude values from the form fields.
+    var lon = $('input[id="longval"]').val(),
+        lat = $('input[id="latval"]').val()
+
+    // First, get an ArcGIS/Esri authentication token using the client id and secret.
+    esriAuthData = {
+        'f': 'json',
+        'client_id': 'eaJ91d6w4ARxpcGQ', 						// Associated with individual ArcGIS applications.
+        'client_secret': '4a8ffe1c767a43b18014b753f3cd36f7', 	// (Found under app overview on developers.arcgis.com)
+        'grant_type': 'client_credentials',
+        'expiration': '1440'
+    }
+
+    // Now call the ArcGIS token generation endpoint.
+    $.ajax({
+        url: 'https://www.arcgis.com/sharing/rest/oauth2/token/',
+        type: 'POST',
+        data: esriAuthData,
+        dataType: "json",
+    }).then(
+
+        // Only proceed if a token was successfully generated!
+        function success(resp) {
+
+            var esriToken = resp["access_token"];
+
+            // The data object that Azure expects. Right now, requires longitude, latitude, and most essentially the Esri token.
+            var data = {
+                "Inputs": {
+                    "input1": {
+                        "ColumnNames": [
+                            "LSF",
+                            "SSF",
+                            "Coloc",
+                            "Center",
+                            "Cotenants",
+                            "Optional1",
+                            "Optional2",
+                            "Optional3",
+                            "Token"
+                        ],
+                        "Values": [
+                            [
+                                lon,
+                                lat,
+                                "0",
+                                "0",
+                                "0",
+                                "",
+                                "",
+                                "",
+                                esriToken
+                            ]
+                        ]
+                    }
+                },
+                "GlobalParameters": {}
+            }
+
+            // Make the call to Azure.
+            fetchData(data);
+        },
+
+        // If there's no Esri token, there's not much we can do.
+        function fail(data, status) {
+
+            console.log("Esri token generation failed.")
+        }
+
+    ).always(function(jqXHR, textStatus) {
+
+        console.log("Esri request completed.")
+    });
+
+    // So the page doesn't refresh or redirect.
+    return false;
+}
+
+// Performs the Azure call. Note: data must include an Esri token.
+function fetchData(data) {
+
+    // Location of the API endpoint.
+    var url = 'https://retailsci.azure-api.net/gfresh/execute'
+
+    // Display a div while the ajax call runs, and hide it when finished.
+    $('#loading').show();
+
+    // Call AzureML
+    console.log(JSON.stringify(data));
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        headers: {
+            "Ocp-Apim-Subscription-Key": "443868928478485190294836e4161fe4 " // Secret key, provided by us.
+        }
+
+    }).then(
+
+        // Unwrap the result and retrieve the sales estimate.
+        function success(resp) {
+
+            population = resp.Results.output1.value.Values[0];
+            console.log("Azure call successful.")
+        },
+
+        // Result may fail if lat/long are invalid, so just show the error message from AzureML.
+        function fail(data, status) {
+
+            population = 'Azure call failed.  Return status: ' + status;
+        }
+
+    ).always(function(jqXHR, textStatus) {
+
+        // After the call is finished, hide the "Loading.." message.
+        $('#loading').hide();
+
+        // And insert the sales estimate into the document.
+        var output = parseFloat(population[0]).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+        document.getElementById("estimate").innerHTML = "Estimate: $" + output;
+
+    });
+}
+</script>
+
+</html>

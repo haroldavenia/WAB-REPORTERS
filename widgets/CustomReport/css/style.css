@@ -1,0 +1,127 @@
+.jimu-widget-marketPlanning .icon{
+	background-image: url(../images/icon.png);
+    width: 50px;
+    height: 50px;
+    background-color: #6A6C6F;
+    border-radius: 4px;
+}
+.jimu-widget-marketPlanning .textSubTitle{
+	margin-left: 20px;
+    display: inline;
+    line-height: 42px;
+}
+.jimu-widget-marketPlanning .hidden {
+    display: none!important;
+    visibility: hidden!important;
+}
+.jimu-widget-marketPlanning .jimu-btn{
+	    min-width: 40px;
+}
+.jimu-widget-marketPlanning .floatRight{
+	float:right;
+}
+.jimu-widget-marketPlanning .margin-bottom{
+	margin-bottom: 10px;
+}
+.jimu-widget-marketPlanning .margin-top-20{
+	margin-top: 20px;
+}
+.jimu-widget-marketPlanning .arcgisSearch .searchMenu {
+    z-index: 10000;
+}
+.jimu-widget-marketPlanning .jimu-r-row {
+    overflow: inherit;
+}
+.jimu-widget-marketPlanning .arcgisSearch .searchGroup .searchInput {
+    width: 87%;
+}
+.jimu-widget-marketPlanning .searchInputGroup{
+    width: 100%;
+}
+.jimu-widget-marketPlanning .searchExpandContainer {
+    width: 85%;
+}
+.map .tooltip {
+    width: 300px;
+}
+
+.jimu-widget-marketPlanning .helpIcon {
+	background-image: url(../images/ago_sprite.png);
+    background-position: -64px -66px;
+    background-size: auto;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+}
+.jimu-widget-marketPlanning .margin-check{
+	margin-top: 10px;
+}
+.jimu-widget-marketPlanning .margin-top{
+	margin-top: 10px;
+}
+.jimu-widget-marketPlanning .margin-check label{
+	 margin-left: 5px;
+    vertical-align: middle;
+}
+.jimu-widget-marketPlanning .btnCalculate{
+	margin-top: 10px;
+}
+.jimu-widget-marketPlanning .rowCalculate{
+	text-align: center;
+}
+.jimu-widget-marketPlanning .dynamicRow{
+	display: inline-table;
+}
+.jimu-widget-marketPlanning .loading-gif {
+    position: absolute;
+    background-image: url(../images/predefined_loading_4.gif);
+    background-repeat: no-repeat;
+    width: 35px;
+    height: 35px;
+    left: 50%;
+    top: 16px;
+    transform: translate(-50%, -50%)
+}
+.jimu-widget-marketPlanning .msgCalculate{
+	line-height: 30px;
+    font-weight: bold;
+}
+
+.jimu-widget-marketPlanning .padding-top{
+    padding-top: 10px;
+}
+.jimu-widget-marketPlanning .width-check{
+    width:97%;
+}
+.claro .dijitSelect .dijitArrowButton {
+    width: 20px !important;
+}
+.padding-top-20{
+    padding-top: 20px;
+}
+.center{
+    text-align: center;
+}
+.estiloResultPpal{
+    font-weight: bolder;
+    margin-top: 20px;
+}
+.cabeceraColum{
+    text-align: left;
+    text-decoration: underline;
+}
+.tableMak, th, td {
+    border: 0px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+}
+.tableMak th {
+    font-weight: bold !important;
+}
+.tableMak {
+    margin-bottom: 20px;
+}
+
+
+
+

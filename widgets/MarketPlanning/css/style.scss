@@ -1,0 +1,132 @@
+@import "https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css";
+
+.jimu-widget-marketPlanning{
+    .icon{
+        background-image: url(../images/icon.png);
+        width: 50px;
+        height: 50px;
+        background-color: #6A6C6F;
+        border-radius: 4px;
+    }
+
+    .textSubTitle{
+        margin-left: 20px;
+        display: inline;
+        line-height: 42px;
+    }
+    .hidden {
+        display: none!important;
+        visibility: hidden!important;
+    }
+    .jimu-btn{
+            min-width: 40px;
+    }
+    .floatRight{
+        float:right;
+    }
+    .margin-bottom{
+        margin-bottom: 10px;
+    }
+    .margin-top-20{
+        margin-top: 20px;
+    }
+    .arcgisSearch .searchMenu {
+        z-index: 10000;
+    }
+    .jimu-r-row {
+        overflow: inherit;
+    }
+    .arcgisSearch .searchGroup .searchInput {
+        width: calc(100% - 37px);
+    }
+    .searchInputGroup{
+        width: 100%;
+    }
+    .searchExpandContainer {
+        width: 85%;
+    }
+    .helpIcon {
+       background-image: url(../images/ago_sprite.png);
+       background-position: -64px -66px;
+       background-size: auto;
+       width: 15px;
+       height: 15px;
+       display: inline-block;
+    }
+    .margin-check{
+       margin-top: 10px;
+    }
+    .margin-top{
+       margin-top: 10px;
+    }
+    .margin-check label{
+        margin-left: 5px;
+       vertical-align: middle;
+    }
+    .btnCalculate{
+       margin-top: 10px;
+    }
+    .rowCalculate{
+       text-align: center;
+    }
+    .dynamicRow{
+       display: inline-table;
+    }
+    .loading-gif {
+       position: absolute;
+       background-image: url(../images/predefined_loading_4.gif);
+       background-repeat: no-repeat;
+       width: 35px;
+       height: 35px;
+       left: 50%;
+       top: 16px;
+       transform: translate(-50%, -50%)
+    }
+    .msgCalculate{
+       line-height: 30px;
+       font-weight: bold;
+    }
+    
+    .padding-top{
+       padding-top: 10px;
+    }
+    .width-check{
+       width:97%;
+    }
+    
+    .padding-top-20{
+        padding-top: 20px;
+    }
+    .center{
+        text-align: center;
+    }
+    .estiloResultPpal{
+        font-weight: bolder;
+        margin-top: 20px;
+    }
+    .cabeceraColum{
+        text-align: left;
+        text-decoration: underline;
+    }
+    .tableMak, th, td {
+        border: 0px solid black;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+    .tableMak th {
+        font-weight: bold !important;
+    }
+    .tableMak {
+        margin-bottom: 20px;
+    }
+}     
+
+.map .tooltip {
+    width: 300px;
+}    
+
+.claro .dijitSelect .dijitArrowButton {
+    width: 20px !important;
+}    
+
+
