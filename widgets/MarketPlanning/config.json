@@ -3,14 +3,13 @@
     "urlLocator": "//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
     "credentials": {
         "url": "https://www.arcgis.com/sharing/rest/oauth2/token/",
-	"client_id": "xxxxxxxxxx",
-	"client_secret": "xxxxxxx",
+        "client_id": "xxxxxxxxxx",
+        "client_secret": "xxxxxxx",
         "grant_type": "client_credentials",
         "expiration": "1440"
     },
     "urlService": "https://api2.retailscientifics.com/streamline/estimate",
     "apikey": "xxxxxxxxxx",
-
     "stylePanelValidation": "width: 300px",
     "icon": {
         "iconAddPoint": "widgets/MarketPlanning/images/pin.png",
@@ -21,101 +20,134 @@
     },
     "configFields": {
         "rows": [
-            [{
-                "title": "siteName",
-                "type": "text",
-                "id": "id_siteName",
-                "placeHolder": "placeHoldersiteName",
-                "defaultValue": "",
-                "help": "helpSiteName",
-                "serviceParam": "SiteName",
-                "serviceParamGIS": "SiteName",
-                "required": true
-            }], [{
-                "title": "Sqft",
-                "type": "number",
-                "id": "id_sqft",
-                "placeHolder": "Pool_SQFT",
-                "defaultValue": "4200",
-                "help": "helpSqft",
-                "serviceParam": "Sqft",
-                "serviceParamGIS": "Sqft",
-                "required": true
-            }], [{
-                "title": "Tanks",
-                "type": "number",
-                "id": "id_tanks",
-                "placeHolder": "placeholderTANKS",
-                "defaultValue": "",
-                "help": "helpTANKS",
-                "serviceParam": "TANKS",
-                "serviceParamGIS": "TANKS",
-                "required": true
-            }], [{
-                "title": "HoursLimited",
-                "type": "number",
-                "id": "id_hours",
-                "placeHolder": "placeholderHoursltd",
-                "defaultValue": "",
-                "help": "helpHOURS",
-                "serviceParam": "HOURS",
-                "serviceParamGIS": "HOURS",
-                "required": true
-            }], [{
-                "title": "Brand",
-                "type": "combo",
-                "required": true,
-                "values": [{
-                    "value": "SafTSwim",
-                    "label": "SafTSwim"
-                }, {
-                    "value": "SafeSplash",
-                    "label": "SafeSplash"
-                }, {
-                    "value": "SwimLabs",
-                    "label": "SwimLabs"
-                }, {
-                    "value": "Swimtastic",
-                    "label": "Swimtastic",
-                    "selected": "selected"
-                }],
-                "id": "id_Brand",
-                "help": "helpBrand",
-                "serviceParam": "Brand",
-                "serviceParamGIS": "Brand"
-            }], [{
-                "title": "Host",
-                "type": "combo",
-                "required": true,
-                "values": [{
-                    "value": "LAFitness",
-                    "label": "LAFitness"
-                }, {
-                    "value": "Other",
-                    "label": "Other"
-                }],
-                "id": "id_Host",
-                "help": "helpHost",
-                "serviceParam": "Host",
-                "serviceParamGIS": "Host"
-            }], [{
-                "title": "Type",
-                "type": "combo",
-                "required": true,
-                "values": [{
-                    "value": "Dedicated",
-                    "label": "Dedicated"
-                }, {
-                    "value": "Hosted",
-                    "label": "Hosted"
-                }, {
-                    "value": "Satellite",
-                    "label": "Satellite"
-                }],
-                "id": "id_Type",
-                "help": "helpType",
-                "serviceParam": "Type",
-                "serviceParamGIS": "Type"
-            }]
-    ]}
+            [
+                {
+                    "title": "siteName",
+                    "type": "text",
+                    "id": "id_siteName",
+                    "placeHolder": "placeHoldersiteName",
+                    "defaultValue": "",
+                    "help": "helpSiteName",
+                    "serviceParam": "SiteName",
+                    "serviceParamGIS": "SiteName",
+                    "required": true
+                }
+            ],
+            [
+                {
+                    "title": "Sqft",
+                    "type": "number",
+                    "id": "id_sqft",
+                    "placeHolder": "Pool_SQFT",
+                    "defaultValue": "4200",
+                    "help": "helpSqft",
+                    "serviceParam": "Sqft",
+                    "serviceParamGIS": "Sqft",
+                    "required": true
+                }
+            ],
+            [
+                {
+                    "title": "Tanks",
+                    "type": "number",
+                    "id": "id_tanks",
+                    "placeHolder": "placeholderTANKS",
+                    "defaultValue": "",
+                    "help": "helpTANKS",
+                    "serviceParam": "TANKS",
+                    "serviceParamGIS": "TANKS",
+                    "required": true
+                }
+            ],
+            [
+                {
+                    "title": "HoursLimited",
+                    "type": "number",
+                    "id": "id_hours",
+                    "placeHolder": "placeholderHoursltd",
+                    "defaultValue": "",
+                    "help": "helpHOURS",
+                    "serviceParam": "HOURS",
+                    "serviceParamGIS": "HOURS",
+                    "required": true
+                }
+            ],
+            [
+                {
+                    "title": "Brand",
+                    "type": "combo",
+                    "required": true,
+                    "values": [
+                        {
+                            "value": "SafTSwim",
+                            "label": "SafTSwim"
+                        },
+                        {
+                            "value": "SafeSplash",
+                            "label": "SafeSplash"
+                        },
+                        {
+                            "value": "SwimLabs",
+                            "label": "SwimLabs"
+                        },
+                        {
+                            "value": "Swimtastic",
+                            "label": "Swimtastic",
+                            "selected": "selected"
+                        }
+                    ],
+                    "id": "id_Brand",
+                    "help": "helpBrand",
+                    "serviceParam": "Brand",
+                    "serviceParamGIS": "Brand"
+                }
+            ],
+            [
+                {
+                    "title": "Host",
+                    "type": "combo",
+                    "required": true,
+                    "values": [
+                        {
+                            "value": "LAFitness",
+                            "label": "LAFitness"
+                        },
+                        {
+                            "value": "Other",
+                            "label": "Other"
+                        }
+                    ],
+                    "id": "id_Host",
+                    "help": "helpHost",
+                    "serviceParam": "Host",
+                    "serviceParamGIS": "Host"
+                }
+            ],
+            [
+                {
+                    "title": "Type",
+                    "type": "combo",
+                    "required": true,
+                    "values": [
+                        {
+                            "value": "Dedicated",
+                            "label": "Dedicated"
+                        },
+                        {
+                            "value": "Hosted",
+                            "label": "Hosted"
+                        },
+                        {
+                            "value": "Satellite",
+                            "label": "Satellite"
+                        }
+                    ],
+                    "id": "id_Type",
+                    "help": "helpType",
+                    "serviceParam": "Type",
+                    "serviceParamGIS": "Type"
+                }
+            ]
+        ]
+    }
 }

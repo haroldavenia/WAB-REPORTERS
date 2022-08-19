@@ -45,8 +45,17 @@ define([
 
             postCreate: function() {
                 this.inherited(arguments);
+
+                let icon = {
+                    "iconAddPoint": "widgets/MarketPlanning/images/pin.png",
+                    "width": 32,
+                    "height": 32,
+                    "XOffSet": 0,
+                    "YOffSet": 16
+                };
+
                 //Create markersymbol for de serach dijit
-                this.picSearch = new PictureMarkerSymbol(this.config.icon.iconAddPoint, this.config.icon.width, this.config.icon.height).setOffset(this.config.icon.XOffSet, this.config.icon.YOffSet);
+                this.picSearch = new PictureMarkerSymbol(icon.iconAddPoint, icon.width, icon.height).setOffset(icon.XOffSet, icon.YOffSet);
                 //Create graphic layer search
                 this.lgisGraphicLayerSearch = new GraphicsLayer({
                     id: "graphicSearch"
@@ -653,7 +662,7 @@ define([
                     var myDialog = new Dialog({
                         title: this.i18n.titleMessageValidation,
                         content: this.i18n.messageValidation,
-                        style: this.config.stylePanelValidation
+                        style: "width: 300px"
                     });
                     myDialog.show();
                 }
