@@ -560,7 +560,6 @@ define([
                 return objectServices;
             },
             _addCustomGisData: function(data) {
-                
                 data.Username = esriId.credentials[0].userId;
 
                 var date;

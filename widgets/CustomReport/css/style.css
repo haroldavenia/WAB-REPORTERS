@@ -29,9 +29,6 @@
 .jimu-widget-customReport .arcgisSearch .searchMenu {
   z-index: 10000; }
 
-.jimu-widget-customReport .jimu-r-row {
-  overflow: inherit; }
-
 .jimu-widget-customReport .arcgisSearch .searchGroup .searchInput {
   width: 87%; }
 
@@ -53,7 +50,7 @@
   margin-top: 10px; }
 
 .jimu-widget-customReport .margin-top {
-  margin-top: 10px; }
+  margin-top: 5px; }
 
 .jimu-widget-customReport .margin-check label {
   margin-left: 5px;
@@ -119,4 +116,4 @@
 .tableMak {
   margin-bottom: 20px; }
 
-/*# sourceMappingURL=styles.css.map */
+/*# sourceMappingURL=style.css.map */
