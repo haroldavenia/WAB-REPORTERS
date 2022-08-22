@@ -1,0 +1,70 @@
+<div>
+    <form data-dojo-attach-event="submit:_saveField">        
+        <div class="text-right">
+            <button type="button" class="btn btn-primary" data-dojo-attach-event="click:_cancel">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+        <div data-dojo-attach-point="controlNode" style="width: 100%; height: 100%;">
+            <div data-dojo-attach-point="generalContentPane">
+                <h3>Field config</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" required class="form-control" data-dojo-attach-point="fieldTitle"/>          
+                        </div>
+                        <div class="form-group">
+                            <label>Type</label>
+                            <select class="form-control" data-dojo-attach-point="fieldType" data-dojo-attach-event="change:_changeType">
+                                <option value="text">Text</option>
+                                <option value="number">Number</option>
+                                <option value="check">Check</option>
+                                <option value="combo">Combo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Id</label>
+                            <input type="text" required class="form-control" data-dojo-attach-point="fieldId"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Placeholder</label>
+                            <input type="text" class="form-control" data-dojo-attach-point="fieldPlaceholder"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Default value</label>
+                            <input type="text" class="form-control" data-dojo-attach-point="fieldDefaultValue"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Help</label>
+                            <input type="text" required class="form-control" data-dojo-attach-point="fieldHelp"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Service param</label>
+                            <input type="text" class="form-control" data-dojo-attach-point="fieldServiceParam"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Service param GIS</label>
+                            <input type="text" class="form-control" data-dojo-attach-point="fieldServiceParamGis"/>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" data-dojo-attach-point="fieldRequired"/>
+                                Required
+                            </label>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div data-dojo-attach-point="valuesContentPane">
+                <div class="text-right">
+                    <button type="button" class="btn btn-primary" style="margin-right: 10px;" data-dojo-attach-point="buttonAddValue" data-dojo-attach-event="click:_addNewValue">Add value</button>
+                </div>
+                <hr>
+                <div data-dojo-attach-point="valueBody"></div>
+                <div data-dojo-attach-point="valuesMessage" class="hidden"><p class="text-warning">Values can only be added when the type is "combo"</p></div>
+            </div>
+        </div>
+    </form>
+</div>

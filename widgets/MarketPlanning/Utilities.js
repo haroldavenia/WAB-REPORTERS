@@ -397,7 +397,7 @@ function buildCharts2(data, context) {
 	}));
 }
 
-function buildCharts1(data, context) {
+function buildCharts1(Plotly, data, context) {
 	var baseController = Chart.controllers.horizontalBar;
 	Chart.defaults.hBarWithLine = Chart.defaults.horizontalBar;
 
@@ -903,7 +903,7 @@ function buildCharts1(data, context) {
 	Plotly.newPlot('gaugeDiv', data2, layout2);
 }
 
-function buildSiteSelectionCharts(data, context) {
+function buildSiteSelectionCharts(Plotly, data, context) {
 	var baseController = Chart.controllers.horizontalBar;
 	Chart.defaults.hBarWithLine = Chart.defaults.horizontalBar;
 

@@ -11,11 +11,11 @@ define([
     "esri/geometry/webMercatorUtils",
     "esri/IdentityManager",
     "dojo/_base/lang",
+    "dojo/dom",
     "dojo/dom-construct",
     "dojo/dom-class",
     "dojo/dom-style",
     "dojo/query",
-    'dojo/i18n!./nls/strings',
     "dojo/parser",
     "dijit/form/TextBox",
     "dijit/form/Select",
@@ -27,27 +27,31 @@ define([
     "dijit/Dialog",
     "dijit/registry"
 ],
-    function(declare, BaseWidget, Search, PictureMarkerSymbol, Locator, esriBundle, GraphicsLayer, Draw, Graphic, webMercatorUtils, esriId, lang, domConstruct, domClass, domStyle, query, i18n, parser, TextBox, Select, Tooltip, CheckBox, NumberTextBox, MultiSelect, win, Dialog, registry) {
+    function(declare, BaseWidget, Search, PictureMarkerSymbol, Locator, esriBundle, GraphicsLayer, Draw, Graphic, webMercatorUtils, esriId, lang, dom, domConstruct, domClass, domStyle, query, parser, TextBox, Select, Tooltip, CheckBox, NumberTextBox, MultiSelect, win, Dialog, registry) {
 
         //To create a widget, you need to derive from BaseWidget.
         return declare([BaseWidget], {
             // Custom widget code goes here
 
-            baseClass: 'jimu-widget-marketPlanning',
+            baseClass: 'jimu-widget-customReport',
             isClick: false,
-            i18n: i18n,
             layerResult: null,
             //this property is set by the framework when widget is loaded.
             //name: 'CustomWidget',
 
 
             //methods to communication with app container:
+    
+            onClose: function(){
+                this.lgisGraphicLayerSearch.clear();
+			    this.drawToolbar.deactivate();
+            },
 
             postCreate: function() {
                 this.inherited(arguments);
 
                 let icon = {
-                    "iconAddPoint": "widgets/MarketPlanning/images/pin.png",
+                    "iconAddPoint": "widgets/CustomReport/images/pin.png",
                     "width": 32,
                     "height": 32,
                     "XOffSet": 0,
@@ -58,7 +62,7 @@ define([
                 this.picSearch = new PictureMarkerSymbol(icon.iconAddPoint, icon.width, icon.height).setOffset(icon.XOffSet, icon.YOffSet);
                 //Create graphic layer search
                 this.lgisGraphicLayerSearch = new GraphicsLayer({
-                    id: "graphicSearch"
+                    id: "cr_graphicSearch"
                 });
                 this.map.addLayer(this.lgisGraphicLayerSearch);
                 this.lgisGraphicLayerSearch.on("click", lang.hitch(this, '_clickGraphicLayerSearch'));
@@ -92,7 +96,7 @@ define([
                     drawTime: 90
                 });
                 this.drawToolbar.on("draw-end", lang.hitch(this, '_drawEnd'));
-                esriBundle.toolbars.draw.addPoint = this.i18n.popupAddLocation;
+                esriBundle.toolbars.draw.addPoint = this.nls.popupAddLocation;
 
                 var contendor = domConstruct.create("div", null, this.containerCheckLayer);
                 domClass.add(contendor, "margin-check");
@@ -104,7 +108,7 @@ define([
                 //domConstruct.place(contendor, rowDom);
                 domConstruct.place(checkBox.domNode, contendor);
                 domConstruct.create("label", {
-                    innerHTML: this.i18n.titleCheckLayer
+                    innerHTML: this.nls.titleCheckLayer
                 }, contendor);
 
                 this._renderDynamicRow();
@@ -120,7 +124,7 @@ define([
                 }
             },
             _searchLayer: function() {
-                debugger;
+                
                 for (var i = 0; i < this.map.graphicsLayerIds.length; i++) {
                     if (this.map.graphicsLayerIds[i].toUpperCase().indexOf(this.config.idLayer.toUpperCase()) >= 0) {
                         var layer = this.map.getLayer(this.map.graphicsLayerIds[i]);
@@ -130,7 +134,7 @@ define([
                 }
             },
             _saveResult: function(gra, attr) {
-                debugger;
+                
                 gra.attributes = attr;
                 /*gra.attributes.ValueInt1=null;
         gra.attributes.ValueStr2=result.toString();
@@ -141,10 +145,10 @@ define([
                 }
                 this.layerResult.applyEdits([gra], null, null, function(e) {
                     console.log(e)
-                    debugger;
+                    
                 }, function(e) {
                     console.log(e)
-                    debugger;
+                    
                 });
             },
             startup: function() {
@@ -156,11 +160,6 @@ define([
             // onOpen: function(){
             //   console.log('onOpen');
             // },
-
-            onClose: function() {
-                this.drawToolbar.deactivate();
-                //console.log('onClose');
-            },
 
             // onMinimize: function(){
             //   console.log('onMinimize');
@@ -187,16 +186,13 @@ define([
             //   console.log('resize');
             // }
             _renderDynamicRow: function() {
-                var help;
-                for (var i = 0; i < this.config.configFields.rows.length; i++) {
-                    var row = this.config.configFields.rows[i];
+                this.config.configFields.rows.forEach(lang.hitch(this, function(row){
                     //Create row
                     var rowDom = domConstruct.create("div", null, this.dynamicRow);
                     domClass.add(rowDom, "jimu-r-row");
                     domClass.add(rowDom, "margin-top");
 
-                    for (var j = 0; j < row.length; j++) {
-                        var element = row[j];
+                    row.forEach(lang.hitch(this, function(element, j){
                         var elementNode;
                         switch (element.type.toUpperCase()) {
                             case "TEXT":
@@ -215,6 +211,7 @@ define([
                                 elementNode = this._createList(rowDom, element, row.length, j);
                                 break;
                         }
+
                         if (element.visible === false) {
                             domClass.add(rowDom, "hidden");
                         }
@@ -222,40 +219,44 @@ define([
                         this._positionElement(rowDom, row.length, j, elementNode, element);
 
                         //check if help
-                        if (row[j].help) {
-                            help = domConstruct.create("span", null);
+                        if (element.help) {
+                            let helpId = registry.getUniqueId("helpcontent");
+                            var help = domConstruct.create("span", {id: helpId});
                             domStyle.set(help, {
                                 "margin-top": "5px",
                             });
                             domClass.add(help, "esriFloatTrailing");
                             domClass.add(help, "helpIcon");
+
                             domConstruct.place(help, rowDom, "first");
-                            var toolTip = new Tooltip({
-                                connectId: [help],
-                                label: this.i18n[row[j].help]
+                            
+                            new Tooltip({
+                                connectId: [helpId],
+                                label: element.help
                             });
                         }
-                        if (row[j].subCheck) {
+                        if (element.subCheck) {
                             var contendor = domConstruct.create("div", null, rowDom);
                             domClass.add(contendor, "margin-check");
+
                             var checkBox = new CheckBox({
-                                name: row[j].subCheck.id,
-                                checked: row[j].subCheck.defaultValue,
+                                name: element.subCheck.id,
+                                checked: element.subCheck.defaultValue,
                             });
                             domConstruct.place(contendor, rowDom);
                             domConstruct.place(checkBox.domNode, contendor);
                             domConstruct.create("label", {
-                                innerHTML: row[j].subCheck.text
+                                innerHTML: element.subCheck.text
                             }, contendor);
                         }
-                    }
-                }
+                    }))
+                }));
             },
             _createTextBox: function(rowDom, element, totalElements, indexActualElement) {
                 var myTextBox = new dijit.form.TextBox({
                     name: element.id,
                     value: (element.defaultValue) ? element.defaultValue : "",
-                    placeHolder: (element.placeHolder) ? this.i18n[element.placeHolder] : ""
+                    placeHolder: (element.placeHolder) ? this.nls[element.placeHolder] : ""
                 });
                 return myTextBox;
             },
@@ -263,7 +264,7 @@ define([
                 var myNumericBox = new NumberTextBox({
                     name: element.id,
                     value: (element.defaultValue) ? element.defaultValue : "",
-                    placeHolder: (element.placeHolder) ? this.i18n[element.placeHolder] : ""
+                    placeHolder: (element.placeHolder) ? this.nls[element.placeHolder] : ""
                 });
                 if (element.defaultValue) {
                     $(myNumericBox.domNode).find("input").attr("value", element.defaultValue);
@@ -275,6 +276,7 @@ define([
                     name: element.id,
                     options: element.values
                 });
+
                 for (var i = 0; i < element.values.length; i++) {
                     if (element.values[i].selected) {
                         mySelect.setValue(element.values[i].value);
@@ -292,7 +294,7 @@ define([
                 domConstruct.place(contendor, rowDom);
                 domConstruct.place(myCheckBox.domNode, contendor);
                 domConstruct.create("label", {
-                    innerHTML: this.i18n[element.text]
+                    innerHTML: this.nls[element.text]
                 }, contendor);
                 domClass.add(contendor, "padding-top");
                 domClass.add(contendor, "width-check");
@@ -338,23 +340,30 @@ define([
                         width: "49%",
                     });
                 }
+
                 if (element.title) {
                     var title = domConstruct.create("p", {
-                        innerHTML: this.i18n[element.title]
+                        innerHTML: element.title
                     }, rowDom);
+                    
                     domStyle.set(title, {
                         "line-height": "30px",
                     });
                 }
-                dojo.byId(rowDom).appendChild(elementNode.domNode);
+                dom.byId(rowDom).appendChild(elementNode.domNode);
             },
             _onPlayBtnClicked: function() {
+                $('html,body,#map_container').css('cursor', 'url("widgets/MarketPlanning/images/pin.png") 16 32, default');
+			    $('#_9_panel').css({opacity: 0.15, 'pointer-events': 'none'});
                 this.drawToolbar.activate(Draw.POINT);
             },
             _drawEnd: function(evt) {
+                $('html,body,#map_container').css('cursor', 'auto');
+			    $('#_9_panel').css({opacity: 1, 'pointer-events': 'auto'});
                 //clear layer always, only one point
                 this.lgisGraphicLayerSearch.clear();
                 this.drawToolbar.deactivate();
+
                 if (!this.isClick) {
                     var graphic = new Graphic(evt.geometry, this.picSearch);
                     this.lgisGraphicLayerSearch.add(graphic);
@@ -378,7 +387,7 @@ define([
                     if (this.tokenEsri) {
                         var data = this._getDataForInputs(this.tokenEsri);
                         var dataGIS = this._getDataForGIS(this.tokenEsri);
-                        debugger;
+                        
                         // Call AzureML
                         console.log(JSON.stringify(data));
                         $.ajax({
@@ -387,7 +396,7 @@ define([
                             data: data
                         }).then(
                             (function success(resp) {
-                                debugger;
+                                
 
                                 function format(s) {
                                   return parseInt(s).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -404,7 +413,7 @@ define([
                                     output  = resp["estimate"][0],
                                     analogs = resp["analogs"];
                                     
-                                $(this.populationResult).text(this.i18n.msgSuccess + format(output));
+                                $(this.populationResult).text(this.nls.msgSuccess + format(output));
                                 $(".tableMak").find("tr:not(.cabeceraColum)").remove();
 
                                 for (var i = 0; i < 5 ; i++) {
@@ -438,11 +447,11 @@ define([
                                 this._saveResult(this.lgisGraphicToInsert, dataGIS);
 
                             }).bind(this), (function fail(data, status) {
-                                debugger;
+                                
                                 var resp = JSON.parse(data.responseText).message[0];
                                 //var returnCode = r[0], returnMsg = r[1];
                                 var myDialog = new Dialog({
-                                    title: this.i18n.titleErrorCall,
+                                    title: this.nls.titleErrorCall,
                                     content: resp
                                 });
                                 myDialog.show();
@@ -497,7 +506,6 @@ define([
                     }
                 }
                 objectServices["Token"] = token;
-                //objectServices=this._parseObjectData(objectServices);
                 objectServices = this._addGeoData(objectServices);
                 objectServices = this._addToken(objectServices, token);
                 objectServices = this._addCustomData(objectServices);
@@ -552,7 +560,7 @@ define([
                 return objectServices;
             },
             _addCustomGisData: function(data) {
-                debugger;
+                
                 data.Username = esriId.credentials[0].userId;
 
                 var date;
@@ -569,33 +577,6 @@ define([
 
                 return data;
 
-            },
-            _parseObjectData: function(data) {
-                var objectData = this.config.data;
-                /*var objectData= {};
-        objectData.Inputs={};
-        objectData.Inputs.input1={};
-        objectData.Inputs.input1.ColumnNames=[];
-        objectData.Inputs.input1.Values=[];
-        objectData.Inputs.input1.Values.push([]);
-        objectData.GlobalParameters={};
-        //index 2 por que el 1 esta reservado para las geometrias
-        var index=1;
-        var value;
-        for(var key in data){
-          if (Array.isArray(data[key])){
-            for(var i=0;i<data[key].length;i++){
-              value=data[key][i];
-              break;
-            }
-          }else{
-            value=data[key];
-          }
-          objectData.Inputs.input1.ColumnNames.push(key);
-          objectData.Inputs.input1.Values[0].push(value.toString());
-        }*/
-
-                return objectData;
             },
             _addGeoData: function(data) {
                 var graphic = this.lgisGraphicLayerSearch.graphics[0];
@@ -660,8 +641,8 @@ define([
                 }
                 if (!status) {
                     var myDialog = new Dialog({
-                        title: this.i18n.titleMessageValidation,
-                        content: this.i18n.messageValidation,
+                        title: this.nls.titleMessageValidation,
+                        content: this.nls.messageValidation,
                         style: "width: 300px"
                     });
                     myDialog.show();

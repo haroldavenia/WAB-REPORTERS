@@ -1,5 +1,6 @@
-@import "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";
-
+@import "https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css";
+@import url(../font-awesome/css/fontawesome.min.css);
+@import url(../font-awesome/css/solid.min.css);
 .jimu-widget-marketPlanning .icon {
   background-image: url(../images/icon.png);
   width: 50px;
@@ -114,6 +115,13 @@
 
 .jimu-widget-marketPlanning .tableMak {
   margin-bottom: 20px; }
+
+.jimu-widget-marketPlanning .needsValidation .form-header {
+  margin-top: 10px;
+  margin-bottom: 2px; }
+
+.jimu-widget-marketPlanning .needsValidation input, .jimu-widget-marketPlanning .needsValidation select {
+  width: 100%; }
 
 .map .tooltip {
   width: 300px; }

@@ -4,8 +4,16 @@
             <div class="panel-heading">General</div>
             <div class="panel-body">
                 <div class="form-group">
-                    <label>Config text</label>
-                    <input type="text"  class="form-control" data-dojo-attach-point="configText"/>          
+                    <label>URL Locator</label>
+                    <input type="text"  class="form-control" data-dojo-attach-point="urlLocator"/>
+                </div>
+                <div class="form-group">
+                    <label>URL service</label>
+                    <input type="text"  class="form-control" data-dojo-attach-point="urlService"/>
+                </div>
+                <div class="form-group">
+                    <label>API Key</label>
+                    <input type="text"  class="form-control" data-dojo-attach-point="apikey"/>
                 </div>
                 <div class="form-group">
                     <label>Id Layer</label>
@@ -13,15 +21,29 @@
                         <div class="col-md-10">
                             <input type="text" disabled class="form-control" data-dojo-attach-point="idLayer"/>
                         </div>
-                        <div  class="col-md-2">
+                        <div  class="col-md-2 text-right">
                             <button type="button" class="btn btn-info" data-dojo-attach-event="click:_setLayer">Set layer</button>
                         </div>
                     </div>
                 </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" data-dojo-attach-point="visibleLayer"/>
+                        Visible layer
+                    </label>
+                </div>
                 <div class="form-group">
-                    <label>URL Locator</label>
-                    <input type="text"  class="form-control" data-dojo-attach-point="urlLocator"/>
-                </div>                    
+                    <label>Column name X</label>
+                    <input type="text"  class="form-control" data-dojo-attach-point="columnNameX"/>
+                </div>
+                <div class="form-group">
+                    <label>Column name Y</label>
+                    <input type="text"  class="form-control" data-dojo-attach-point="columnNameY"/>
+                </div>
+                <div class="form-group">
+                    <label>Column name token</label>
+                    <input type="text"  class="form-control" data-dojo-attach-point="columnNameToken"/>
+                </div>
             </div>
         </div>
         <div class="panel panel-default">
@@ -40,64 +62,16 @@
                     <input type="text"  class="form-control" data-dojo-attach-point="cred_clientSecret"/>           
                 </div>
             </div>
-        </div>
+        </div>       
         <div class="panel panel-default">
-            <div class="panel-heading">Config fields</div>
-            <div class="panel-body">
-                <button type="button" class="btn btn-primary btn-addrow" data-dojo-attach-event="click:_addRow">Add row</button>
-                <div class="rows" data-dojo-attach-point="configFields_rows"></div>
+            <div class="panel-heading" style="position: relative;">
+                <div>Config fields</div>
+                <button type="button" class="btn btn-primary btn-addrow" data-dojo-attach-event="click:_addNewRow">Add row</button>
             </div>
+            <div class="panel-body" data-dojo-attach-point="configFields_rows"></div>
         </div>
     </div>
     <div data-dojo-attach-point="configFieldPanel" class="config-field" style="display: none;">
-        <h3>Field config</h3>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Title</label>
-                    <input type="text"  class="form-control" data-dojo-attach-point="fieldTitle"/>          
-                </div>
-                <div class="form-group">
-                    <label>Type</label>
-                    <input type="text"  class="form-control" data-dojo-attach-point="fieldType"/>
-                </div>
-                <div class="form-group">
-                    <label>Id</label>
-                    <input type="text"  class="form-control" data-dojo-attach-point="fieldId"/>
-                </div>
-                <div class="form-group">
-                    <label>Placeholder</label>
-                    <input type="text"  class="form-control" data-dojo-attach-point="fieldPlaceholder"/>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Default value</label>
-                    <input type="text"  class="form-control" data-dojo-attach-point="fieldDefaultValue"/>
-                </div>
-                <div class="form-group">
-                    <label>Help</label>
-                    <input type="text"  class="form-control" data-dojo-attach-point="fieldHelp"/>
-                </div>
-                <div class="form-group">
-                    <label>Service param</label>
-                    <input type="text"  class="form-control" data-dojo-attach-point="fieldServiceParam"/>
-                </div>
-                <div class="form-group">
-                    <label>Service param GIS</label>
-                    <input type="text"  class="form-control" data-dojo-attach-point="fieldServiceParamGis"/>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" data-dojo-attach-point="fieldRequired"/>
-                        Required
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div>
-            <button type="button" class="btn btn-default" data-dojo-attach-event="click:_cancelEditField">Cancel</button>
-            <button type="button" class="btn btn-default" data-dojo-attach-event="click:_saveField">Save</button>
-        </div>
+        
     </div>
 </div>

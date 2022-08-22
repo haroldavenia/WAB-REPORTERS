@@ -47,9 +47,8 @@ define([
 ) {
 	return declare([BaseWidget], {
 		baseClass: 'jimu-widget-marketPlanning',
-		name: 'BootstrapTest',
+		name: 'Market Planning',
 		layerResult: null,
-		queryLayer: 'Demo_Output_Layer_5015',
 		drawingPolygon: false,
 		drawingPoint: false,
 		pinDropped: false,
@@ -64,7 +63,7 @@ define([
 		},
 
 		toDefaultSize: function () {
-			PanelManager.getInstance().panels[0].setPosition({
+			this.getPanel().setPosition({
 				left: 50,
 				top: 50,
 				right: 0,
@@ -75,7 +74,7 @@ define([
 		},
 
 		toLargeSize: function () {
-			PanelManager.getInstance().panels[0].setPosition({
+			this.getPanel().setPosition({
 				left: 50,
 				top: 50,
 				right: 0,
@@ -83,6 +82,10 @@ define([
 				width: window.innerWidth * 0.75,
 				height: window.innerHeight * 0.75
 			});
+		},
+
+		onOpen: function(){
+			this.toDefaultSize();
 		},
 
 		postCreate: function () {
@@ -97,16 +100,20 @@ define([
 			Chart.defaults.global.title.fontStyle = 'bold';
 			Chart.defaults.global.title.fontSize = 14;
 
-			this.pm = PanelManager;
+			let icon = {
+				"iconAddPoint": "widgets/MarketPlanning/images/pin.png",
+				"width": 32,
+				"height": 32
+			};
 
 			this.picSearch = new PictureMarkerSymbol(
-				this.config.icon.iconAddPoint,
-				this.config.icon.width,
-				this.config.icon.height)
-				.setOffset(0, 0);
+				icon.iconAddPoint,
+				icon.width,
+				icon.height)
+				.setOffset(0, 16);
 
 			this.scratchGraphicsLayer = new GraphicsLayer({
-				id: 'graphicSearch'
+				id: 'mp_graphicSearch'
 			});
 			this.map.addLayer(this.scratchGraphicsLayer);
 
@@ -141,7 +148,7 @@ define([
 
 			// Handle selection of features
 			this.selectQuery = new Query();
-			this.featureLayer = this.map.getLayer(this.queryLayer);
+			this.featureLayer = this.map.getLayer(this.config.idQueryLayer);
 
 			let context = this;
 			//debugger;
@@ -184,9 +191,8 @@ define([
 		},
 
 		_onDrawPointClick: function () {
-			$('html,body,#map_container').css('cursor', 'url("http://demo.retailscientifics.com/widgets/marketplanning/images/pin.png"), default');
+			$('html,body,#map_container').css('cursor', 'url("widgets/MarketPlanning/images/pin.png") 16 32, default');
 			$('#_9_panel').css({opacity: 0.15, 'pointer-events': 'none'});
-			this.picSearch.setOffset(16, -16);
 			this.drawToolbar.activate(Draw.POINT);
 			this.drawingPoint = true;
 		},
@@ -194,7 +200,6 @@ define([
 		_onDrawPolygonClick: function () {
 			$('html,body,#map_container').css('cursor', 'crosshair');
 			$('#_9_panel').css({opacity: 0.15, 'pointer-events': 'none'});
-			this.picSearch.setOffset(0, 0);
 			this.drawToolbar.activate(Draw.FREEHAND_POLYGON);
 			this.drawingPolygon = true;
 		},
@@ -225,7 +230,6 @@ define([
 				this.drawingPoint = false;
 				this.pinDropped = true;
 			}
-			this.picSearch.setOffset(0, 0);
 		},
 
 		processSearch: function (e) {
@@ -395,7 +399,7 @@ define([
 						.map(a => randomWorse(estimate, 0.25))
 					);
 
-				buildCharts1(resp, context);
+				buildCharts1(Plotly, resp, context);
 
 				prior = context.currentSite.lat*25000;
 				delta = estimate - prior;
@@ -424,7 +428,7 @@ define([
 					...[...new Array(4)].map(a => randomWorse(estimate, 0.25))
 				];
 
-				buildSiteSelectionCharts(resp, context);
+				buildSiteSelectionCharts(Plotly, resp, context);
 				$('#salesEstimate2').html(toMoney(estimate));
 				$('#salesImpact2').html(toMoney(Math.abs(estimate)))
 					.css('color', (estimate < 1000000 ? 'red' : 'green'));
@@ -465,14 +469,13 @@ define([
 		},
 
 		_callAPI: function (data, formID) {
-			let context = this,
-				dataGIS = $.extend({}, data);
-			data.apikey = 'X6xKerHF';
+			let context = this;
+			data.apikey = this.config.apikey;
 
 			query('#myModal').modal('show');
 
 			$.ajax({
-				url: 'https://api2.retailscientifics.com/demo/estimate',
+				url: this.config.urlService,
 				type: 'POST',
 				data: data,
 				inputData: data,

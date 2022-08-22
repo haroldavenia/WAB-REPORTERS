@@ -11,14 +11,64 @@
   .custom-report-setting .form-group {
     margin-bottom: 5px; }
   .custom-report-setting .btn-addrow {
-    float: right; }
+    position: absolute;
+    top: 5px;
+    right: 14px; }
   .custom-report-setting .rows {
     margin-top: 40px; }
+  .custom-report-setting .content-buttons {
+    padding-top: 5px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee; }
   .custom-report-setting .config-field {
     position: absolute;
     top: 0;
     background-color: #fff;
     width: 100%;
     height: 100%; }
+  .custom-report-setting .btn-add {
+    width: 30px;
+    height: 30px;
+    background-color: #337AB7;
+    border: none;
+    border-radius: 50%;
+    color: #fff; }
+    .custom-report-setting .btn-add .glyphicon {
+      top: 2px;
+      left: 1px; }
+  .custom-report-setting .btn-delete {
+    width: 30px;
+    height: 30px;
+    background-color: #D9534F;
+    border: none;
+    border-radius: 50%;
+    color: #fff; }
+    .custom-report-setting .btn-delete .glyphicon {
+      top: 2px;
+      left: -1px; }
+  .custom-report-setting .btn-delete-field {
+    width: 24px;
+    height: 24px;
+    background-color: #D9534F;
+    border: none;
+    border-radius: 50%;
+    color: #fff; }
+    .custom-report-setting .btn-delete-field .glyphicon {
+      top: 2px;
+      left: -3px; }
+  .custom-report-setting .vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none; }
+  .custom-report-setting .field-text {
+    margin-top: 3px;
+    cursor: pointer; }
+    .custom-report-setting .field-text:hover {
+      font-weight: bold; }
+  .custom-report-setting .jimu-widget-fieldsetting {
+    width: 100%; }
+  .custom-report-setting .panel {
+    margin-bottom: 10px; }
 
 /*# sourceMappingURL=style.css.map */

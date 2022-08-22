@@ -9,12 +9,15 @@ define({
     popupAddLocation:"Click to add location",
     calculate:"Calculate",
     CalculateGP:"Calculate...",
+    runReport:"Run Report",
+    running:"Processing...",
     Cancel:"Cancel",
     saveResult:"Save Results",
     back:"Back",
     titleMessageValidation:"Validation",
     messageValidation:"Some values are missing.",
     titleErrorCall:"Error",
+
     storeName:"Store name",
     placeHolderStoreName:"Store Name",
     helpStoreName:"Store name",
@@ -23,6 +26,7 @@ define({
     helpStoreID:"Store ID",
     FormatTitle:"Format",
     helpFormat:"Help Format",
+
     titleEnvironment:"Environment",
     helpEnvironment:"Help Environment",
     titleRentableSQFT:"Rentable Sq Ft",
@@ -38,6 +42,7 @@ define({
     helpCityTier:"City Tier",
     textColocateWithJewelryStore:"Colocate with jewelry store(y/n)",
     helpColocateWithJewelryStore:"Colocate with jewelry store",
+
     titleCotenants:"Cotenants",
     helpCotenants:"Cotenants select",
     titleNotes:"Notes",
@@ -47,36 +52,30 @@ define({
     titleCheckLayer:"Show prior results",
     Sales:"Cannibalization",
     Analogs:"Store Name",
-    StoreIDs:"Store ID"
+    StoreIDs:"Store ID",
 
-  }),
-  "ar": 0,
-  "cs": 0,
-  "da": 0,
-  "de": 0,
-  "el": 0,
-  "es": 1,
-  "et": 0,
-  "fi": 0,
-  "fr": 0,
-  "he": 0,
-  "it": 0,
-  "ja": 0,
-  "ko": 0,
-  "lt": 0,
-  "lv": 0,
-  "nb": 0,
-  "nl": 0,
-  "pl": 0,
-  "pt-br": 0,
-  "pt-pt": 0,
-  "ro": 0,
-  "ru": 0,
-  "sv": 0,
-  "th": 0,
-  "tr": 0,
-  "vi": 0,
-  "zh-cn": 0,
-  "zh-hk": 0,
-  "zh-tw": 0
+    AreaType:"Area Type",
+    placeHolderAreaType:"Area Type",
+    helpAreaType:"What type of area the buffer will represent.",
+ 
+    storeID:"Store ID",
+    placeHolderStoreID:"Store ID",
+    helpStoreID:"Store ID",
+
+    FormatTitle:"Format",
+    helpFormat:"Help Format",
+
+    checkOption: "New Option",
+    helpCheckOption: "Help",
+    placeHolderCheckOption: "Placeholder.",
+
+    selectOption: "selectOption",
+    helpSelectOption: "Help",
+    placeHolderSelectOption: "Placeholder select.",
+
+    multi: "Multi Option",
+    helpMulti: "Help",
+    placeHolderMulti: "Placeholder.",
+
+  })
 });

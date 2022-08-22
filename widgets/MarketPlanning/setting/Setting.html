@@ -1,24 +1,63 @@
 <div>
-  
-    <label>Map Layer ID</label>
-  	<input data-dojo-attach-point="idLayer"><br>
-
-  	<label>urlLocator</label>
-  	<input data-dojo-attach-point="urlLocator"><br>
-
-  	<label>API Endpoint</label>
-  	<input data-dojo-attach-point="urlService"><br>
-
-  	<label>apikey</label>
-  	<input data-dojo-attach-point="apikey"><br>
-
-  	<label>Client ID</label>
-  	<input data-dojo-attach-point="client_id"><br>
-
-  	<label>Client Secret</label>
-  	<input data-dojo-attach-point="client_secret"><br>
-
-  	<label>Input Fields</label>
-  	<input data-dojo-attach-point="configFields"><br>
-
+    <div class="main-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading">General</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label>URL Locator</label>
+                    <input type="text"  class="form-control" data-dojo-attach-point="urlLocator"/>
+                </div>
+                <div class="form-group">
+                    <label>URL service</label>
+                    <input type="text"  class="form-control" data-dojo-attach-point="urlService"/>
+                </div>
+                <div class="form-group">
+                    <label>API Key</label>
+                    <input type="text"  class="form-control" data-dojo-attach-point="apikey"/>
+                </div>
+                <div class="form-group">
+                    <label>Query Layer</label>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input type="text" disabled class="form-control" data-dojo-attach-point="idQueryLayer"/>
+                        </div>
+                        <div  class="col-md-2 text-right">
+                            <button type="button" class="btn btn-info" data-dojo-attach-event="click:_setQueryLayer">Set layer</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Id Layer</label>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input type="text" disabled class="form-control" data-dojo-attach-point="idLayer"/>
+                        </div>
+                        <div  class="col-md-2 text-right">
+                            <button type="button" class="btn btn-info" data-dojo-attach-event="click:_setLayer">Set layer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Credentials</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label>Token Url</label>
+                    <input type="text"  class="form-control" data-dojo-attach-point="cred_Url"/>           
+                </div>
+                <div class="form-group">
+                    <label>Client Id</label>
+                    <input type="text"  class="form-control" data-dojo-attach-point="cred_clientId"/>           
+                </div>
+                <div class="form-group">
+                    <label>Client Secret</label>
+                    <input type="text"  class="form-control" data-dojo-attach-point="cred_clientSecret"/>           
+                </div>
+            </div>
+        </div>        
+    </div>
+    <div data-dojo-attach-point="configFieldPanel" class="config-field" style="display: none;">
+        
+    </div>
 </div>

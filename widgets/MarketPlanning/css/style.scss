@@ -1,4 +1,6 @@
 @import "https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css";
+@import "../font-awesome/css/fontawesome.min.css";
+@import "../font-awesome/css/solid.min.css";
 
 .jimu-widget-marketPlanning{
     .icon{
@@ -118,6 +120,15 @@
     }
     .tableMak {
         margin-bottom: 20px;
+    }
+    .needsValidation{
+        .form-header{
+            margin-top: 10px;
+            margin-bottom: 2px;
+        }
+        input, select{
+            width: 100%;
+        }
     }
 }     
 

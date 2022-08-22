@@ -1,3 +1,74 @@
-.asdsdsa-setting input {
-  margin-left: 10px;
-}
+@import "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css";
+.market-planning-setting {
+  width: 100%;
+  height: 100% !important; }
+  .market-planning-setting .main-panel {
+    width: 100%;
+    height: 100% !important;
+    overflow: auto; }
+  .market-planning-setting label {
+    font-size: 12px; }
+  .market-planning-setting .form-group {
+    margin-bottom: 5px; }
+  .market-planning-setting .btn-addrow {
+    position: absolute;
+    top: 5px;
+    right: 14px; }
+  .market-planning-setting .rows {
+    margin-top: 40px; }
+  .market-planning-setting .content-buttons {
+    padding-top: 5px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee; }
+  .market-planning-setting .config-field {
+    position: absolute;
+    top: 0;
+    background-color: #fff;
+    width: 100%;
+    height: 100%; }
+  .market-planning-setting .btn-add {
+    width: 30px;
+    height: 30px;
+    background-color: #337AB7;
+    border: none;
+    border-radius: 50%;
+    color: #fff; }
+    .market-planning-setting .btn-add .glyphicon {
+      top: 2px;
+      left: 1px; }
+  .market-planning-setting .btn-delete {
+    width: 30px;
+    height: 30px;
+    background-color: #D9534F;
+    border: none;
+    border-radius: 50%;
+    color: #fff; }
+    .market-planning-setting .btn-delete .glyphicon {
+      top: 2px;
+      left: -1px; }
+  .market-planning-setting .btn-delete-field {
+    width: 24px;
+    height: 24px;
+    background-color: #D9534F;
+    border: none;
+    border-radius: 50%;
+    color: #fff; }
+    .market-planning-setting .btn-delete-field .glyphicon {
+      top: 2px;
+      left: -3px; }
+  .market-planning-setting .vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none; }
+  .market-planning-setting .field-text {
+    margin-top: 3px;
+    cursor: pointer; }
+    .market-planning-setting .field-text:hover {
+      font-weight: bold; }
+  .market-planning-setting .jimu-widget-fieldsetting {
+    width: 100%; }
+  .market-planning-setting .panel {
+    margin-bottom: 10px; }
+
+/*# sourceMappingURL=style.css.map */

@@ -1,6 +1,12 @@
 {
-    "configText": "abcdefg",
-    "urlLocator": "//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
+    "urlLocator": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",  
+    "urlService": "https://api2.retailscientifics.com/demo/estimate",
+    "apikey": "X6xKerHF",
+    "idLayer": "Demo_Output_Layer_5015",
+    "visibleLayer": false,
+    "columnNameX": "LSF",
+    "columnNameY": "SSF",
+    "columnNameToken": "Token",
     "credentials": {
         "url": "https://www.arcgis.com/sharing/rest/oauth2/token/",
         "client_id": "xxxxxxxxxx",
@@ -12,12 +18,12 @@
         "rows": [
             [
                 {
-                    "title": "BufferRadii",
+                    "title": "Buffer Radii",
                     "type": "text",
                     "id": "BufferRadii",
-                    "placeHolder": "placeHolderBufferRadii",
+                    "placeHolder": "Buffer Radii",
                     "defaultValue": "1",
-                    "help": "helpBufferRadii",
+                    "help": "Select the values for the rings you wish to use, separated by commas. Examples: '1,5,10', '1', '3,5', etc",
                     "serviceParam": "BufferRadii",
                     "serviceParamGIS": "BufferRadii",
                     "required": true
@@ -25,9 +31,9 @@
             ],
             [
                 {
-                    "title": "BufferUnits",
-                    "placeHolder": "placeHolderBufferUnits",
-                    "help": "helpBufferUnits",
+                    "title": "Buffer Units",
+                    "placeHolder": "Buffer Units",
+                    "help": "Enter what type of units will be used for the buffer radii.",
                     "type": "combo",
                     "id": "BufferUnits",
                     "text": "BufferUnits",
@@ -73,8 +79,13 @@
             ],
             [
                 {
-                    "title": "ReportType",
+                    "title": "Report Type",
+                    "id": "ReportType",
+                    "placeHolder": "Report Type",
                     "type": "combo",
+                    "help": "Select the type of report you would like to generate.",
+                    "serviceParam": "ReportType",
+                    "serviceParamGIS": "ReportType",
                     "required": true,
                     "values": [
                         {
@@ -270,26 +281,9 @@
                             "value": "traffic_map08",
                             "label": "Traffic Map - Close Up"
                         }
-                    ],
-                    "id": "ReportType",
-                    "help": "helpReportType",
-                    "serviceParam": "ReportType",
-                    "serviceParamGIS": "ReportType"
+                    ]                    
                 }
             ]
         ]
-    },
-    "visibleLayer": false,
-    "idLayer": "BK_New_Sites_6025",
-    "columnNameX": "LSF",
-    "columnNameY": "SSF",
-    "columnNameToken": "Token",
-    "data": {
-        "longitude": 0,
-        "latitude": 0,
-        "Name": "Test",
-        "UniqueID": 1,
-        "Format1": "0",
-        "Environment": "0"
     }
 }
