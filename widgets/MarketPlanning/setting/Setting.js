@@ -95,7 +95,7 @@ function(
             var featurePopup = new CustomFeatureLayerSourcePopup(args);
             on.once(featurePopup, 'ok', lang.hitch(this, function (item) {
                 featurePopup.close();
-                inputElement.value = this.queryLayerId;
+                inputElement.value = item.url;
             }));
     
             on.once(featurePopup, 'cancel', lang.hitch(this, function () {
