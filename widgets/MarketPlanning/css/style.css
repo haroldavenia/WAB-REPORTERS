@@ -1,6 +1,7 @@
 @import "https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css";
 @import url(../font-awesome/css/fontawesome.min.css);
 @import url(../font-awesome/css/solid.min.css);
+
 .jimu-widget-marketPlanning .icon {
   background-image: url(../images/icon.png);
   width: 50px;
