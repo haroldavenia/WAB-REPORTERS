@@ -43,7 +43,7 @@ function(
             this.apikey.value = config.apikey;
 
             this.idQueryLayer.value = config.idQueryLayer;
-            this.idLayer.value = config.idLayer;
+            //this.idLayer.value = config.idLayer;
 
             this.cred_Url.value = config.credentials.url;
             this.cred_clientId.value = config.credentials.client_id;
@@ -57,7 +57,7 @@ function(
 
             this.config.idQueryLayer = this.idQueryLayer.value;
 
-            this.config.idLayer = this.idLayer.value;
+            //this.config.idLayer = this.idLayer.value;
             
             this.config.credentials = {
                 url: this.cred_Url.value,
@@ -70,9 +70,9 @@ function(
             return this.config;
         },
 
-        _setLayer: function(){
+        /*_setLayer: function(){
             this.openPopupSetLayer(this.idLayer);
-        },
+        },*/
 
         _setQueryLayer: function(){
             this.openPopupSetLayer(this.idQueryLayer);
@@ -95,7 +95,7 @@ function(
             var featurePopup = new CustomFeatureLayerSourcePopup(args);
             on.once(featurePopup, 'ok', lang.hitch(this, function (item) {
                 featurePopup.close();
-                inputElement.value = item.url;
+                inputElement.value = item.layerInfo && item.layerInfo.id || null;;
             }));
     
             on.once(featurePopup, 'cancel', lang.hitch(this, function () {

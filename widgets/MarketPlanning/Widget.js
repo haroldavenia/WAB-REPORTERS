@@ -242,7 +242,7 @@ define([
 		},
 
 
-		_searchLayer: function () {
+		/*_searchLayer: function () {
 			for (let i = 0; i < this.map.graphicsLayerIds.length; i++) {
 				if (this.map.graphicsLayerIds[i].toUpperCase().indexOf(this.config.idLayer.toUpperCase()) >= 0) {
 					let layer = this.map.getLayer(this.map.graphicsLayerIds[i]);
@@ -262,7 +262,7 @@ define([
 			}, function (e) {
 				console.log(e);
 			});
-		},
+		},*/
 
 		_parseForm: function (context, e) {
 			let formID = e.target.id;

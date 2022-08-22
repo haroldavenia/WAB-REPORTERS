@@ -1,5 +1,4 @@
 {
-    "idLayer": "Gap_Stores_7364",
     "idQueryLayer": "Demo_Output_Layer_5015",
     "urlLocator": "//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
     "credentials": {
