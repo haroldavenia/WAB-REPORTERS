@@ -1,13 +1,15 @@
 {
     "idLayer": "Gap_Stores_7364",
+    "idQueryLayer": "Demo_Output_Layer_5015",
     "urlLocator": "//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
     "credentials": {
         "url": "https://www.arcgis.com/sharing/rest/oauth2/token/",
-        "client_id": "xxxxxxxxxx",
-        "client_secret": "xxxxxxx",
+        "client_id": "o6dkVn6w0JIhcH0O",
+        "client_secret": "e561e50aafb1457483712c8c5ccb7716",
         "grant_type": "client_credentials",
         "expiration": "1440"
     },
-    "urlService": "https://api2.retailscientifics.com/streamline/estimate",
-    "apikey": "xxxxxxxxxx"
+    "urlService": "https://api2.retailscientifics.com/demo/estimate",
+    "apikey": "X6xKerHF"
 }
+  
