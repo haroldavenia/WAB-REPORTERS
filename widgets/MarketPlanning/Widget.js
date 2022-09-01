@@ -2,7 +2,7 @@
 
 define([
 	'dojo/query', 'dojo/on',
-	'dojo/_base/declare', 'jimu/BaseWidget',
+	'dojo/_base/declare', 'dojo/_base/window', 'jimu/BaseWidget',
 	'esri/dijit/Search', 'esri/symbols/PictureMarkerSymbol', 'esri/tasks/locator',
 	'dojo/i18n!esri/nls/jsapi', 'esri/layers/GraphicsLayer',
 	'esri/toolbars/draw', 'esri/graphic', 'esri/geometry/webMercatorUtils',
@@ -25,7 +25,7 @@ define([
 	'./Utilities'
 ], function (
 	query, on,
-	declare, BaseWidget,
+	declare, baseWin, BaseWidget,
 	Search, PictureMarkerSymbol, Locator,
 	esriBundle, GraphicsLayer,
 	Draw, Graphic, webMercatorUtils,
@@ -85,13 +85,14 @@ define([
 		},
 
 		onOpen: function(){
-			this.toDefaultSize();
+			//this.toDefaultSize();
 		},
 
 		postCreate: function () {
 			this.charts1 = [], this.charts2 = [];
 
 			this.toDefaultSize();
+			this.addModalToBody();
 
 			Chart.defaults.global.responsive = true;
 			Chart.defaults.global.legend.display = false;
@@ -181,6 +182,34 @@ define([
 			this.featureLayer.setSelectionSymbol(marker);
 		},
 
+		addModalToBody: function(){
+			var elem = dojo.byId('myModal');
+
+			if(elem == null){
+				let modalHtmlStr = `
+					<div class="modal fade" data-keyboard="false" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-dojo-dataid="pid29" style="display: none;">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title" id="myModalLabel">Computing...</h4>
+								</div>
+								<div class="modal-body">
+									Please wait while we run your model.
+									<div class="progress progress-striped active" style="margin-bottom:0;">
+										<div class="progress-bar" style="width: 100%"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				`;
+	
+				var node = domConstruct.toDom(modalHtmlStr);
+				// Place node at body element
+				domConstruct.place(node, baseWin.body());
+			}
+		},
+
 		// Hook into resize function to inform Charts.js and Plotly
 		resize: function () {
 			this.resizeCharts();
@@ -192,21 +221,21 @@ define([
 
 		_onDrawPointClick: function () {
 			$('html,body,#map_container').css('cursor', 'url("widgets/MarketPlanning/images/pin.png") 16 32, default');
-			$('#_9_panel').css({opacity: 0.15, 'pointer-events': 'none'});
+			$(`#${this.id}_panel`).css({opacity: 0.15, 'pointer-events': 'none'});
 			this.drawToolbar.activate(Draw.POINT);
 			this.drawingPoint = true;
 		},
 
 		_onDrawPolygonClick: function () {
 			$('html,body,#map_container').css('cursor', 'crosshair');
-			$('#_9_panel').css({opacity: 0.15, 'pointer-events': 'none'});
+			$(`#${this.id}_panel`).css({opacity: 0.15, 'pointer-events': 'none'});
 			this.drawToolbar.activate(Draw.FREEHAND_POLYGON);
 			this.drawingPolygon = true;
 		},
 
 		_drawEnd: function (evt) {
 			$('html,body,#map_container').css('cursor', 'auto');
-			$('#_9_panel').css({opacity: 1, 'pointer-events': 'auto'});
+			$(`#${this.id}_panel`).css({opacity: 1, 'pointer-events': 'auto'});
 
 			this.drawToolbar.deactivate();
 
@@ -279,30 +308,30 @@ define([
 						});
 
 					switch (formID) {
-					case 'tab1Form':
-						if (!context.pinDropped) {
-							throw 'Please select the new relocation site.';
-						}
-						if (!context.currentSiteSelected) {
-							throw 'Please select the current site.';
-						}
-						location = context._getGeoData();
-						currentSite = context.currentSite;
-						$.extend(data, location);
-						break;
-					case 'tab2Form':
-						if (!context.pinDropped) {
-							throw 'Please select the new site.';
-						}
-						location = context._getGeoData();
-						$.extend(data, location);
-						break;
-					case 'tab3Form':
-						if (!context.currentSiteSelected) {
-							throw 'Please select the current site';
-						}
-						currentSite = context.currentSite;
-						break;
+						case 'tab1Form':
+							if (!context.pinDropped) {
+								throw 'Please select the new relocation site.';
+							}
+							if (!context.currentSiteSelected) {
+								throw 'Please select the current site.';
+							}
+							location = context._getGeoData();
+							currentSite = context.currentSite;
+							$.extend(data, location);
+							break;
+						case 'tab2Form':
+							if (!context.pinDropped) {
+								throw 'Please select the new site.';
+							}
+							location = context._getGeoData();
+							$.extend(data, location);
+							break;
+						case 'tab3Form':
+							if (!context.currentSiteSelected) {
+								throw 'Please select the current site';
+							}
+							currentSite = context.currentSite;
+							break;
 					}
 					context._callAPI(data, formID);
 				}
@@ -390,81 +419,81 @@ define([
 			context.toLargeSize();
 
 			switch (formID) {
-			case 'tab1Form':
-				estimate = fuzz(context.currentSite.lat, 0.25) + gsf * 500 + nos * 10000 + c;
-				resp.estimate = estimate;
-				resp.analogs = [...new Array(2)]
-					.map(a => randomBetter(estimate, 0.25))
-					.concat([...new Array(4)]
-						.map(a => randomWorse(estimate, 0.25))
-					);
+				case 'tab1Form':
+					estimate = fuzz(context.currentSite.lat, 0.25) + gsf * 500 + nos * 10000 + c;
+					resp.estimate = estimate;
+					resp.analogs = [...new Array(2)]
+						.map(a => randomBetter(estimate, 0.25))
+						.concat([...new Array(4)]
+							.map(a => randomWorse(estimate, 0.25))
+						);
 
-				buildCharts1(Plotly, resp, context);
+					buildCharts1(Plotly, resp, context);
 
-				prior = context.currentSite.lat*25000;
-				delta = estimate - prior;
+					prior = context.currentSite.lat*25000;
+					delta = estimate - prior;
 
-				$('#salesEstimate1').html(toMoney(estimate));
-				$('#priorSales1').html(toMoney(prior));
+					$('#salesEstimate1').html(toMoney(estimate));
+					$('#priorSales1').html(toMoney(prior));
 
-				if (delta < 0) {
-					$('#salesImpact1').html('(' + toMoney(Math.abs(delta)) + ')')
-						.css('color', 'red');
-				} else {
-					$('#salesImpact1').html(toMoney(Math.abs(delta)))
-						.css('color', 'green');
-				}
+					if (delta < 0) {
+						$('#salesImpact1').html('(' + toMoney(Math.abs(delta)) + ')')
+							.css('color', 'red');
+					} else {
+						$('#salesImpact1').html(toMoney(Math.abs(delta)))
+							.css('color', 'green');
+					}
 
-				$('#inputForm1').fadeOut();
-				$('#outputForm1').fadeIn();
-				context.resizeCharts();
-				break;
+					$('#inputForm1').fadeOut();
+					$('#outputForm1').fadeIn();
+					context.resizeCharts();
+					break;
 
-			case 'tab2Form':
-				estimate = fuzz(1000000, 0.10) + (gsf * 500) + (nos * 10000) + c;
-				resp.estimate = estimate;
-				resp.analogs = [
-					...[...new Array(2)].map(a => randomBetter(estimate, 0.25)),
-					...[...new Array(4)].map(a => randomWorse(estimate, 0.25))
-				];
+				case 'tab2Form':
+					estimate = fuzz(1000000, 0.10) + (gsf * 500) + (nos * 10000) + c;
+					resp.estimate = estimate;
+					resp.analogs = [
+						...[...new Array(2)].map(a => randomBetter(estimate, 0.25)),
+						...[...new Array(4)].map(a => randomWorse(estimate, 0.25))
+					];
 
-				buildSiteSelectionCharts(Plotly, resp, context);
-				$('#salesEstimate2').html(toMoney(estimate));
-				$('#salesImpact2').html(toMoney(Math.abs(estimate)))
-					.css('color', (estimate < 1000000 ? 'red' : 'green'));
+					buildSiteSelectionCharts(Plotly, resp, context);
+					$('#salesEstimate2').html(toMoney(estimate));
+					$('#salesImpact2').html(toMoney(Math.abs(estimate)))
+						.css('color', (estimate < 1000000 ? 'red' : 'green'));
 
-				$('#inputForm2').fadeOut();
-				$('#outputForm2').fadeIn();
-				context.resizeCharts();
-				break;
+					$('#inputForm2').fadeOut();
+					$('#outputForm2').fadeIn();
+					context.resizeCharts();
+					break;
 
-			case 'tab3Form':
-				estimate = fuzz(context.currentSite.lat, 0.10) + gsf * 500 + c;
+				case 'tab3Form':
+					estimate = fuzz(context.currentSite.lat, 0.10) + gsf * 500 + c;
 
-				prior = context.currentSite.lat;
-				delta = estimate - prior;
-				$('#salesEstimate3').html(toMoney(estimate));
-				if (delta < 0) {
-					$('#salesImpact3').html('(' + toMoney(Math.abs(delta)) + ')')
-						.css('color', 'red');
-				} else {
-					$('#salesImpact3').html(toMoney(Math.abs(delta)))
-						.css('color', 'green');
-				}
+					prior = context.currentSite.lat;
+					delta = estimate - prior;
+					$('#salesEstimate3').html(toMoney(estimate));
+					if (delta < 0) {
+						$('#salesImpact3').html('(' + toMoney(Math.abs(delta)) + ')')
+							.css('color', 'red');
+					} else {
+						$('#salesImpact3').html(toMoney(Math.abs(delta)))
+							.css('color', 'green');
+					}
 
-				// Left Side
-				$('#currentSales3').html(toMoney(context.currentSite.Sales));
-				$('#centerConditionOutput').html(inputData.center_condition);
-				$('#entranceScoreOutput').html(inputData.entrance_score);
+					// Left Side
+					$('#currentSales3').html(toMoney(context.currentSite.Sales));
+					$('#centerConditionOutput').html(inputData.center_condition);
+					$('#entranceScoreOutput').html(inputData.entrance_score);
 
-				// Right Side
-				$('#newSales3').html(toMoney(estimate));
-				$('#centerConditionOutput2').html(getRandomInt(1, 5));
-				$('#entranceScoreOutput2').html(getRandomInt(1, 5));
+					// Right Side
+					$('#newSales3').html(toMoney(estimate));
+					$('#centerConditionOutput2').html(getRandomInt(1, 5));
+					$('#entranceScoreOutput2').html(getRandomInt(1, 5));
 
-				$('#inputForm3').fadeOut();
-				$('#outputForm3').fadeIn();
-				break;
+					$('#inputForm3').fadeOut();
+					$('#outputForm3').fadeIn();
+					break;
 			}
 		},
 

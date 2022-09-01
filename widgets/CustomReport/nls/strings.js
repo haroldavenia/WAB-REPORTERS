@@ -75,7 +75,6 @@ define({
 
     multi: "Multi Option",
     helpMulti: "Help",
-    placeHolderMulti: "Placeholder.",
-
+    placeHolderMulti: "Placeholder."
   })
 });
