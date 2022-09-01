@@ -1,61 +1,64 @@
 <div>
 	<div class="jimu-r-row">
-		<div class="icon col-1-2"></div>
+		<div class="icon col-1-2">
+		</div>
 		<div>
 			<p class="textSubTitle">${nls.subTitle}</p>
 		</div>
 	</div>
 	<hr style="margin-top: 15px;">
-    <div data-dojo-attach-point="contentInsertParams" class="jimu-r-row">
-   		<div class="jimu-r-row margin-bottom">
-    		<p>${nls.infoInsertPoint}</p>
-    	</div>
+	<div data-dojo-attach-point="rcontentInsertParams" class="jimu-r-row">
 		<div class="jimu-r-row margin-bottom">
-    		<div>
+			<p>${nls.infoInsertPoint}</p>
+		</div>
+		<div class="jimu-r-row margin-bottom">
+			<div>
 				<div data-dojo-attach-point="txtGeocoder"></div>
 			</div>
 		</div>
-    	<div class="jimu-r-row">
+		<div class="jimu-r-row">
+			<!-- "Add Location" -->
 			<div class="col-1-3">
-				<div class="jimu-btn" data-dojo-attach-event="onclick:_onPlayBtnClicked">${nls.addLocation}</div>
+				<div class="jimu-btn" data-dojo-attach-point="btnReportAddLocation" data-dojo-attach-event="
+					onclick:_raddLocationToMap">
+					${nls.addLocation}
+				</div>
 			</div>
+			<!-- "Remove All Locations" -->
 			<div class="col-2-3">
-				<div class="jimu-btn floatRight" data-dojo-attach-event="onclick:_onDeleteBtnClicked">${nls.removeAllLocation}</div>
+				<div class="jimu-btn floatRight" data-dojo-attach-point="btnReportClearSelection" data-dojo-attach-event="onclick:_rclearSelection">
+					${nls.removeAllLocation}
+				</div>
+			</div>
+			<div class="jimu-r-row margin-bottom margin-top-10 dynamicRow" data-dojo-attach-point="dynamicRow"></div>
+			<div class="jimu-r-row rowCalculate">
+				<div class="jimu-btn btnCalculate" data-dojo-attach-point="btnCalculate" data-dojo-attach-event="
+					onclick:_runReport">
+					${nls.runReport}
+				</div>
 			</div>
 		</div>
-		<div class="jimu-r-row">	
-			<div data-dojo-attach-point="containerCheckLayer"></div>	
-    	</div>
-		<div class="jimu-r-row margin-bottom margin-top-10 dynamicRow" data-dojo-attach-point="dynamicRow"></div>
-		<div class="jimu-r-row rowCalculate">
-   			<div class="jimu-btn btnCalculate" data-dojo-attach-point="btnCalculate" data-dojo-attach-event="onclick:_callServiceR">${nls.calculate}</div>
-   		</div>
 	</div>
-    <div>
-    <div data-dojo-attach-point="contentResult" class="jimu-r-row hidden">
-    	<div data-dojo-attach-point="calculated">
-	    	<div class="msgCalculate">${nls.CalculateGP}</div>
-	    	<div class="loading-gif"></div>
-	    	<div class="jimu-r-row rowCalculate margin-top">
-	   			<div class="jimu-btn btnCancelAndBack" data-dojo-attach-point="btnCancelAndBack" data-dojo-attach-event="onclick:_cancelAndBack">${nls.Cancel}</div>
-	   		</div>
-   		</div>
-   		<div data-dojo-attach-point="panelResult" class="hidden">
-   			<div class="jimu-r-row">
-   				<div data-dojo-attach-point="populationResult" class="estiloResultPpal"></div>
-   				<hr>
-   				<table style="width:100%" class="tableMak" data-dojo-attach-point='tableAnalog'>
-				  <tr class="cabeceraColum">
-				    <th data-dojo-attach-point='nameColumTableAnalog' style="font-weight: bold;">${nls.Analogs}</th>
-				    <th>${nls.StoreIDs}</th>
-				    <th style="text-align: right;">${nls.Sales}</th>		
-				  </tr>
-				</table>
-   			</div>
-   			<div class="jimu-r-row center" >
-   				<div class="jimu-btn" data-dojo-attach-point="btnBack" data-dojo-attach-event="onclick:_onBack">${nls.back}</div>
+	
+	<div data-dojo-attach-point="rcontentResult" class="jimu-r-row hidden">
+		<div data-dojo-attach-point="rcalculating">
+			<div class="msgCalculate">${nls.running}</div>
+			<div class="loading-gif"></div>
+			<div class="jimu-r-row rowCalculate margin-top">
+				<div class="jimu-btn btnCancelAndBack" data-dojo-attach-point="btnCancelAndBack" data-dojo-attach-event="onclick:_rcancelAndBack">${nls.Cancel}</div>
 			</div>
-   		<div>
-    </div>
+		</div>
 
+		<div data-dojo-attach-point="reportResult" class="hidden">
+			<div>
+				The report has been downloaded to your computer.
+				<hr>
+			</div>
+			<div class="jimu-r-row center" >
+				<div class="jimu-btn" data-dojo-attach-point="btnBack" data-dojo-attach-event="onclick:_ronBack">${nls.back}</div>
+			</div>
+			<div>
+			</div>
+		</div>
+	</div>
 </div>

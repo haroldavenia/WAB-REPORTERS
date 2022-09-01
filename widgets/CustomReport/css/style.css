@@ -29,15 +29,6 @@
 .jimu-widget-customReport .arcgisSearch .searchMenu {
   z-index: 10000; }
 
-.jimu-widget-customReport .arcgisSearch .searchGroup .searchInput {
-  width: 87%; }
-
-.jimu-widget-customReport .searchInputGroup {
-  width: 100%; }
-
-.jimu-widget-customReport .searchExpandContainer {
-  width: 85%; }
-
 .jimu-widget-customReport .helpIcon {
   background-image: url(../images/ago_sprite.png);
   background-position: -64px -66px;

@@ -3,14 +3,6 @@
 @import "../font-awesome/css/solid.min.css";
 
 .jimu-widget-marketPlanning{
-    .icon{
-        background-image: url(../images/icon.png);
-        width: 50px;
-        height: 50px;
-        background-color: #6A6C6F;
-        border-radius: 4px;
-    }
-
     .textSubTitle{
         margin-left: 20px;
         display: inline;
@@ -38,64 +30,54 @@
     .jimu-r-row {
         overflow: inherit;
     }
-    .arcgisSearch .searchGroup .searchInput {
-        width: calc(100% - 37px);
-    }
-    .searchInputGroup{
-        width: 100%;
-    }
-    .searchExpandContainer {
-        width: 85%;
-    }
     .helpIcon {
-       background-image: url(../images/ago_sprite.png);
-       background-position: -64px -66px;
-       background-size: auto;
-       width: 15px;
-       height: 15px;
-       display: inline-block;
+        background-image: url(../images/ago_sprite.png);
+        background-position: -64px -66px;
+        background-size: auto;
+        width: 15px;
+        height: 15px;
+        display: inline-block;
     }
     .margin-check{
-       margin-top: 10px;
+        margin-top: 10px;
     }
     .margin-top{
-       margin-top: 10px;
+        margin-top: 10px;
     }
     .margin-check label{
-        margin-left: 5px;
-       vertical-align: middle;
+         margin-left: 5px;
+        vertical-align: middle;
     }
     .btnCalculate{
-       margin-top: 10px;
+        margin-top: 10px;
     }
     .rowCalculate{
-       text-align: center;
+        text-align: center;
     }
     .dynamicRow{
-       display: inline-table;
+        display: inline-table;
     }
     .loading-gif {
-       position: absolute;
-       background-image: url(../images/predefined_loading_4.gif);
-       background-repeat: no-repeat;
-       width: 35px;
-       height: 35px;
-       left: 50%;
-       top: 16px;
-       transform: translate(-50%, -50%)
+        position: absolute;
+        background-image: url(../images/predefined_loading_4.gif);
+        background-repeat: no-repeat;
+        width: 35px;
+        height: 35px;
+        left: 50%;
+        top: 16px;
+        transform: translate(-50%, -50%)
     }
     .msgCalculate{
-       line-height: 30px;
-       font-weight: bold;
+        line-height: 30px;
+        font-weight: bold;
     }
     
     .padding-top{
-       padding-top: 10px;
+        padding-top: 10px;
     }
     .width-check{
-       width:97%;
+        width:97%;
     }
-    
     .padding-top-20{
         padding-top: 20px;
     }
@@ -130,14 +112,102 @@
             width: 100%;
         }
     }
-}     
+
+    /*Others styles*/
+    #accordion .panel-heading { padding: 0;}
+    #accordion .panel-title > a {
+        display: block;
+        padding: 0.4em 0.6em;
+        outline: none;
+        font-weight:bold;
+        text-decoration: none;
+    }
+
+    .form-header {
+        font-weight: bolder;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .form-select {
+        width: 100%;
+    }
+
+    .row {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .nav-tabs {
+        margin-bottom: 15px;
+    }
+
+    .search-description-text {
+        font-style: italic;
+        font-weight: 100;
+        margin-top: 10px !important;
+    }
+
+    .jimu-widget {
+        overflow-x: hidden;
+    }
+
+    .form-col {
+        margin-bottom: 15px;
+    }
+
+    .form-col input {
+        width: 100%;
+    }
+
+    i.fa.fa-info-circle {
+        float: right;
+    }
+
+    .glyphicon {
+        z-index: 100;
+    }
+
+    .col-xs-6 {
+        height:100%;
+    }
+
+    .chart-row {
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+    }
+
+    .tab-content>.tab-pane {
+        min-height: 300px;
+    }
+
+    .summary {
+        min-height:140px;
+        border: 1px inset gray;
+        overflow:hidden;
+    }
+
+    #summary {
+        margin-bottom:15px;
+    }
+
+    .vertical-align {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    }
+
+    .btn {
+        white-space: normal !important;
+    }
+} 
 
 .map .tooltip {
     width: 300px;
-}    
+}
 
 .claro .dijitSelect .dijitArrowButton {
     width: 20px !important;
-}    
-
+}
 
