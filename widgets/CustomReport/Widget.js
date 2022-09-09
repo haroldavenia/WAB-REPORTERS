@@ -542,7 +542,7 @@ function(declare, BaseWidget, Search, PictureMarkerSymbol, Locator, esriBundle,
         },
 
         _addCustomGisData: function(data) {
-            data.Username = esriId.credentials[0].userId;
+            data.Username = esriId.credentials.length?esriId.credentials[0].userId: "Anonymous";
 
             var date;
             date = new Date();
