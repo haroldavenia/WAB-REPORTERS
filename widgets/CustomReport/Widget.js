@@ -669,7 +669,7 @@ function(declare, BaseWidget, Search, PictureMarkerSymbol, Locator, esriBundle,
                     sortField: 'title',
                     start: 1,
                     f: 'json',
-                    token: context.mainToken
+                    token: context.tokenEsri
                 },
                 success: (resp) => {
                     var respObj = JSON.parse(resp);
@@ -680,8 +680,8 @@ function(declare, BaseWidget, Search, PictureMarkerSymbol, Locator, esriBundle,
                     var reportID = respObj.results[0].id;
                     var str  = `https://geoenrich.arcgis.com/arcgis/rest/services/World/GeoEnrichmentServer/Geoenrichment/Createreport?` +
                     `studyareas=[{"geometry":{"x": -122.435, "y": 37.785}}]&`+
-                    `report={"itemid":"${reportID}","url":"www.arcgis.com","token":"${context.mainToken}"}&` +
-                    `format=pdf&f=bin&token=${context.mainToken}`;
+                    `report={"itemid":"${reportID}","url":"www.arcgis.com","token":"${context.tokenEsri}"}&` +
+                    `format=pdf&f=bin&token=${context.tokenEsri}`;
                 },
                 error: (err) => {
                     console.log("Token regeneration failed.");
@@ -724,11 +724,11 @@ function(declare, BaseWidget, Search, PictureMarkerSymbol, Locator, esriBundle,
                         report: {
                             itemID: data.ReportType,
                             url: 'www.arcgis.com',
-                            token: this.mainToken
+                            token: this.tokenEsri
                         },
                         format: 'pdf',
                         f: 'bin',
-                        token: this.mainToken
+                        token: this.tokenEsri
                     });
                 } else {
                     this.task.createReport({

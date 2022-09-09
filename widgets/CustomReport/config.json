@@ -1,212 +1,290 @@
 {
-    "urlLocator": "//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
-    "icon": {
-        "iconAddPoint": "widgets/MarketPlanning/images/pin.png",
-        "width": 32,
-        "height": 32,
-        "XOffSet": 0,
-        "YOffSet": 16
-    },
-    "stylePanelValidation": "width: 300px",
-    "configFields": {
-        "rows": [
-            [{
-                "title": "BufferRadii",
-                "type": "text",
-                "id": "BufferRadii",
-                "placeHolder": "placeHolderBufferRadii",
-                "defaultValue": "1,3,5",
-                "help": "helpBufferRadii",
-                "serviceParam": "BufferRadii",
-                "serviceParamGIS": "BufferRadii",
-                "required": true
-            }],
-            [{
-                "title": "BufferUnits",
-                "placeHolder": "placeHolderBufferUnits",
-                "help": "helpBufferUnits",
-                "type": "combo",
-                "id": "BufferUnits",
-                "text": "BufferUnits",
-                "serviceParam": "BufferUnits",
-                "serviceParamGIS": "BufferUnits",
-                "required": false,
-                "values": [{
-                    "value": "esriDriveTimeUnitsMinutes",
-                    "label": "Drive Time: Minutes"
-                }, {
-                    "value": "esriDriveTimeUnitsHours",
-                    "label": "Drive Time: Hours"
-                }, {
-                    "value": "esriMiles",
-                    "label": "Miles",
-                    "selected": "selected"
-                }]
-
-            }],
-            [{
-                "title": "ReportType",
-                "type": "combo",
-                "required": true,
-                "id": "ReportType",
-                "help": "helpReportType",
-                "serviceParam": "ReportType",
-                "serviceParamGIS": "ReportType",
-                "values": [{
-                    "value": "census2010_profile",
-                    "label": "2010 Census Profile"
-                }, {
-                    "value": "acs_housing",
-                    "label": "ACS Housing Summary"
-                }, {
-                    "value": "acs_population",
-                    "label": "ACS Population Summary"
-                }, {
-                    "value": "55plus",
-                    "label": "Age 50+ Profile"
-                }, {
-                    "value": "agesexrace",
-                    "label": "Age by Sex by Race Profile"
-                }, {
-                    "value": "agesex",
-                    "label": "Age by Sex Profile"
-                }, {
-                    "value": "cex_auto",
-                    "label": "Automotive Aftermarket Expenditures"
-                }, {
-                    "value": "business_loc",
-                    "label": "Business Locator"
-                }, {
-                    "value": "business_summary",
-                    "label": "Business Summary"
-                }, {
-                    "value": "community_profile",
-                    "label": "Community Profile"
-                }, {
-                    "value": "Custom_Map_Landscape",
-                    "label": "Custom Map Landscape"
-                }, {
-                    "value": "Custom_Map_Portrait",
-                    "label": "Custom Map Portrait"
-                }, {
-                    "value": "dandicomparison",
-                    "label": "Demographic and Income Comparison Profile"
-                }, {
-                    "value": "dandi",
-                    "label": "Demographic and Income Profile",
-                    "selected": "selected"
-                }, {
-                    "value": "agedet",
-                    "label": "Detailed Age Profile"
-                }, {
-                    "value": "dispinc",
-                    "label": "Disposable Income Profile"
-                }, {
-                    "value": "tapestry_map",
-                    "label": "Dominant Tapestry Map"
-                }, {
-                    "value": "mpi_pc",
-                    "label": "Electronics and Internet Market Potential"
-                }, {
-                    "value": "execsummary",
-                    "label": "Executive Summary"
-                }, {
-                    "value": "mpi_investment",
-                    "label": "Finances Market Potential"
-                }, {
-                    "value": "cex_financial",
-                    "label": "Financial Expenditures"
-                }, {
-                    "value": "graphic",
-                    "label": "Graphic Profile"
-                }, {
-                    "value": "mpi_health",
-                    "label": "Health and Beauty Market Potential"
-                }, {
-                    "value": "cex_home",
-                    "label": "House and Home Expenditures"
-                }, {
-                    "value": "cex_budget",
-                    "label": "Household Budget Expenditures"
-                }, {
-                    "value": "hh_income",
-                    "label": "Household Income Profile"
-                }, {
-                    "value": "housing",
-                    "label": "Housing Profile"
-                }, {
-                    "value": "shopping",
-                    "label": "Major Shopping Center Locator"
-                }, {
-                    "value": "shopping_centers_map",
-                    "label": "Major Shopping Center Map"
-                }, {
-                    "value": "market_profile",
-                    "label": "Market Profile"
-                }, {
-                    "value": "cex_medical",
-                    "label": "Medical Expenditures"
-                }, {
-                    "value": "networth",
-                    "label": "Net Worth Profile"
-                }, {
-                    "value": "mpi_pet",
-                    "label": "Pets and Products Market Potential"
-                }, {
-                    "value": "cex_recreation",
-                    "label": "Recreation Expenditures"
-                }, {
-                    "value": "mpi_restaurant",
-                    "label": "Restaurant Market Potential"
-                }, {
-                    "value": "cex_retail",
-                    "label": "Retail Goods and Services Expenditures"
-                }, {
-                    "value": "mpi_retail",
-                    "label": "Retail Market Potential"
-                }, {
-                    "value": "retail_market",
-                    "label": "Retail MarketPlace Profile"
-                }, {
-                    "value": "site_details_map",
-                    "label": "Site Details Map"
-                }, {
-                    "value": "site_map_imagery04",
-                    "label": "Site Map on Satellite Imagery - 0.4 Miles Wide"
-                }, {
-                    "value": "site_map_imagery08",
-                    "label": "Site Map on Satellite Imagery - 0.8 Miles Wide"
-                }, {
-                    "value": "site_map_imagery16",
-                    "label": "Site Map on Satellite Imagery - 1.6 Miles Wide"
-                }, {
-                    "value": "site_map",
-                    "label": "Site Map Report"
-                }, {
-                    "value": "mpi_sports",
-                    "label": "Sports and Leisure Market Potential"
-                }, {
-                    "value": "tapestry_profileNEW",
-                    "label": "Tapestry Segmentation Area Profile"
-                }, {
-                    "value": "traffic",
-                    "label": "Traffic Count Profile"
-                }, {
-                    "value": "traffic_map",
-                    "label": "Traffic Map"
-                }, {
-                    "value": "traffic_map08",
-                    "label": "Traffic Map - Close Up"
-                }]
-            }]
-        ]
-    },
+    "urlLocator": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
+    "urlService": "https://api2.retailscientifics.com/demo/estimate",
+    "apikey": "X6xKerHF",
+    "idLayer": "Demo_Output_Layer_5015",
     "visibleLayer": false,
-    "data": {
-        "longitude": 0,
-        "latitude": 0,
-        "UniqueID": 1,
-        "Token": "",
-        "apikey": ""
+    "columnNameX": "LSF",
+    "columnNameY": "SSF",
+    "columnNameToken": "Token",
+    "credentials": {
+      "url": "https://www.arcgis.com/sharing/rest/oauth2/token/",
+      "client_id": "o6dkVn6w0JIhcH0O",
+      "client_secret": "e561e50aafb1457483712c8c5ccb7716",
+      "grant_type": "client_credentials",
+      "expiration": "1440"
+    },
+    "configFields": {
+      "rows": [
+        [
+          {
+            "title": "Buffer Radii",
+            "type": "text",
+            "id": "BufferRadii",
+            "placeHolder": "Buffer Radii",
+            "defaultValue": "1,3,5",
+            "help": "Select the values for the rings you wish to use, separated by commas. Examples: '1,5,10', '1', '3,5', etc",
+            "serviceParam": "BufferRadii",
+            "serviceParamGIS": "BufferRadii",
+            "required": true
+          }
+        ],
+        [
+          {
+            "title": "Buffer Units",
+            "placeHolder": "Buffer Units",
+            "help": "Enter what type of units will be used for the buffer radii.",
+            "type": "combo",
+            "id": "BufferUnits",
+            "text": "BufferUnits",
+            "serviceParam": "BufferUnits",
+            "serviceParamGIS": "BufferUnits",
+            "required": false,
+            "values": [
+              {
+                "value": "esriDriveTimeUnitsSeconds",
+                "label": "Drive Time: Seconds"
+              },
+              {
+                "value": "esriDriveTimeUnitsMinutes",
+                "label": "Drive Time: Minutes"
+              },
+              {
+                "value": "esriDriveTimeUnitsHours",
+                "label": "Drive Time: Hours"
+              },
+              {
+                "value": "esriMiles",
+                "label": "Miles",
+                "selected": "selected"
+              },
+              {
+                "value": "esriKilometers",
+                "label": "Kilometers"
+              },
+              {
+                "value": "esriYards",
+                "label": "Yards"
+              },
+              {
+                "value": "esriMeters",
+                "label": "Meters"
+              },
+              {
+                "value": "esriFeet",
+                "label": "Feet"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "title": "Report Type",
+            "id": "ReportType",
+            "placeHolder": "Report Type",
+            "type": "combo",
+            "help": "Select the type of report you would like to generate.",
+            "serviceParam": "ReportType",
+            "serviceParamGIS": "ReportType",
+            "required": true,
+            "values": [
+              {
+                "value": "census2010_profile",
+                "label": "2010 Census Profile"
+              },
+              {
+                "value": "acs_housing",
+                "label": "ACS Housing Summary"
+              },
+              {
+                "value": "acs_population",
+                "label": "ACS Population Summary"
+              },
+              {
+                "value": "55plus",
+                "label": "Age 50+ Profile"
+              },
+              {
+                "value": "agesexrace",
+                "label": "Age by Sex by Race Profile"
+              },
+              {
+                "value": "agesex",
+                "label": "Age by Sex Profile"
+              },
+              {
+                "value": "cex_auto",
+                "label": "Automotive Aftermarket Expenditures"
+              },
+              {
+                "value": "business_loc",
+                "label": "Business Locator"
+              },
+              {
+                "value": "business_summary",
+                "label": "Business Summary"
+              },
+              {
+                "value": "community_profile",
+                "label": "Community Profile"
+              },
+              {
+                "value": "Custom_Map_Landscape",
+                "label": "Custom Map Landscape"
+              },
+              {
+                "value": "Custom_Map_Portrait",
+                "label": "Custom Map Portrait"
+              },
+              {
+                "value": "dandicomparison",
+                "label": "Demographic and Income Comparison Profile",
+                "selected": "selected"
+              },
+              {
+                "value": "dandi",
+                "label": "Demographic and Income Profile"
+              },
+              {
+                "value": "agedet",
+                "label": "Detailed Age Profile"
+              },
+              {
+                "value": "dispinc",
+                "label": "Disposable Income Profile"
+              },
+              {
+                "value": "tapestry_map",
+                "label": "Dominant Tapestry Map"
+              },
+              {
+                "value": "mpi_pc",
+                "label": "Electronics and Internet Market Potential"
+              },
+              {
+                "value": "execsummary",
+                "label": "Executive Summary"
+              },
+              {
+                "value": "mpi_investment",
+                "label": "Finances Market Potential"
+              },
+              {
+                "value": "cex_financial",
+                "label": "Financial Expenditures"
+              },
+              {
+                "value": "graphic",
+                "label": "Graphic Profile"
+              },
+              {
+                "value": "mpi_health",
+                "label": "Health and Beauty Market Potential"
+              },
+              {
+                "value": "cex_home",
+                "label": "House and Home Expenditures"
+              },
+              {
+                "value": "cex_budget",
+                "label": "Household Budget Expenditures"
+              },
+              {
+                "value": "hh_income",
+                "label": "Household Income Profile"
+              },
+              {
+                "value": "housing",
+                "label": "Housing Profile"
+              },
+              {
+                "value": "shopping",
+                "label": "Major Shopping Center Locator"
+              },
+              {
+                "value": "shopping_centers_map",
+                "label": "Major Shopping Center Map"
+              },
+              {
+                "value": "market_profile",
+                "label": "Market Profile"
+              },
+              {
+                "value": "cex_medical",
+                "label": "Medical Expenditures"
+              },
+              {
+                "value": "networth",
+                "label": "Net Worth Profile"
+              },
+              {
+                "value": "mpi_pet",
+                "label": "Pets and Products Market Potential"
+              },
+              {
+                "value": "cex_recreation",
+                "label": "Recreation Expenditures"
+              },
+              {
+                "value": "mpi_restaurant",
+                "label": "Restaurant Market Potential"
+              },
+              {
+                "value": "cex_retail",
+                "label": "Retail Goods and Services Expenditures"
+              },
+              {
+                "value": "mpi_retail",
+                "label": "Retail Market Potential"
+              },
+              {
+                "value": "retail_market",
+                "label": "Retail MarketPlace Profile"
+              },
+              {
+                "value": "site_details_map",
+                "label": "Site Details Map"
+              },
+              {
+                "value": "site_map_imagery04",
+                "label": "Site Map on Satellite Imagery - 0.4 Miles Wide"
+              },
+              {
+                "value": "site_map_imagery08",
+                "label": "Site Map on Satellite Imagery - 0.8 Miles Wide"
+              },
+              {
+                "value": "site_map_imagery16",
+                "label": "Site Map on Satellite Imagery - 1.6 Miles Wide"
+              },
+              {
+                "value": "site_map",
+                "label": "Site Map Report"
+              },
+              {
+                "value": "mpi_sports",
+                "label": "Sports and Leisure Market Potential"
+              },
+              {
+                "value": "tapestry_profileNEW",
+                "label": "Tapestry Segmentation Area Profile"
+              },
+              {
+                "value": "traffic",
+                "label": "Traffic Count Profile"
+              },
+              {
+                "value": "traffic_map",
+                "label": "Traffic Map"
+              },
+              {
+                "value": "traffic_map08",
+                "label": "Traffic Map - Close Up"
+              }
+            ]
+          }
+        ]
+      ]
     }
-}
+  }
+  
