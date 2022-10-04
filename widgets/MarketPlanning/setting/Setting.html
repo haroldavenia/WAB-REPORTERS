@@ -26,17 +26,6 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="form-group">
-                    <label>Id Layer</label>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <input type="text" disabled class="form-control" data-dojo-attach-point="idLayer"/>
-                        </div>
-                        <div  class="col-md-2 text-right">
-                            <button type="button" class="btn btn-info" data-dojo-attach-event="click:_setLayer">Set layer</button>
-                        </div>
-                    </div>
-                </div>-->
             </div>
         </div>
         <div class="panel panel-default">
@@ -55,7 +44,15 @@
                     <input type="text"  class="form-control" data-dojo-attach-point="cred_clientSecret"/>           
                 </div>
             </div>
-        </div>        
+        </div>
+        
+        <div class="panel panel-default">
+            <div class="panel-heading" style="position: relative;">
+                <div>Config fields - Site Selection</div>
+                <button type="button" class="btn btn-primary btn-addrow" data-dojo-attach-event="click:_addNewRowSelection">Add row</button>
+            </div>
+            <div class="panel-body" data-dojo-attach-point="rows"></div>
+        </div>
     </div>
     <div data-dojo-attach-point="configFieldPanel" class="config-field" style="display: none;">
         

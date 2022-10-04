@@ -180,7 +180,155 @@ define([
 				.setStyle(SimpleMarkerSymbol.STYLE_SQUARE);
 
 			this.featureLayer.setSelectionSymbol(marker);
+
+			if(this.config.configFields.rows){
+				this.insertFields(this.config.configFields.rows, this.fieldsSite);
+				this.insertFields(this.config.configFields.rows, this.fieldsRelocation);
+			}
 		},
+
+		insertFields: function(rows, container){
+			rows.forEach(lang.hitch(this, function(row){
+                //Create row
+                var rowDom = domConstruct.toDom(`<div class="row" style="margin-top: 0; margin-bottom: 0;"></div>`);
+				domConstruct.place(rowDom, container);
+
+				let colSize = 'xs-1';
+
+				if(row.length == 2){
+					colSize = 'xs-6';
+				} else if(row.length == 3){
+					colSize = 'xs-4';
+				} else if(row.length == 4){
+					colSize = 'xs-3';
+				} else if (row.length > 4) {
+					colSize = 'xs-6';
+				}
+
+                row.forEach(lang.hitch(this, function(element){
+
+                    let elementNode;
+
+                    switch (element.type.toUpperCase()) {
+                        case "TEXT":
+                            elementNode = this._createTextBox(element);
+                            break;
+                        case "COMBO":
+                            elementNode = this._createSelect(element);
+                            break;
+                        case "NUMBER":
+                            elementNode = this._createNumber(element);
+                            break;
+                        /*case "CHECK":
+                            elementNode = this._createCheck(element);
+                            break;*/
+                    }
+
+					let title = domConstruct.toDom(`<p class="form-header">${element.title}</p>`);
+
+					if(element.help){
+						title = domConstruct.toDom(`<p class="form-header">
+							${element.title}
+							<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='${element.help}'></i>
+						</p>`);
+					}
+
+					let blockErrors = domConstruct.toDom('<div class="help-block with-errors"></div>');
+
+					let col = domConstruct.toDom(`<div class="col-${colSize} form-col"></div>`);
+
+					domConstruct.place(title, col);
+					domConstruct.place(elementNode, col);
+					domConstruct.place(blockErrors, col);
+
+					domConstruct.place(col, rowDom);
+
+                    //Insert element in dom
+                    //this._positionElement(rowDom, row.length, j, elementNode, element);
+
+                    /*if (element.help) {
+                        let helpId = registry.getUniqueId("helpcontent");
+                        var help = domConstruct.create("span", {id: helpId});
+
+                        domStyle.set(help, {
+                            "margin-top": "5px"
+                        });
+                        domClass.add(help, "esriFloatTrailing");
+                        domClass.add(help, "helpIcon");
+                        domConstruct.place(help, rowDom, "first");
+
+                        // May not be used
+                        new Tooltip({
+                            connectId: [helpId],
+                            label: element.help
+                        });
+                    }
+
+                    if (element.subCheck) {
+                        var contendor = domConstruct.create("div", null, rowDom);
+                        domClass.add(contendor, "margin-check");
+                        var checkBox = new CheckBox({
+                            name: element.subCheck.id,
+                            checked: element.subCheck.defaultValue
+                        });
+                        domConstruct.place(contendor, rowDom);
+                        domConstruct.place(checkBox.domNode, contendor);
+                        domConstruct.create("label", {
+                            innerHTML: element.subCheck.text
+                        }, contendor);
+                    }*/
+                }))
+            }));
+		},
+
+		_createTextBox: function(element) {
+            var myTextBox = domConstruct.toDom(`<input name="${element.id}" type="text" ${element.defaultValue?'value="'+element.defaultValue+'"':''} data-error="This is a required form field." ${element.required?'required':''}/>`);
+
+            return myTextBox;
+        },
+
+        _createNumber: function(element) {
+			var myNumericBox = domConstruct.toDom(`<input name="${element.id}" type="number" ${element.defaultValue?'value="'+element.defaultValue+'"':''} data-error="This is a required form field." ${element.required?'required':''}/>`);
+
+            return myNumericBox;
+        },
+
+        _createSelect: function(element) {
+			let options = '';
+
+			element.values.forEach(function(value){
+				let option = `<option value="${value.value}">${value.label}</option>`;
+
+				if(value.selected){
+					option = `<option value="${value.value}" selected>${value.label}</option>`;
+					options += option;
+				}else{
+					options += option;
+				}
+			});
+
+            let mySelect = domConstruct.toDom(`<select class="form-select" name="${element.id}">${options}</select>`);
+
+            return mySelect;
+        },
+
+        _createCheck: function(element) {
+            var container = domConstruct.create("div");
+            var myCheckBox = new CheckBox({
+                name: element.id,
+                checked: (element.defaultValue) ? element.defaultValue : 0
+            });
+            domConstruct.place(myCheckBox.domNode, container);
+            domConstruct.create("label", {
+                innerHTML: this.nls[element.text]
+            }, container);
+            domClass.add(container, "padding-top");
+            domClass.add(container, "width-check");
+            container = {
+                domNode: container
+            };
+            return container;
+        },		
 
 		addModalToBody: function(){
 			var elem = dojo.byId('myModal');

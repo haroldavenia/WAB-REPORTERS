@@ -10,6 +10,12 @@
       "expiration": "1440"
     },
     "urlService": "https://api2.retailscientifics.com/demo/estimate",
-    "apikey": "X6xKerHF"
+    "apikey": "X6xKerHF",
+    "configFieldsSite": {
+      "rows": []
+    },
+    "configFieldsRelocation": {
+      "rows": []
+    }
   }
   
