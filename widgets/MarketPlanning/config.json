@@ -1,21 +1,283 @@
 {
-    "idLayer": "https://services6.arcgis.com/LrnbNBnvD1FFFc4w/arcgis/rest/services/demo_output_layer_5015/FeatureServer/0",
-    "idQueryLayer": "Demo_Output_Layer_5015",
-    "urlLocator": "//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
-    "credentials": {
-      "url": "https://www.arcgis.com/sharing/rest/oauth2/token/",
-      "client_id": "o6dkVn6w0JIhcH0O",
-      "client_secret": "e561e50aafb1457483712c8c5ccb7716",
-      "grant_type": "client_credentials",
-      "expiration": "1440"
-    },
-    "urlService": "https://api2.retailscientifics.com/demo/estimate",
-    "apikey": "X6xKerHF",
-    "configFieldsSite": {
-      "rows": []
-    },
-    "configFieldsRelocation": {
-      "rows": []
-    }
+  "idLayer": "https://services6.arcgis.com/LrnbNBnvD1FFFc4w/arcgis/rest/services/demo_output_layer_5015/FeatureServer/0",
+  "idQueryLayer": "Demo_Output_Layer_5015",
+  "urlLocator": "//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
+  "credentials": {
+    "url": "https://www.arcgis.com/sharing/rest/oauth2/token/",
+    "client_id": "o6dkVn6w0JIhcH0O",
+    "client_secret": "e561e50aafb1457483712c8c5ccb7716",
+    "grant_type": "client_credentials",
+    "expiration": "1440"
+  },
+  "urlService": "https://api2.retailscientifics.com/demo/estimate",
+  "apikey": "X6xKerHF",
+  "configFields": {
+    "rows": [
+      [
+        {
+          "title": "Gross Square Footage",
+          "type": "number",
+          "id": "gross_sq_ft",
+          "placeHolder": "Gross Square Footage",
+          "defaultValue": "1000",
+          "help": "Enter the gross square footage of this location.",
+          "serviceParam": "BufferRadii",
+          "serviceParamGIS": "BufferRadii",
+          "required": true
+        },
+        {
+          "title": "Number of Seats",
+          "type": "number",
+          "id": "number_of_seats",
+          "placeHolder": "Number of Seats",
+          "defaultValue": "18",
+          "help": "What is the seating capacity of this location?",
+          "serviceParam": "BufferRadii",
+          "serviceParamGIS": "BufferRadii",
+          "required": true
+        }
+      ],
+      [
+        {
+          "title": "Location Type",
+          "placeHolder": "Location Type",
+          "help": "What type of location is this?",
+          "type": "combo",
+          "id": "cars1",
+          "serviceParam": "BufferUnits",
+          "serviceParamGIS": "BufferUnits",
+          "required": false,
+          "values": [
+            {
+              "value": "1",
+              "label": "Other"
+            },
+            {
+              "value": "1",
+              "label": "PF"
+            },
+            {
+              "value": "2",
+              "label": "FS"
+            },
+            {
+              "value": "3",
+              "label": "NS",
+              "selected": "selected"
+            },
+            {
+              "value": "4",
+              "label": "M"
+            },
+            {
+              "value": "5",
+              "label": "S"
+            }
+          ]
+        },
+        {
+          "title": "Center Condition",
+          "placeHolder": "Center Condition",
+          "help": "What condition is this shopping center in?",
+          "type": "combo",
+          "id": "cars3",
+          "serviceParam": "BufferUnits",
+          "serviceParamGIS": "BufferUnits",
+          "required": false,
+          "values": [
+            {
+              "value": "1",
+              "label": "1 - New"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3",
+              "selected": "selected"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5 - Old"
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "title": "Store Highway Accessibility",
+          "placeHolder": "Store Highway Accessibility",
+          "help": "How accessible is this location from the nearest highway?",
+          "type": "combo",
+          "id": "cars6",
+          "serviceParam": "BufferUnits",
+          "serviceParamGIS": "BufferUnits",
+          "required": false,
+          "values": [
+            {
+              "value": "1",
+              "label": "1 - Rappid Access"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3",
+              "selected": "selected"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5 - Dificult Access"
+            }
+          ]
+        },
+        {
+          "title": "Walk Score",
+          "placeHolder": "Walk Score",
+          "help": "What is the walk score of this location?",
+          "type": "combo",
+          "id": "walk_score",
+          "serviceParam": "BufferUnits",
+          "serviceParamGIS": "BufferUnits",
+          "required": false,
+          "values": [
+            {
+              "value": "1",
+              "label": "1 - Excellent"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3",
+              "selected": "selected"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5 - Poor"
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "title": "Store Front Visibility",
+          "placeHolder": "Store Front Visibility",
+          "help": "How visible is the store front?",
+          "type": "combo",
+          "id": "cars4",
+          "serviceParam": "BufferUnits",
+          "serviceParamGIS": "BufferUnits",
+          "required": false,
+          "values": [
+            {
+              "value": "1",
+              "label": "1 - High Visibility"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3",
+              "selected": "selected"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5 - Minimal Visibility"
+            }
+          ]
+        },
+        {
+          "title": "Store Highway Visibility",
+          "placeHolder": "Store Highway Visibility",
+          "help": "What is the visibility of this location from the nearest highway?",
+          "type": "combo",
+          "id": "cars2",
+          "serviceParam": "BufferUnits",
+          "serviceParamGIS": "BufferUnits",
+          "required": false,
+          "values": [
+            {
+              "value": "1",
+              "label": "1 - High Visibility"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3",
+              "selected": "selected"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5 - Minimal Visibility"
+            }
+          ]
+        },
+        {
+          "title": "Center Signage",
+          "placeHolder": "Center Signage",
+          "help": "What type of signage does the shopping center have?",
+          "type": "combo",
+          "id": "cars5",
+          "serviceParam": "BufferUnits",
+          "serviceParamGIS": "BufferUnits",
+          "required": false,
+          "values": [
+            {
+              "value": "1",
+              "label": "1 - High Visibility"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3",
+              "selected": "selected"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5 - Minimal Visibility"
+            }
+          ]
+        }
+      ]
+    ]
   }
-  
+}
