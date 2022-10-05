@@ -37,6 +37,7 @@ return declare([BaseWidgetSetting], {
     rowsData: {},
 
     postCreate: function() {
+        this.rowsData = {};
         this.setConfig(this.config);
     },
 
