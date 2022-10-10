@@ -22,6 +22,7 @@ define([
 	'libs/dojo-bootstrap/Modal',
 	'libs/dojo-bootstrap/Collapse',
 	'libs/dojo-bootstrap/Tooltip',
+	'./report/Report',
 	'./Utilities'
 ], function (
 	query, on,
@@ -43,6 +44,7 @@ define([
 	Modal,
 	Collapse,
 	bootstrapTooltip,
+	ReportPDF,
 	Utilities
 ) {
 	return declare([BaseWidget], {
@@ -365,6 +367,14 @@ define([
 
 		dropdownClick: function () {
 			alert('Sorry, this functionality is not available in the demo.');
+		},
+
+		generateReportClick: function(){
+			let rpdf = new ReportPDF();
+
+			let report = dojo.byId("outputForm2");
+
+			rpdf.save(report);
 		},
 
 		_onDrawPointClick: function () {
