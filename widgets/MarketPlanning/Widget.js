@@ -8,7 +8,7 @@ define([
 	'esri/toolbars/draw', 'esri/graphic', 'esri/geometry/webMercatorUtils',
 	'esri/IdentityManager', 'jimu/PanelManager',
 	'dojo/_base/lang', 'dojo/dom-construct', 'dojo/dom-class', 'dojo/dom-style',
-	'dojo/parser', 'dijit/form/TextBox', 'dijit/form/Select', 'dijit/Tooltip', 'dijit/form/CheckBox',
+	'dojo/parser', 'dijit/_WidgetsInTemplateMixin', 'dijit/form/TextBox', 'dijit/form/Select', 'dijit/Tooltip', 'dijit/form/CheckBox',
 	'dijit/form/NumberTextBox', 'dijit/form/MultiSelect',
 	'dojo/_base/window', 'dijit/Dialog', 'dijit/registry',
 	'https://cdn.plot.ly/plotly-latest.min.js',
@@ -17,6 +17,7 @@ define([
 	'esri/symbols/SimpleMarkerSymbol', 'esri/symbols/SimpleLineSymbol', 'esri/symbols/SimpleFillSymbol',
 	'esri/tasks/query',
 	'esri/layers/FeatureLayer',
+	'jimu/dijit/LoadingShelter',
 	'libs/dojo-bootstrap/Dropdown',
 	'libs/dojo-bootstrap/Tab',
 	'libs/dojo-bootstrap/Modal',
@@ -32,13 +33,14 @@ define([
 	Draw, Graphic, webMercatorUtils,
 	esriId, PanelManager,
 	lang, domConstruct, domClass, domStyle,
-	parser, TextBox, Select, Tooltip, CheckBox,
+	parser, _WidgetsInTemplateMixin, TextBox, Select, Tooltip, CheckBox,
 	NumberTextBox, MultiSelect, win, Dialog, registry,
 	Plotly, Chart,
 	Validator,
 	SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol,
 	Query,
 	FeatureLayer,
+	LoadingShelter,
 	Dropdown,
 	Tab,
 	Modal,
@@ -47,7 +49,7 @@ define([
 	ReportPDF,
 	Utilities
 ) {
-	return declare([BaseWidget], {
+	return declare([BaseWidget, _WidgetsInTemplateMixin], {
 		baseClass: 'jimu-widget-marketPlanning',
 		name: 'Market Planning',
 		layerResult: null,
@@ -243,42 +245,7 @@ define([
 					domConstruct.place(elementNode, col);
 					domConstruct.place(blockErrors, col);
 
-					domConstruct.place(col, rowDom);
-
-                    //Insert element in dom
-                    //this._positionElement(rowDom, row.length, j, elementNode, element);
-
-                    /*if (element.help) {
-                        let helpId = registry.getUniqueId("helpcontent");
-                        var help = domConstruct.create("span", {id: helpId});
-
-                        domStyle.set(help, {
-                            "margin-top": "5px"
-                        });
-                        domClass.add(help, "esriFloatTrailing");
-                        domClass.add(help, "helpIcon");
-                        domConstruct.place(help, rowDom, "first");
-
-                        // May not be used
-                        new Tooltip({
-                            connectId: [helpId],
-                            label: element.help
-                        });
-                    }
-
-                    if (element.subCheck) {
-                        var contendor = domConstruct.create("div", null, rowDom);
-                        domClass.add(contendor, "margin-check");
-                        var checkBox = new CheckBox({
-                            name: element.subCheck.id,
-                            checked: element.subCheck.defaultValue
-                        });
-                        domConstruct.place(contendor, rowDom);
-                        domConstruct.place(checkBox.domNode, contendor);
-                        domConstruct.create("label", {
-                            innerHTML: element.subCheck.text
-                        }, contendor);
-                    }*/
+					domConstruct.place(col, rowDom);                    
                 }))
             }));
 		},
@@ -333,18 +300,19 @@ define([
         },		
 
 		addModalToBody: function(){
-			var elem = dojo.byId('myModal');
+			this.modalId = "marketingModal";
+			var elem = dojo.byId(this.modalId);
 
 			if(elem == null){
 				let modalHtmlStr = `
-					<div class="modal fade" data-keyboard="false" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-dojo-dataid="pid29" style="display: none;">
+					<div class="modal fade" data-keyboard="false" id="${this.modalId}" role="dialog" aria-labelledby="marketingModalLabel" aria-hidden="true" data-dojo-dataid="pid29" style="display: none;">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h4 class="modal-title" id="myModalLabel">Computing...</h4>
+									<h4 class="modal-title" id="marketingModalLabel"></h4>
 								</div>
 								<div class="modal-body">
-									Please wait while we run your model.
+									<div class="modal-message"></div>
 									<div class="progress progress-striped active" style="margin-bottom:0;">
 										<div class="progress-bar" style="width: 100%"></div>
 									</div>
@@ -360,6 +328,14 @@ define([
 			}
 		},
 
+		setModalInfo: function(title, message){
+			var titleNode = query(".modal-title", this.modalId)[0];
+			var messageNode = query(".modal-message", this.modalId)[0];
+
+			titleNode.innerHTML = title;
+			messageNode.innerHTML = message;
+		},
+
 		// Hook into resize function to inform Charts.js and Plotly
 		resize: function () {
 			this.resizeCharts();
@@ -370,11 +346,40 @@ define([
 		},
 
 		generateReportClick: function(){
+			this.setModalInfo("Computing...", "Please wait while we run your model.");
+
+			query(`#${this.modalId}`).modal('show');
+			
 			let rpdf = new ReportPDF();
+			
+			rpdf.save("outputForm2").then(lang.hitch(this, function(file){
+				let reportTracking = "https://services.arcgis.com/x4VfPdxfhKEZtlzf/arcgis/rest/services/DownloadReportTracking/FeatureServer/0";
+				let fl = new FeatureLayer(reportTracking);
+				let graphic = new Graphic(null, null, {}, null);
+				
+				//Once it is saved, the download record is saved in the tracking table
+				fl.applyEdits([graphic]).then(lang.hitch(this, function(addResult){
+					let objectId = addResult[0].objectId;
+					
+					let form = new FormData();
+					form.set("attachment", file);
 
-			let report = dojo.byId("outputForm2");
-
-			rpdf.save(report);
+					// If the record is saved, the attachment is added
+					fl.addAttachment(objectId, form).then(lang.hitch(this, function(){
+						// Success
+						query(`#${this.modalId}`).modal('hide');
+					}), lang.hitch(this, function(error){
+						// Error
+						query(`#${this.modalId}`).modal('hide');
+					}));
+				}), lang.hitch(this, function(error){
+					// Error
+					query(`#${this.modalId}`).modal('hide');
+				}))
+			}), lang.hitch(this, function(error){
+				// Error
+				query(`#${this.modalId}`).modal('hide');
+			}));
 		},
 
 		_onDrawPointClick: function () {
@@ -659,7 +664,9 @@ define([
 			let context = this;
 			data.apikey = this.config.apikey;
 
-			query('#myModal').modal('show');
+			this.setModalInfo("Computing...", "Please wait while we run your model.");
+
+			query(`#${this.modalId}`).modal('show');
 
 			$.ajax({
 				url: this.config.urlService,
@@ -680,9 +687,9 @@ define([
 						content: errMsg
 					}).show();
 				},
-				complete: function () {
-					query('#myModal').modal('hide');
-				}
+				complete: lang.hitch(this, function () {
+					query(`#${this.modalId}`).modal('hide');
+				})
 			});
 		},
 

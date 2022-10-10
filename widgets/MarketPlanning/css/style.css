@@ -2,7 +2,14 @@
 @import url(../font-awesome/css/fontawesome.min.css);
 @import url(../font-awesome/css/solid.min.css);
 .jimu-widget-marketPlanning {
+  width: 100%;
+  height: 100%;
   /*Others styles*/ }
+  .jimu-widget-marketPlanning .container-widget {
+    overflow: auto; }
+  .jimu-widget-marketPlanning .jimu-loading-shelter {
+    z-index: 1000;
+    background-color: white; }
   .jimu-widget-marketPlanning .textSubTitle {
     margin-left: 20px;
     display: inline;

@@ -1,635 +1,638 @@
 <div>
-    <h3>Market Planning</h3>
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" role="tablist" id="tabnav">
-        <li class="active"><a href="#siteSelection" role="tab" data-toggle="tab">Site Selection</a></li>
-        <li><a href="#sales" role="tab" data-toggle="tab">Relocation</a></li>
-        <li><a href="#more" role="tab" data-toggle="tab">More...</a></li>
-    </ul>
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <!-- Tab 1 -->
-        <div class="tab-pane fade in" id="sales">
-            <!-- Tab 1 Input Form -->
-            <div id="inputForm1">
-                <div class="row">
-                    <!-- Form Field: Location -->
-                    <div class="col-xs-6">
-                        <h3>Current Location</h3>
-                        <p class="search-description-text">Click to draw on the map and circle the area where the current site is located.</p>
-                        <div class="panel panel-info">
-                            <div class="panel-heading">Selected Location</div>
-                            <div class="panel-body">
-                                <span id="current_site">None</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- / Location -->
-                    <!-- Form Field: Location -->
-                    <div class="col-xs-6">
-                        <h3>New Site Performance Estimate</h3>
-                        <p class="search-description-text">Click to drop a pin on the map at the point where the new site will be located.</p>
-                    </div>
-                    <!-- / Location -->
-                </div>
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="btn btn-sm btn-primary btn-block" data-dojo-attach-event="onclick:_onDrawPolygonClick">
-                            <span class="glyphicon glyphicon-pencil"></span>&nbsp Select Current Site
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="btn btn-sm btn-primary btn-block" data-dojo-attach-event="onclick:_onDrawPointClick">
-                            <span class="glyphicon glyphicon-map-marker"></span>&nbsp Select New Site
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <form role="form" id="tab1Form" class="needsValidation">
-                    <div class="margin-bottom" data-dojo-attach-point="fieldsRelocation"></div>
-                    <!-- /Row -->
-                    <!-- Submit Button -->
-                    <div class="row location">
-                        <div class="col-xs-12">
-                            <button type="submit" class="btn btn-block btn-success" style="width:100%">
-                                <i class="fa fa-bar-chart"></i>&nbsp Calculate
-                            </button>
-                        </div>
-                    </div>
-                    <!-- / Submit Button-->
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                                <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                    Advanced Options
-                                </a>
-                            </h4>
-                            </div>
-                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                <div class="panel-body">
-                                    <!-- Form Field: Select -->
-                                    <div class="col-xs-6 form-col">
-                                        <p class="form-header">
-                                            Advanced Option 1
-                                            <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='These are options that are usually static, but can be changed if necessary.'></i>
-                                        </p>
-                                        <select class="form-select" name="adv1">
-                                            <option value="4" selected>Advanced Default 1</option>
-                                            <option value="1">AFG</option>
-                                            <option value="2">WES</option>
-                                            <option value="3">VVX</option>
-                                        </select>
-                                    </div>
-                                    <!-- / Form Field -->
-                                    <!-- Form Field: Select -->
-                                    <div class="col-xs-6 form-col">
-                                        <p class="form-header">
-                                            Advanced Option 2
-                                            <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='These are options that are usually static, but can be changed if necessary.'></i>
-                                        </p>
-                                        <select class="form-select" name="adv2">
-                                            <option value="4">Advanced Default 2</option>
-                                            <option value="1">MSK</option>
-                                            <option value="2">SQR</option>
-                                            <option value="3">ZTW</option>
-                                        </select>
-                                    </div>
-                                    <!-- / Form Field -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <!-- / Tab 1 Input Form -->
-            <!-- outputForm1 -->
-            <div id="outputForm1" style="display:none">
-                <!-- Row 1 -->
-                <div class="row summary vertical-align">
-                    <div class="col-xs-8" style="height:100%">
-                        <div class='row'>
-                            <div class='col-xs-6'>
-                                <h3 class='summarySales'>
-                                    Forecast:
-                                </h3>
-                            </div>
-                            <div class='col-xs-6'>
-                                <h3 class='summarySales'>
-                                    <span id="salesEstimate1"></span>
-                                </h3>
-                            </div>
-                        </div>
-                        <div class='row'>
-                            <div class='col-xs-6'>
-                                <h3 class='summarySales'>
-                                    Prior Sales:
-                                </h3>
-                            </div>
-                            <div class='col-xs-6'>
-                                <h3 class='summarySales'>
-                                    <span id="priorSales1"></span>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Col 1 -->
-                    <!-- Col 2 -->
-                    <div id="summary" class="col-xs-4" style="height: 100%; overflow-y: auto;">
-                        <h3>Summary</h3>
-                        <p>Relocation is estimated to bring a sales impact of
-                            <h4><u id="salesImpact1"></u></h4> .
-                        </p>
-                    </div>
-                </div>
-                <!-- /Row 1 -->
-                <!-- Back Button: Form 1 -->
-                <div class="row chart-row">
-                    <div class="col-xs-4">
-                        <button type="button" class="btn btn-block btn-lg btn-primary" data-dojo-attach-event="onclick:_onBack" id="backForm1">
-                            <i class="glyphicon glyphicon-chevron-left"></i>&nbsp Run Another Model
-                        </button>
-                    </div>
-                    <div class="col-xs-8">
-                        <button type="button" class="btn btn-info pull-right" style="margin-left: 5px;" data-dojo-attach-event="onclick:dropdownClick">
-                            <i class="fa fa-file-pdf-o"></i>&nbsp Generate Report
-                        </button>
-                        <button type="button" class="btn btn-info pull-right" data-dojo-attach-event="onclick:dropdownClick">
-                            <i class="fa fa-cloud-download"></i>&nbsp Save to Layer
-                        </button>
-                    </div>
-                </div>
-                <!-- / Back Button: Form 1 -->
-                <hr style="z-index:100; position:relative;">
-                <!-- Row 2 -->
-                <div class="row chart-row" style="height:300px;">
-                    <div class="col-xs-6" style="height: 100%;">
-                        <div id="plotly-div" style="height:260px;"></div>
-                    </div>
-                    <div class="col-xs-6" style="height: 100%;">
-                        <div id="gaugeDiv"></div>
-                    </div>
-                </div>
-                <hr style="z-index:100; position:relative;">
-                <div class="row chart-row" style="height: 200px;">
-                    <div class="col-xs-12" style="height: 100%;">
-                        <canvas id="horizontal-bar"></canvas>
-                    </div>
-                </div>
-                <hr>
-                <div class="row chart-row" style="height: 200px;">
-                    <div class="col-xs-6" style="height: 100%;">
-                        <canvas id="vertical-bar-1"></canvas>
-                    </div>
-                    <div class="col-xs-6" style="height: 100%;">
-                        <canvas id="vertical-bar-2"></canvas>
-                    </div>
-                </div>
-                <hr>
-                <div class="row chart-row" style="height: 300px;">
-                    <div class="col-xs-6" style="height:100%">
-                        <canvas id="radar1"></canvas>
-                    </div>
-                    <div class="col-xs-6" style="height:100%">
-                        <canvas id="pie1"></canvas>
-                    </div>
-                </div>
-                <hr>
-                <div class="row chart-row" style="height: 500px;">
-                    <div id="mapDiv">
-                    </div>
-                </div>
-            </div>
-            <!-- /outputForm1 -->
-        </div>
-        <!-- End Tab 1 -->
-        <!-- Tab 2 -->
-        <div class="tab-pane fade in active" id="siteSelection">
-            <!-- Tab 2 Input Form -->
-            <div id="inputForm2">
+    <div class="container-widget" data-dojo-attach-point="containerWidget">
+        <h3>Market Planning</h3>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="tabnav">
+            <li class="active"><a href="#siteSelection" role="tab" data-toggle="tab">Site Selection</a></li>
+            <li><a href="#sales" role="tab" data-toggle="tab">Relocation</a></li>
+            <li><a href="#more" role="tab" data-toggle="tab">More...</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <!-- Tab 1 -->
+            <div class="tab-pane fade in" id="sales">
+                <!-- Tab 1 Input Form -->
+                <div id="inputForm1">
                     <div class="row">
-                    <!-- Form Field: Location -->
-                    <div class="col-xs-12">
-                        <h3>New Location</h3>
-                        <p class="search-description-text">Use Address Search to zoom to required location and click to drop a pin on the map at the point where the new site will be located.</p>
-                    </div>
-                    <!-- / Location -->
-                </div>
-                    <div class="jimu-r-row margin-bottom">
-                        <div>
-                            <div data-dojo-attach-point="txtGeocoder"></div>
-                        </div>
-                    </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="btn btn-sm btn-primary btn-block" data-dojo-attach-event="onclick:_onDrawPointClick">
-                            <span class="glyphicon glyphicon-map-marker"></span>&nbsp Select New Site
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <form role="form" id="tab2Form" class="needsValidation">
-                    <div class="margin-bottom" data-dojo-attach-point="fieldsSite"></div>
-                    <!-- /Row -->
-                    <!-- Submit Button -->
-                    <div class="row location">
-                        <div class="col-xs-12">
-                            <button type="submit" class="btn btn-block btn-success" style="width:100%">
-                                <i class="fa fa-bar-chart"></i>&nbsp Calculate
-                            </button>
-                        </div>
-                    </div>
-                </form>
-                    <!-- / Submit Button-->
-                <form role="form" id="tab2Form2" class="needsValidation">
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingTwo">
-                                <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Multiple Site Selection Estimates
-                                </a>
-                            </h4>
-                            </div>
-                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <!-- Form Field: Location -->
+                        <div class="col-xs-6">
+                            <h3>Current Location</h3>
+                            <p class="search-description-text">Click to draw on the map and circle the area where the current site is located.</p>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">Selected Location</div>
                                 <div class="panel-body">
-                                    <!-- Form Field: Select -->
-                                    <div class="col-xs-6 form-col">
-                                        <p class="form-header">
-                                            email Address for Result
-                                            <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='Run batch files. Results will be emailed.'></i>
-                                            <input name="batch_email" type="text" data-error="This is a required form field." required/>
-                                        </p>
-                                    </div>
-                                    <!-- / Form Field -->
-                                    <!-- Form Field: Select -->
-                                    <div class="col-xs-6 form-col">
-                                        <p class="form-header">
-                                            Upload input file
-                                            <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='Run batch files. Results will be emailed.'></i>
-                                            <input type="file" id="myFile" name="filename">
-                                            <input type="submit">
-                                        </p>
-                                    </div>
-                                    <!-- / Form Field -->
+                                    <span id="current_site">None</span>
                                 </div>
                             </div>
                         </div>
+                        <!-- / Location -->
+                        <!-- Form Field: Location -->
+                        <div class="col-xs-6">
+                            <h3>New Site Performance Estimate</h3>
+                            <p class="search-description-text">Click to drop a pin on the map at the point where the new site will be located.</p>
+                        </div>
+                        <!-- / Location -->
                     </div>
-                </form>
-                    <!--<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingTwo">
-                                <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Advanced Options
-                                </a>
-                            </h4>
-                            </div>
-                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                <div class="panel-body">
-                                    <!-- Form Field: Select -->
-                                    <!--<div class="col-xs-6 form-col">
-                                        <p class="form-header">
-                                            Advanced Option 1
-                                            <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='These are options that are usually static, but can be changed if necessary.'></i>
-                                        </p>
-                                        <select class="form-select" name="adv1">
-                                            <option value="4" selected>Advanced Default 1</option>
-                                            <option value="1">AFG</option>
-                                            <option value="2">WES</option>
-                                            <option value="3">VVX</option>
-                                        </select>
-                                    </div>
-                                    <!-- / Form Field -->
-                                    <!-- Form Field: Select -->
-                                    <!--<div class="col-xs-6 form-col">
-                                        <p class="form-header">
-                                            Advanced Option 2
-                                            <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='These are options that are usually static, but can be changed if necessary.'></i>
-                                        </p>
-                                        <select class="form-select" name="adv2">
-                                            <option value="4">Advanced Default 2</option>
-                                            <option value="1">MSK</option>
-                                            <option value="2">SQR</option>
-                                            <option value="3">ZTW</option>
-                                        </select>
-                                    </div>
-                                    <!-- / Form Field -->
-                                <!--</div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="btn btn-sm btn-primary btn-block" data-dojo-attach-event="onclick:_onDrawPolygonClick">
+                                <span class="glyphicon glyphicon-pencil"></span>&nbsp Select Current Site
                             </div>
                         </div>
-                    </div>-->
-                
-            </div>
-            <!-- / Tab 2 Input Form -->
-            <!-- outputForm2 -->
-            <div id="outputForm2" style="display:none">
-                <!-- Row 1 -->
-                <div class="row summary vertical-align">
-                    <div class="col-xs-8" style="height:100%">
-                        <div class='row'>
-                            <div class='col-xs-6'>
-                                <h3 class='summarySales'>
-                                    Forecast:
-                                </h3>
-                            </div>
-                            <div class='col-xs-6'>
-                                <h3 class='summarySales'>
-                                    <span id="salesEstimate2"></span>
-                                </h3>
+                        <div class="col-xs-6">
+                            <div class="btn btn-sm btn-primary btn-block" data-dojo-attach-event="onclick:_onDrawPointClick">
+                                <span class="glyphicon glyphicon-map-marker"></span>&nbsp Select New Site
                             </div>
                         </div>
                     </div>
-                    <!-- End Col 1 -->
-                    <!-- Col 2 -->
-                    <div id="summary" class="col-xs-4" style="height: 100%; overflow-y: auto;">
-                        <h3>Summary</h3>
-                        <p>This site is estimated to have <u id="salesImpact2"></u> in yearly sales.
-                        </p>
-                    </div>
-                </div>
-                <!-- /Row 1 -->
-                <!-- Back Button: Form 2 -->
-                <div class="row chart-row">
-                    <div class="col-xs-4">
-                        <button type="button" class="btn btn-block btn-lg btn-primary" data-dojo-attach-event="onclick:_onBack" id="backForm2">
-                            <i class="glyphicon glyphicon-chevron-left"></i>&nbsp Run Another Model
-                        </button>
-                    </div>
-                    <div class="col-xs-8">
-                        <button type="button" class="btn btn-info pull-right" style="margin-left: 5px;" data-dojo-attach-event="onclick:generateReportClick">
-                            <i class="fa fa-file-pdf-o"></i>&nbsp Generate Report
-                        </button>
-                        <button type="button" class="btn btn-info pull-right" data-dojo-attach-event="onclick:dropdownClick">
-                            <i class="fa fa-cloud-download"></i>&nbsp Save to Layer
-                        </button>
-                    </div>
-                </div>
-                <!-- / Back Button: Form 2 -->
-                <hr style="z-index:100; position:relative;">
-                <!-- Row 2 -->
-                <div class="row chart-row" style="height:300px;">
-                    <div class="col-xs-6" style="height: 100%;">
-                        <div id="plotly-div-ss" style="height:260px;"></div>
-                    </div>
-                    <div class="col-xs-6" style="height: 100%;">
-                        <div id="gaugeDiv-ss"></div>
-                    </div>
-                </div>
-                <hr>
-                <div class="row chart-row" style="height: 400px;">
-                    <div class="col-xs-6" style="height: 100%;">
-                        <canvas id="horizontal-bar-xaicatss"></canvas>
-                    </div>
-                    <div class="col-xs-6" style="height: 100%;">
-                         <canvas id="horizontal-bar-xaiss"></canvas>
-                    </div>
-                </div>
-                <hr>
-                 <div class="row chart-row" style="height: 200px;">
-                    <div class="col-xs-12" style="height: 100%;">
-                        <canvas id="horizontal-bar-ss"></canvas>
-                    </div>
-                </div>
-                <hr>
-                <div class="row chart-row" style="height: 200px;">
-                    <div class="col-xs-6" style="height: 100%;">
-                        <canvas id="vertical-bar-1-ss"></canvas>
-                    </div>
-                    <div class="col-xs-6" style="height: 100%;">
-                        <canvas id="vertical-bar-2-ss"></canvas>
-                    </div>
-                </div>
-                <hr>
-                <div class="row chart-row" style="height: 300px;">
-                    <div class="col-xs-6" style="height:100%">
-                        <canvas id="radar1-ss"></canvas>
-                    </div>
-                    <div class="col-xs-6" style="height:100%">
-                        <canvas id="pie1-ss"></canvas>
-                    </div>
-                </div>
-                <hr>
-                <div class="row chart-row" style="height: 500px;">
-                    <div id="mapDiv-ss">
-                    </div>
-                </div>
-            </div>
-            <!-- /outputForm1 -->
-        </div>
-        <!-- End Tab 2 -->
-        <!-- Tab 3 -->
-        <div class="tab-pane fade" id="reposition">
-            <!-- Tab 3 Input Form -->
-            <div id="inputForm3">
-                <!-- Form Field: Location -->
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h3>Current Location</h3>
-                        <p class="search-description-text">Click to draw on the map and circle the area where the current site is located.</p>
-                        <div class="panel panel-info">
-                            <div class="panel-heading">Selected Location</div>
-                            <div class="panel-body">
-                                <span id="current_site">None</span>
-                            </div>
-                        </div>
+                    <hr>
+                    <form role="form" id="tab1Form" class="needsValidation">
+                        <div class="margin-bottom" data-dojo-attach-point="fieldsRelocation"></div>
+                        <!-- /Row -->
+                        <!-- Submit Button -->
                         <div class="row location">
-                            <div class="col-xs-4">
-                                <div class="btn btn-sm btn-primary btn-block" data-dojo-attach-point="btnAddLocation" data-dojo-attach-event="onclick:_onDrawPolygonClick">
-                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp Select Current Site
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-block btn-success" style="width:100%">
+                                    <i class="fa fa-bar-chart"></i>&nbsp Calculate
+                                </button>
+                            </div>
+                        </div>
+                        <!-- / Submit Button-->
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        Advanced Options
+                                    </a>
+                                </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        <!-- Form Field: Select -->
+                                        <div class="col-xs-6 form-col">
+                                            <p class="form-header">
+                                                Advanced Option 1
+                                                <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='These are options that are usually static, but can be changed if necessary.'></i>
+                                            </p>
+                                            <select class="form-select" name="adv1">
+                                                <option value="4" selected>Advanced Default 1</option>
+                                                <option value="1">AFG</option>
+                                                <option value="2">WES</option>
+                                                <option value="3">VVX</option>
+                                            </select>
+                                        </div>
+                                        <!-- / Form Field -->
+                                        <!-- Form Field: Select -->
+                                        <div class="col-xs-6 form-col">
+                                            <p class="form-header">
+                                                Advanced Option 2
+                                                <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='These are options that are usually static, but can be changed if necessary.'></i>
+                                            </p>
+                                            <select class="form-select" name="adv2">
+                                                <option value="4">Advanced Default 2</option>
+                                                <option value="1">MSK</option>
+                                                <option value="2">SQR</option>
+                                                <option value="3">ZTW</option>
+                                            </select>
+                                        </div>
+                                        <!-- / Form Field -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- / Tab 1 Input Form -->
+                <!-- outputForm1 -->
+                <div id="outputForm1" style="display:none">
+                    <!-- Row 1 -->
+                    <div class="row summary vertical-align">
+                        <div class="col-xs-8" style="height:100%">
+                            <div class='row'>
+                                <div class='col-xs-6'>
+                                    <h3 class='summarySales'>
+                                        Forecast:
+                                    </h3>
+                                </div>
+                                <div class='col-xs-6'>
+                                    <h3 class='summarySales'>
+                                        <span id="salesEstimate1"></span>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-xs-6'>
+                                    <h3 class='summarySales'>
+                                        Prior Sales:
+                                    </h3>
+                                </div>
+                                <div class='col-xs-6'>
+                                    <h3 class='summarySales'>
+                                        <span id="priorSales1"></span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Col 1 -->
+                        <!-- Col 2 -->
+                        <div id="summary" class="col-xs-4" style="height: 100%; overflow-y: auto;">
+                            <h3>Summary</h3>
+                            <p>Relocation is estimated to bring a sales impact of
+                                <h4><u id="salesImpact1"></u></h4> .
+                            </p>
+                        </div>
+                    </div>
+                    <!-- /Row 1 -->
+                    <!-- Back Button: Form 1 -->
+                    <div class="row chart-row">
+                        <div class="col-xs-4">
+                            <button type="button" class="btn btn-block btn-lg btn-primary" data-dojo-attach-event="onclick:_onBack" id="backForm1">
+                                <i class="glyphicon glyphicon-chevron-left"></i>&nbsp Run Another Model
+                            </button>
+                        </div>
+                        <div class="col-xs-8">
+                            <button type="button" class="btn btn-info pull-right" style="margin-left: 5px;" data-dojo-attach-event="onclick:dropdownClick">
+                                <i class="fa fa-file-pdf-o"></i>&nbsp Generate Report
+                            </button>
+                            <button type="button" class="btn btn-info pull-right" data-dojo-attach-event="onclick:dropdownClick">
+                                <i class="fa fa-cloud-download"></i>&nbsp Save to Layer
+                            </button>
+                        </div>
+                    </div>
+                    <!-- / Back Button: Form 1 -->
+                    <hr style="z-index:100; position:relative;">
+                    <!-- Row 2 -->
+                    <div class="row chart-row" style="height:300px;">
+                        <div class="col-xs-6" style="height: 100%;">
+                            <div id="plotly-div" style="height:260px;"></div>
+                        </div>
+                        <div class="col-xs-6" style="height: 100%;">
+                            <div id="gaugeDiv"></div>
+                        </div>
+                    </div>
+                    <hr style="z-index:100; position:relative;">
+                    <div class="row chart-row" style="height: 200px;">
+                        <div class="col-xs-12" style="height: 100%;">
+                            <canvas id="horizontal-bar"></canvas>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row chart-row" style="height: 200px;">
+                        <div class="col-xs-6" style="height: 100%;">
+                            <canvas id="vertical-bar-1"></canvas>
+                        </div>
+                        <div class="col-xs-6" style="height: 100%;">
+                            <canvas id="vertical-bar-2"></canvas>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row chart-row" style="height: 300px;">
+                        <div class="col-xs-6" style="height:100%">
+                            <canvas id="radar1"></canvas>
+                        </div>
+                        <div class="col-xs-6" style="height:100%">
+                            <canvas id="pie1"></canvas>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row chart-row" style="height: 500px;">
+                        <div id="mapDiv">
+                        </div>
+                    </div>
+                </div>
+                <!-- /outputForm1 -->
+            </div>
+            <!-- End Tab 1 -->
+            <!-- Tab 2 -->
+            <div class="tab-pane fade in active" id="siteSelection">
+                <!-- Tab 2 Input Form -->
+                <div id="inputForm2">
+                        <div class="row">
+                        <!-- Form Field: Location -->
+                        <div class="col-xs-12">
+                            <h3>New Location</h3>
+                            <p class="search-description-text">Use Address Search to zoom to required location and click to drop a pin on the map at the point where the new site will be located.</p>
+                        </div>
+                        <!-- / Location -->
+                    </div>
+                        <div class="jimu-r-row margin-bottom">
+                            <div>
+                                <div data-dojo-attach-point="txtGeocoder"></div>
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="btn btn-sm btn-primary btn-block" data-dojo-attach-event="onclick:_onDrawPointClick">
+                                <span class="glyphicon glyphicon-map-marker"></span>&nbsp Select New Site
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <form role="form" id="tab2Form" class="needsValidation">
+                        <div class="margin-bottom" data-dojo-attach-point="fieldsSite"></div>
+                        <!-- /Row -->
+                        <!-- Submit Button -->
+                        <div class="row location">
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-block btn-success" style="width:100%">
+                                    <i class="fa fa-bar-chart"></i>&nbsp Calculate
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                        <!-- / Submit Button-->
+                    <form role="form" id="tab2Form2" class="needsValidation">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Multiple Site Selection Estimates
+                                    </a>
+                                </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                        <!-- Form Field: Select -->
+                                        <div class="col-xs-6 form-col">
+                                            <p class="form-header">
+                                                email Address for Result
+                                                <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='Run batch files. Results will be emailed.'></i>
+                                                <input name="batch_email" type="text" data-error="This is a required form field." required/>
+                                            </p>
+                                        </div>
+                                        <!-- / Form Field -->
+                                        <!-- Form Field: Select -->
+                                        <div class="col-xs-6 form-col">
+                                            <p class="form-header">
+                                                Upload input file
+                                                <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='Run batch files. Results will be emailed.'></i>
+                                                <input type="file" id="myFile" name="filename">
+                                                <input type="submit">
+                                            </p>
+                                        </div>
+                                        <!-- / Form Field -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                        <!--<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Advanced Options
+                                    </a>
+                                </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                        <!-- Form Field: Select -->
+                                        <!--<div class="col-xs-6 form-col">
+                                            <p class="form-header">
+                                                Advanced Option 1
+                                                <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='These are options that are usually static, but can be changed if necessary.'></i>
+                                            </p>
+                                            <select class="form-select" name="adv1">
+                                                <option value="4" selected>Advanced Default 1</option>
+                                                <option value="1">AFG</option>
+                                                <option value="2">WES</option>
+                                                <option value="3">VVX</option>
+                                            </select>
+                                        </div>
+                                        <!-- / Form Field -->
+                                        <!-- Form Field: Select -->
+                                        <!--<div class="col-xs-6 form-col">
+                                            <p class="form-header">
+                                                Advanced Option 2
+                                                <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='These are options that are usually static, but can be changed if necessary.'></i>
+                                            </p>
+                                            <select class="form-select" name="adv2">
+                                                <option value="4">Advanced Default 2</option>
+                                                <option value="1">MSK</option>
+                                                <option value="2">SQR</option>
+                                                <option value="3">ZTW</option>
+                                            </select>
+                                        </div>
+                                        <!-- / Form Field -->
+                                    <!--</div>
+                                </div>
+                            </div>
+                        </div>-->
+                    
+                </div>
+                <!-- / Tab 2 Input Form -->
+                <!-- outputForm2 -->
+                <div id="outputForm2" style="display:none">
+                    <!-- Row 1 -->
+                    <div class="row summary vertical-align">
+                        <div class="col-xs-8" style="height:100%">
+                            <div class='row'>
+                                <div class='col-xs-6'>
+                                    <h3 class='summarySales'>
+                                        Forecast:
+                                    </h3>
+                                </div>
+                                <div class='col-xs-6'>
+                                    <h3 class='summarySales'>
+                                        <span id="salesEstimate2"></span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Col 1 -->
+                        <!-- Col 2 -->
+                        <div id="summary" class="col-xs-4" style="height: 100%; overflow-y: auto;">
+                            <h3>Summary</h3>
+                            <p>This site is estimated to have <u id="salesImpact2"></u> in yearly sales.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- /Row 1 -->
+                    <!-- Back Button: Form 2 -->
+                    <div class="row chart-row">
+                        <div class="col-xs-4">
+                            <button type="button" class="btn btn-block btn-lg btn-primary" data-dojo-attach-event="onclick:_onBack" id="backForm2">
+                                <i class="glyphicon glyphicon-chevron-left"></i>&nbsp Run Another Model
+                            </button>
+                        </div>
+                        <div class="col-xs-8">
+                            <button type="button" class="btn btn-info pull-right" style="margin-left: 5px;" data-dojo-attach-event="onclick:generateReportClick">
+                                <i class="fa fa-file-pdf-o"></i>&nbsp Generate Report
+                            </button>
+                            <button type="button" class="btn btn-info pull-right" data-dojo-attach-event="onclick:dropdownClick">
+                                <i class="fa fa-cloud-download"></i>&nbsp Save to Layer
+                            </button>
+                        </div>
+                    </div>
+                    <!-- / Back Button: Form 2 -->
+                    <hr style="z-index:100; position:relative;">
+                    <!-- Row 2 -->
+                    <div class="row chart-row" style="height:300px;">
+                        <div class="col-xs-6" style="height: 100%;">
+                            <div id="plotly-div-ss" style="height:260px;"></div>
+                        </div>
+                        <div class="col-xs-6" style="height: 100%;">
+                            <div id="gaugeDiv-ss"></div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row chart-row" style="height: 400px;">
+                        <div class="col-xs-6" style="height: 100%;">
+                            <canvas id="horizontal-bar-xaicatss"></canvas>
+                        </div>
+                        <div class="col-xs-6" style="height: 100%;">
+                            <canvas id="horizontal-bar-xaiss"></canvas>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row chart-row" style="height: 200px;">
+                        <div class="col-xs-12" style="height: 100%;">
+                            <canvas id="horizontal-bar-ss"></canvas>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row chart-row" style="height: 200px;">
+                        <div class="col-xs-6" style="height: 100%;">
+                            <canvas id="vertical-bar-1-ss"></canvas>
+                        </div>
+                        <div class="col-xs-6" style="height: 100%;">
+                            <canvas id="vertical-bar-2-ss"></canvas>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row chart-row" style="height: 300px;">
+                        <div class="col-xs-6" style="height:100%">
+                            <canvas id="radar1-ss"></canvas>
+                        </div>
+                        <div class="col-xs-6" style="height:100%">
+                            <canvas id="pie1-ss"></canvas>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row chart-row" style="height: 500px;">
+                        <div id="mapDiv-ss">
+                        </div>
+                    </div>
+                </div>
+                <!-- /outputForm1 -->
+            </div>
+            <!-- End Tab 2 -->
+            <!-- Tab 3 -->
+            <div class="tab-pane fade" id="reposition">
+                <!-- Tab 3 Input Form -->
+                <div id="inputForm3">
+                    <!-- Form Field: Location -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h3>Current Location</h3>
+                            <p class="search-description-text">Click to draw on the map and circle the area where the current site is located.</p>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">Selected Location</div>
+                                <div class="panel-body">
+                                    <span id="current_site">None</span>
+                                </div>
+                            </div>
+                            <div class="row location">
+                                <div class="col-xs-4">
+                                    <div class="btn btn-sm btn-primary btn-block" data-dojo-attach-point="btnAddLocation" data-dojo-attach-event="onclick:_onDrawPolygonClick">
+                                        <span class="glyphicon glyphicon-pencil"></span>&nbsp Select Current Site
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- / Location -->
+                    <hr>
+                    <form role="form" id="tab3Form" class="needsValidation">
+                        <div class="row">
+                            <!-- Form Field: Select -->
+                            <div class="col-xs-6 form-col">
+                                <p class="form-header">
+                                    Size
+                                    <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='How big is this location?'></i>
+                                </p>
+                                <input name="gross_sq_ft" type="number" value="1000" required/>
+                            </div>
+                            <!-- / Form Field -->
+                            <!-- Form Field: Select -->
+                            <div class="col-xs-6 form-col">
+                                <p class="form-header">
+                                    Center Condition
+                                    <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='What condition is this shopping center in?'></i>
+                                </p>
+                                <select class="form-select" name="center_condition">
+                                    <option value="1">1 - New</option>
+                                    <option value="2">2</option>
+                                    <option value="3" selected>3</option>
+                                    <option value="4">4</option>
+                                    <option value="4">5 - Old</option>
+                                </select>
+                            </div>
+                            <!-- / Form Field -->
+                        </div>
+                        <div class="row">
+                            <!-- Form Field: Select -->
+                            <div class="col-xs-6 form-col">
+                                <p class="form-header">
+                                    Entrance Score
+                                    <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='How well does the entrance score?'></i>
+                                </p>
+                                <select class="form-select" name="entrance_score">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3" selected>3</option>
+                                    <option value="4">4</option>
+                                    <option value="4">5</option>
+                                </select>
+                            </div>
+                            <!-- / Form Field -->
+                            <!-- Form Field: Select -->
+                            <div class="col-xs-6 form-col">
+                                <p class="form-header">
+                                    Adjacencies
+                                    <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='What types of retailers are adjacent to this location?'></i>
+                                </p>
+                                <select class="form-select" name="adjacencies">
+                                    <option value="1">Clothing</option>
+                                    <option value="2">Jewelry</option>
+                                    <option value="3">Specialty</option>
+                                </select>
+                            </div>
+                            <!-- / Form Field -->
+                        </div>
+                        <!-- Submit Button -->
+                        <div class="row location">
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-block btn-success" style="width:100%">
+                                    <i class="fa fa-bar-chart"></i>&nbsp Calculate
+                                </button>
+                            </div>
+                        </div>
+                        <!-- / Submit Button-->
+                    </form>
                 </div>
-                <!-- / Location -->
-                <hr>
-                <form role="form" id="tab3Form" class="needsValidation">
-                    <div class="row">
-                        <!-- Form Field: Select -->
-                        <div class="col-xs-6 form-col">
-                            <p class="form-header">
-                                Size
-                                <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='How big is this location?'></i>
-                            </p>
-                            <input name="gross_sq_ft" type="number" value="1000" required/>
+                <!-- /inputForm3 -->
+                <!-- outputForm3 -->
+                <div id="outputForm3" style="display:none">
+                    <!-- Row 1 -->
+                    <div class="row summary vertical-align">
+                        <div class="col-xs-6 text-center" style="height:100%">
+                            <h3>
+                            Reposition Sales Forecast: <span id="salesEstimate3"></span>
+                        </h3>
                         </div>
-                        <!-- / Form Field -->
-                        <!-- Form Field: Select -->
-                        <div class="col-xs-6 form-col">
-                            <p class="form-header">
-                                Center Condition
-                                <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='What condition is this shopping center in?'></i>
-                            </p>
-                            <select class="form-select" name="center_condition">
-                                <option value="1">1 - New</option>
-                                <option value="2">2</option>
-                                <option value="3" selected>3</option>
-                                <option value="4">4</option>
-                                <option value="4">5 - Old</option>
-                            </select>
+                        <div id="summary" class="col-xs-6" style="height: 100%; overflow-y: auto;">
+                            <h3>Summary</h3>
+                            <p>Repositioning is estimated to bring a sales impact of <u id="salesImpact3"></u>.</p>
                         </div>
-                        <!-- / Form Field -->
                     </div>
-                    <div class="row">
-                        <!-- Form Field: Select -->
-                        <div class="col-xs-6 form-col">
-                            <p class="form-header">
-                                Entrance Score
-                                <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='How well does the entrance score?'></i>
-                            </p>
-                            <select class="form-select" name="entrance_score">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3" selected>3</option>
-                                <option value="4">4</option>
-                                <option value="4">5</option>
-                            </select>
+                    <!-- Back Button: Form 3 -->
+                    <div class="row chart-row">
+                        <div class="col-xs-4">
+                            <button type="button" class="btn btn-block btn-lg btn-primary" data-dojo-attach-event="onclick:_onBack" id="backForm3">
+                                <i class="glyphicon glyphicon-chevron-left"></i>&nbsp Analyze Another Reposition
+                            </button>
                         </div>
-                        <!-- / Form Field -->
-                        <!-- Form Field: Select -->
-                        <div class="col-xs-6 form-col">
-                            <p class="form-header">
-                                Adjacencies
-                                <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='What types of retailers are adjacent to this location?'></i>
-                            </p>
-                            <select class="form-select" name="adjacencies">
-                                <option value="1">Clothing</option>
-                                <option value="2">Jewelry</option>
-                                <option value="3">Specialty</option>
-                            </select>
-                        </div>
-                        <!-- / Form Field -->
-                    </div>
-                    <!-- Submit Button -->
-                    <div class="row location">
-                        <div class="col-xs-12">
-                            <button type="submit" class="btn btn-block btn-success" style="width:100%">
-                                <i class="fa fa-bar-chart"></i>&nbsp Calculate
+                        <div class="col-xs-8">
+                            <button type="button" class="btn btn-info pull-right" style="margin-left: 5px;" data-dojo-attach-event="onclick:dropdownClick">
+                                <i class="fa fa-file-pdf-o"></i>&nbsp Generate Report
+                            </button>
+                            <button type="button" class="btn btn-info pull-right" data-dojo-attach-event="onclick:dropdownClick">
+                                <i class="fa fa-cloud-download"></i>&nbsp Save to Layer
                             </button>
                         </div>
                     </div>
-                    <!-- / Submit Button-->
-                </form>
-            </div>
-            <!-- /inputForm3 -->
-            <!-- outputForm3 -->
-            <div id="outputForm3" style="display:none">
-                <!-- Row 1 -->
-                <div class="row summary vertical-align">
-                    <div class="col-xs-6 text-center" style="height:100%">
-                        <h3>
-                        Reposition Sales Forecast: <span id="salesEstimate3"></span>
-                    </h3>
-                    </div>
-                    <div id="summary" class="col-xs-6" style="height: 100%; overflow-y: auto;">
-                        <h3>Summary</h3>
-                        <p>Repositioning is estimated to bring a sales impact of <u id="salesImpact3"></u>.</p>
-                    </div>
-                </div>
-                <!-- Back Button: Form 3 -->
-                <div class="row chart-row">
-                    <div class="col-xs-4">
-                        <button type="button" class="btn btn-block btn-lg btn-primary" data-dojo-attach-event="onclick:_onBack" id="backForm3">
-                            <i class="glyphicon glyphicon-chevron-left"></i>&nbsp Analyze Another Reposition
-                        </button>
-                    </div>
-                    <div class="col-xs-8">
-                        <button type="button" class="btn btn-info pull-right" style="margin-left: 5px;" data-dojo-attach-event="onclick:dropdownClick">
-                            <i class="fa fa-file-pdf-o"></i>&nbsp Generate Report
-                        </button>
-                        <button type="button" class="btn btn-info pull-right" data-dojo-attach-event="onclick:dropdownClick">
-                            <i class="fa fa-cloud-download"></i>&nbsp Save to Layer
-                        </button>
-                    </div>
-                </div>
-                <!-- / Back Button: Form 3 -->
-                <hr>
-                <div class="row chart-row vertical-align" style="min-height: 200px;">
-                    <div class="col-xs-5 text-center panel panel-default" style="height: 100%;">
-                        <div class="panel-body">
-                            <h2>Old Location</h2>
-                            <table class="table table-hover">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <h5>Sales</h5></td>
-                                        <td>
-                                            <h5 id='currentSales3'></h5></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h5>Adjacency Score</h5></td>
-                                        <td>
-                                            <h5 id="centerConditionOutput"></h5></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h5>Entrance Score</h5></td>
-                                        <td>
-                                            <h5 id="entranceScoreOutput"></h5></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <!-- / Back Button: Form 3 -->
+                    <hr>
+                    <div class="row chart-row vertical-align" style="min-height: 200px;">
+                        <div class="col-xs-5 text-center panel panel-default" style="height: 100%;">
+                            <div class="panel-body">
+                                <h2>Old Location</h2>
+                                <table class="table table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <h5>Sales</h5></td>
+                                            <td>
+                                                <h5 id='currentSales3'></h5></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h5>Adjacency Score</h5></td>
+                                            <td>
+                                                <h5 id="centerConditionOutput"></h5></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h5>Entrance Score</h5></td>
+                                            <td>
+                                                <h5 id="entranceScoreOutput"></h5></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xs-2 text-center" style="height: 100%;">
-                        <i class="fa fa-arrow-right fa-5x" aria-hidden="true"></i>
-                    </div>
-                    <div class="col-xs-5 text-center panel panel-default" style="height: 100%;">
-                        <div class="panel-body">
-                            <h2>New Location</h2>
-                            <table class="table table-hover">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <h5>Sales</h5></td>
-                                        <td>
-                                            <h5 id='newSales3'></h5></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h5>Adjacency Score</h5></td>
-                                        <td>
-                                            <h5 id="centerConditionOutput2"></h5></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h5>Entrance Score</h5></td>
-                                        <td>
-                                            <h5 id="entranceScoreOutput2"></h5></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="col-xs-2 text-center" style="height: 100%;">
+                            <i class="fa fa-arrow-right fa-5x" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-xs-5 text-center panel panel-default" style="height: 100%;">
+                            <div class="panel-body">
+                                <h2>New Location</h2>
+                                <table class="table table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <h5>Sales</h5></td>
+                                            <td>
+                                                <h5 id='newSales3'></h5></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h5>Adjacency Score</h5></td>
+                                            <td>
+                                                <h5 id="centerConditionOutput2"></h5></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h5>Entrance Score</h5></td>
+                                            <td>
+                                                <h5 id="entranceScoreOutput2"></h5></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!-- /outputForm3 -->
             </div>
-            <!-- /outputForm3 -->
-        </div>
-        <!-- End Tab 3 -->
-        <!-- Tab 4 -->
-        <div class="tab-pane fade" id="more">
-            <h3>Additional Planning Tools</h3>
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                    Select..
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-dojo-attach-event="onclick:dropdownClick">
-                    Competitor Analysis</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-dojo-attach-event="onclick:dropdownClick">
-                    New Location Forecast</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-dojo-attach-event="onclick:dropdownClick">
-                    Store Segmentation</a></li>
-                    <li role="presentation" class="divider"></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-dojo-attach-event="onclick:dropdownClick">
-                    Other</a></li>
-                </ul>
+            <!-- End Tab 3 -->
+            <!-- Tab 4 -->
+            <div class="tab-pane fade" id="more">
+                <h3>Additional Planning Tools</h3>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                        Select..
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-dojo-attach-event="onclick:dropdownClick">
+                        Competitor Analysis</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-dojo-attach-event="onclick:dropdownClick">
+                        New Location Forecast</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-dojo-attach-event="onclick:dropdownClick">
+                        Store Segmentation</a></li>
+                        <li role="presentation" class="divider"></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-dojo-attach-event="onclick:dropdownClick">
+                        Other</a></li>
+                    </ul>
+                </div>
             </div>
+            <!-- End Tab 4 -->
         </div>
-        <!-- End Tab 4 -->
     </div>
+    <div data-dojo-attach-point="shelter" data-dojo-type="jimu/dijit/LoadingShelter" data-dojo-props='hidden:true'></div>
 </div>
