@@ -1,6 +1,7 @@
 {
   "idLayer": "https://services6.arcgis.com/LrnbNBnvD1FFFc4w/arcgis/rest/services/demo_output_layer_5015/FeatureServer/0",
   "idQueryLayer": "Demo_Output_Layer_5015",
+  "urlTrackingLayer": "https://services.arcgis.com/x4VfPdxfhKEZtlzf/arcgis/rest/services/Download_Report_Tracking/FeatureServer",
   "urlLocator": "//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
   "credentials": {
     "url": "https://www.arcgis.com/sharing/rest/oauth2/token/",

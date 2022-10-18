@@ -8,6 +8,7 @@ define([
     'dijit/registry',
     'jimu/BaseWidgetSetting',
     'jimu/dijit/Message',
+    'jimu/dijit/_FeaturelayerSourcePopup',
     './FieldSetting',
     './CustomFeatureLayerSourcePopup',
     'libs/dojo-bootstrap/Dropdown',
@@ -26,6 +27,7 @@ function(
     registry,
     BaseWidgetSetting,
     Message,
+    _FeaturelayerSourcePopup,
     FieldSetting,
     CustomFeatureLayerSourcePopup
 ) {
@@ -47,6 +49,7 @@ return declare([BaseWidgetSetting], {
         this.apikey.value = config.apikey;
 
         this.idQueryLayer.value = config.idQueryLayer;
+        this.urlTrackingLayer.value = config.urlTrackingLayer;
         //this.idLayer.value = config.idLayer;
 
         this.cred_Url.value = config.credentials.url;
@@ -83,6 +86,7 @@ return declare([BaseWidgetSetting], {
         this.config.apikey = this.apikey.value;
 
         this.config.idQueryLayer = this.idQueryLayer.value;
+        this.config.urlTrackingLayer = this.urlTrackingLayer.value;
 
         //this.config.idLayer = this.idLayer.value;
         
@@ -104,17 +108,21 @@ return declare([BaseWidgetSetting], {
     },
 
     _setQueryLayer: function(){
-        this.openPopupSetLayer(this.idQueryLayer);
+        this.openPopupSetLayerId(this.idQueryLayer);
+    },
+
+    _setTrackingLayer: function(){
+        this.openPopupSetLayerUrl(this.urlTrackingLayer);
     },
     
-    openPopupSetLayer: function(inputElement){
+    openPopupSetLayerId: function(inputElement){
         var args = {
             titleLabel: "Set layer source",
     
             dijitArgs: {
                 multiple: false,
                 createMapResponse: this.map.webMapResponse,
-                portalUrl: null,
+                portalUrl: this.appConfig.portalUrl,
                 style: {
                     height: '100%'
                 }
@@ -125,6 +133,32 @@ return declare([BaseWidgetSetting], {
         on.once(featurePopup, 'ok', lang.hitch(this, function (item) {
             featurePopup.close();
             inputElement.value = item.layerInfo && item.layerInfo.id || null;;
+        }));
+
+        on.once(featurePopup, 'cancel', lang.hitch(this, function () {
+            featurePopup.close();
+            featurePopup = null;
+        }));
+    },
+
+    openPopupSetLayerUrl: function(inputElement){
+        var args = {
+            titleLabel: "Set layer source",
+    
+            dijitArgs: {
+                multiple: false,
+                createMapResponse: this.map.webMapResponse,
+                portalUrl: this.appConfig.portalUrl,
+                style: {
+                    height: '100%'
+                }
+            }
+        };
+
+        var featurePopup = new _FeaturelayerSourcePopup(args);
+        on.once(featurePopup, 'ok', lang.hitch(this, function (item) {
+            featurePopup.close();
+            inputElement.value = item.url || null;;
         }));
 
         on.once(featurePopup, 'cancel', lang.hitch(this, function () {

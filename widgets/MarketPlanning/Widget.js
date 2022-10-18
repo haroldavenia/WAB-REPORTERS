@@ -353,7 +353,7 @@ define([
 			let rpdf = new ReportPDF();
 			
 			rpdf.save("outputForm2").then(lang.hitch(this, function(file){
-				let reportTracking = "https://services.arcgis.com/x4VfPdxfhKEZtlzf/arcgis/rest/services/DownloadReportTracking/FeatureServer/0";
+				let reportTracking = this.config.urlTrackingLayer;
 				let fl = new FeatureLayer(reportTracking);
 				let graphic = new Graphic(null, null, {}, null);
 				
