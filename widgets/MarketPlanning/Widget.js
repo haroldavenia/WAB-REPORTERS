@@ -355,7 +355,8 @@ define([
 			rpdf.save("outputForm2").then(lang.hitch(this, function(file){
 				let reportTracking = this.config.urlTrackingLayer;
 				let fl = new FeatureLayer(reportTracking);
-				let graphic = new Graphic(null, null, {}, null);
+				let point = this.map.graphics.graphics[0];
+				let graphic = new Graphic(point.geometry, null, {}, null);
 				
 				//Once it is saved, the download record is saved in the tracking table
 				fl.applyEdits([graphic]).then(lang.hitch(this, function(addResult){
