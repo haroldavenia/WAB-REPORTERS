@@ -17,6 +17,7 @@ define([
 	'esri/symbols/SimpleMarkerSymbol', 'esri/symbols/SimpleLineSymbol', 'esri/symbols/SimpleFillSymbol',
 	'esri/tasks/query',
 	'esri/layers/FeatureLayer',
+	'esri/geometry/Point',
 	'jimu/dijit/LoadingShelter',
 	'libs/dojo-bootstrap/Dropdown',
 	'libs/dojo-bootstrap/Tab',
@@ -40,6 +41,7 @@ define([
 	SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol,
 	Query,
 	FeatureLayer,
+	Point,
 	LoadingShelter,
 	Dropdown,
 	Tab,
@@ -355,8 +357,15 @@ define([
 			rpdf.save("outputForm2").then(lang.hitch(this, function(file){
 				let reportTracking = this.config.urlTrackingLayer;
 				let fl = new FeatureLayer(reportTracking);
-				let point = this.map.graphics.graphics[0];
-				let graphic = new Graphic(point.geometry, null, {}, null);
+				let graphic = this.scratchGraphicsLayer.graphics[0];
+				let geometry = new Point(0, 0, this.map.spatialReference);
+
+				if (graphic.geometry.type == "point"){
+					geometry = graphic.geometry;
+				}
+
+
+				graphic = new Graphic(geometry, null, {}, null);
 				
 				//Once it is saved, the download record is saved in the tracking table
 				fl.applyEdits([graphic]).then(lang.hitch(this, function(addResult){
