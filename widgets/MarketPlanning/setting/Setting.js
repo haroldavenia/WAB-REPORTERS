@@ -56,6 +56,9 @@ return declare([BaseWidgetSetting], {
         this.cred_clientId.value = config.credentials.client_id;
         this.cred_clientSecret.value = config.credentials.client_secret;
 
+        this.relocationTab.checked = config.tabPanels.relocation ? config.tabPanels.relocation: false;
+        this.moreTab.checked = config.tabPanels.more ? config.tabPanels.more: false;
+
         if(config.configFields.rows){
             this.addConfigFields(config.configFields, this.rowsData, this.rows);
         }
@@ -96,6 +99,11 @@ return declare([BaseWidgetSetting], {
             client_secret: this.cred_clientSecret.value,
             grant_type: "client_credentials",
             expiration: "1440"
+        };
+
+        this.config.tabPanels = {
+            "relocation": this.relocationTab.checked,
+            "more": this.moreTab.checked
         };
 
         let rowsList = Object.values(this.rowsData).map(lang.hitch(this, function(row){

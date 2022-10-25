@@ -12,6 +12,10 @@
   },
   "urlService": "https://api2.retailscientifics.com/demo/estimate",
   "apikey": "X6xKerHF",
+  "tabPanels": {
+    "relocation": false,
+    "more": false
+  },
   "configFields": {
     "rows": [
       [

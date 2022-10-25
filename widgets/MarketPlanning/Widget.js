@@ -191,6 +191,9 @@ define([
 				this.insertFields(this.config.configFields.rows, this.fieldsSite);
 				this.insertFields(this.config.configFields.rows, this.fieldsRelocation);
 			}
+
+			this.config.tabPanels.relocation ? domStyle.set(this.relocationTab, "display", "block"): domStyle.set(this.relocationTab, "display", "none");
+			this.config.tabPanels.more ? domStyle.set(this.moreTab, "display", "block"): domStyle.set(this.moreTab, "display", "none");
 		},
 
 		insertFields: function(rows, container){
