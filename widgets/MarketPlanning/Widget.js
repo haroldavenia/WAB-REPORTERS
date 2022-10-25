@@ -202,7 +202,7 @@ define([
                 var rowDom = domConstruct.toDom(`<div class="row" style="margin-top: 0; margin-bottom: 0;"></div>`);
 				domConstruct.place(rowDom, container);
 
-				let colSize = 'xs-1';
+				let colSize = 'xs-12';
 
 				if(row.length == 2){
 					colSize = 'xs-6';

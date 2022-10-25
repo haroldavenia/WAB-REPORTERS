@@ -16,10 +16,64 @@ define([
   html2canvas
 ) {
 return declare(null, {
+
+    canvasResults: [],
+
     constructor: function(options){
         this.inherited(arguments);
 
         lang.mixin(this, options);    
+    },
+
+    resolvePromise: function(deferred, elements, i){
+        let row = elements[i];
+
+        var contentBox = domGeom.getContentBox(row);
+        let height = (contentBox.h*750)/contentBox.w;
+
+        html2canvas(row, {
+            windowWidth: 750,
+            windowHeight: height,
+            onrendered: lang.hitch(this, function(canvas){
+                this.canvasResults.push(canvas);
+                if(i < elements.length-1){
+                    this.resolvePromise(deferred, elements, i+1);
+                } else {
+                    this.savePDF(deferred);
+                }
+
+            })
+        });        
+    },
+
+    savePDF: function(deferred){
+        let positions = [/*First page -->*/20,78,176,235, /*Second page -->*/ 20,78];
+
+        let doc = new JSPDF.jsPDF();
+
+        this.canvasResults.forEach((canvas, i) => {
+            // Calulate height
+            let width  = 750/3.7795275591;
+            let height = ((canvas.height * 750) /canvas.width) /3.7795275591;
+
+            //let img = canvas.toDataURL("image/png");
+
+            let postion = positions[i];
+    
+            doc.addImage(canvas,'JPEG', 5, postion, width, height);
+            
+            if(i == 3){
+                doc.addPage();
+            }
+        })
+
+        doc.save('Report Marketing Planning.pdf');
+
+        let file = doc.output('blob', {
+            filename: "Report Marketing Planning.pdf"
+        });
+
+        deferred.resolve(file);
     },
     
     save: function(idContainer){
@@ -34,9 +88,12 @@ return declare(null, {
             document.querySelector(`#${idContainer}`).children[13]
         ];
 
-        let positions = [/*First page -->*/20,78,176,235, /*Second page -->*/ 20,78];
+        //setTimeout(()=>{}, 5000);
 
-        let promises = rows.map((row)=> {
+
+        this.resolvePromise(deferred, rows, 0);
+
+        /*let promises = rows.map((row)=> {
             var contentBox = domGeom.getContentBox(row);
             let height = (contentBox.h*750)/contentBox.w;
 
@@ -71,8 +128,8 @@ return declare(null, {
                 filename: "Report Marketing Planning.pdf"
             });
 
-            return deferred.resolve(file);
-        });
+            deferred.resolve(file);
+        });*/
 
         return deferred;
     } 
