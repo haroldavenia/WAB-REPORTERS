@@ -201,7 +201,7 @@ return declare([BaseWidgetSetting], {
                         onClick: lang.hitch(this, function() {
                             popup.close();
                             domConstruct.destroy(rowElement);
-                            delete rowsData[rowBody];
+                            delete rowsData[rowId];
                         })
                     },
                     {

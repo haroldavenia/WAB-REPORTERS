@@ -167,7 +167,7 @@ function(
                             onClick: lang.hitch(this, function() {
                                 popup.close();
                                 domConstruct.destroy(rowElement);
-                                delete this.rowsData[rowBody];
+                                delete this.rowsData[rowId];
                             })
                         },
                         {
