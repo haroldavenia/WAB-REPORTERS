@@ -326,96 +326,96 @@
                 <!-- / Tab 2 Input Form -->
                 <!-- outputForm2 -->
                 <div id="outputForm2" style="display:none">
-                    <!-- Row 1 -->
-                    <div class="row summary vertical-align">
-                        <div class="col-xs-8" style="height:100%">
-                            <div class='row'>
-                                <div class='col-xs-6'>
-                                    <h3 class='summarySales'>
-                                        Forecast:
-                                    </h3>
-                                </div>
-                                <div class='col-xs-6'>
-                                    <h3 class='summarySales'>
-                                        <span id="salesEstimate2"></span>
-                                    </h3>
+                        <!-- Row 1 -->
+                        <div class="row summary vertical-align">
+                            <div class="col-xs-8" style="height:100%">
+                                <div class='row'>
+                                    <div class='col-xs-6'>
+                                        <h3 class='summarySales'>
+                                            Forecast:
+                                        </h3>
+                                    </div>
+                                    <div class='col-xs-6'>
+                                        <h3 class='summarySales'>
+                                            <span id="salesEstimate2"></span>
+                                        </h3>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- End Col 1 -->
+                            <!-- Col 2 -->
+                            <div id="summary" class="col-xs-4" style="height: 100%; overflow-y: auto;">
+                                <h3>Summary</h3>
+                                <p>This site is estimated to have <u id="salesImpact2"></u> in yearly sales.
+                                </p>
+                            </div>
                         </div>
-                        <!-- End Col 1 -->
-                        <!-- Col 2 -->
-                        <div id="summary" class="col-xs-4" style="height: 100%; overflow-y: auto;">
-                            <h3>Summary</h3>
-                            <p>This site is estimated to have <u id="salesImpact2"></u> in yearly sales.
-                            </p>
+                        <!-- /Row 1 -->
+                        <!-- Back Button: Form 2 -->
+                        <div class="row chart-row">
+                            <div class="col-xs-4">
+                                <button type="button" class="btn btn-block btn-lg btn-primary" data-dojo-attach-event="onclick:_onBack" id="backForm2">
+                                    <i class="glyphicon glyphicon-chevron-left"></i>&nbsp Run Another Model
+                                </button>
+                            </div>
+                            <div class="col-xs-8">
+                                <button data-dojo-attach-point="btnGenerateReport" type="button" class="btn btn-info pull-right" style="margin-left: 5px;" data-dojo-attach-event="onclick:generateReportClick">
+                                    <i class="fa fa-file-pdf-o"></i>&nbsp Generate Report
+                                </button>
+                                <button type="button" class="btn btn-info pull-right" data-dojo-attach-event="onclick:dropdownClick">
+                                    <i class="fa fa-cloud-download"></i>&nbsp Save to Layer
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <!-- /Row 1 -->
-                    <!-- Back Button: Form 2 -->
-                    <div class="row chart-row">
-                        <div class="col-xs-4">
-                            <button type="button" class="btn btn-block btn-lg btn-primary" data-dojo-attach-event="onclick:_onBack" id="backForm2">
-                                <i class="glyphicon glyphicon-chevron-left"></i>&nbsp Run Another Model
-                            </button>
+                        <!-- / Back Button: Form 2 -->
+                        <hr style="z-index:100; position:relative;">
+                        <!-- Row 2 -->
+                        <div class="row chart-row" style="height:300px;">
+                            <div class="col-xs-6" style="height: 100%;">
+                                <div id="plotly-div-ss" style="height:260px;"></div>
+                            </div>
+                            <div class="col-xs-6" style="height: 100%;">
+                                <div id="gaugeDiv-ss"></div>
+                            </div>
                         </div>
-                        <div class="col-xs-8">
-                            <button type="button" class="btn btn-info pull-right" style="margin-left: 5px;" data-dojo-attach-event="onclick:generateReportClick">
-                                <i class="fa fa-file-pdf-o"></i>&nbsp Generate Report
-                            </button>
-                            <button type="button" class="btn btn-info pull-right" data-dojo-attach-event="onclick:dropdownClick">
-                                <i class="fa fa-cloud-download"></i>&nbsp Save to Layer
-                            </button>
+                        <hr>
+                        <div class="row chart-row" style="height: 400px;">
+                            <div class="col-xs-6" style="height: 100%;">
+                                <canvas id="horizontal-bar-xaicatss"></canvas>
+                            </div>
+                            <div class="col-xs-6" style="height: 100%;">
+                                <canvas id="horizontal-bar-xaiss"></canvas>
+                            </div>
                         </div>
-                    </div>
-                    <!-- / Back Button: Form 2 -->
-                    <hr style="z-index:100; position:relative;">
-                    <!-- Row 2 -->
-                    <div class="row chart-row" style="height:300px;">
-                        <div class="col-xs-6" style="height: 100%;">
-                            <div id="plotly-div-ss" style="height:260px;"></div>
+                        <hr>
+                        <div class="row chart-row" style="height: 200px;">
+                            <div class="col-xs-12" style="height: 100%;">
+                                <canvas id="horizontal-bar-ss"></canvas>
+                            </div>
                         </div>
-                        <div class="col-xs-6" style="height: 100%;">
-                            <div id="gaugeDiv-ss"></div>
+                        <hr>
+                        <div class="row chart-row" style="height: 200px;">
+                            <div class="col-xs-6" style="height: 100%;">
+                                <canvas id="vertical-bar-1-ss"></canvas>
+                            </div>
+                            <div class="col-xs-6" style="height: 100%;">
+                                <canvas id="vertical-bar-2-ss"></canvas>
+                            </div>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="row chart-row" style="height: 400px;">
-                        <div class="col-xs-6" style="height: 100%;">
-                            <canvas id="horizontal-bar-xaicatss"></canvas>
+                        <hr>
+                        <div class="row chart-row" style="height: 300px;">
+                            <div class="col-xs-6" style="height:100%">
+                                <canvas id="radar1-ss"></canvas>
+                            </div>
+                            <div class="col-xs-6" style="height:100%">
+                                <canvas id="pie1-ss"></canvas>
+                            </div>
                         </div>
-                        <div class="col-xs-6" style="height: 100%;">
-                            <canvas id="horizontal-bar-xaiss"></canvas>
+                        <hr>
+                        <div class="row chart-row" style="height: 500px;">
+                            <div id="mapDiv-ss">
+                            </div>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="row chart-row" style="height: 200px;">
-                        <div class="col-xs-12" style="height: 100%;">
-                            <canvas id="horizontal-bar-ss"></canvas>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row chart-row" style="height: 200px;">
-                        <div class="col-xs-6" style="height: 100%;">
-                            <canvas id="vertical-bar-1-ss"></canvas>
-                        </div>
-                        <div class="col-xs-6" style="height: 100%;">
-                            <canvas id="vertical-bar-2-ss"></canvas>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row chart-row" style="height: 300px;">
-                        <div class="col-xs-6" style="height:100%">
-                            <canvas id="radar1-ss"></canvas>
-                        </div>
-                        <div class="col-xs-6" style="height:100%">
-                            <canvas id="pie1-ss"></canvas>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row chart-row" style="height: 500px;">
-                        <div id="mapDiv-ss">
-                        </div>
-                    </div>
                 </div>
                 <!-- /outputForm1 -->
             </div>

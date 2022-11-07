@@ -88,6 +88,13 @@ function(
             }
         },
 
+        _showMessage: function _showMessage(title, message) {
+            new Message({
+              titleLabel: title,
+              message: message
+            });
+        },
+
         _changeType: function(){
             if(this.currentType != this.fieldType.value && this.currentType == "combo"){
                 var popup = new Message({
@@ -152,19 +159,24 @@ function(
             };
 
             if(config.type == "combo"){
-                let values = Object.values(this.inputValues).map(lang.hitch(this, function(rowValue){
-                    let valueInput = dom.byId(rowValue.value);
-                    let labelInput = dom.byId(rowValue.label);
-    
-                    return {
-                        value: valueInput.value,
-                        label: labelInput.value
+                if (Object.values(this.inputValues).length > 0){
+                    let values = Object.values(this.inputValues).map(lang.hitch(this, function(rowValue){
+                        let valueInput = dom.byId(rowValue.value);
+                        let labelInput = dom.byId(rowValue.label);
+        
+                        return {
+                            value: valueInput.value,
+                            label: labelInput.value
+                        }
+                    }));
+        
+                    if(values.length){
+                        config.values = values;
                     }
-                }));
-    
-                if(values.length){
-                    config.values = values;
+                } else {
+                    this._showMessage(this.nls.valuesFieldError, "Dropdown values doesn't exist")
                 }
+                
             }
 
             this.emit("saveField", config)

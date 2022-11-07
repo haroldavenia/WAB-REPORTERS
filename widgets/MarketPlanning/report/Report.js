@@ -2,136 +2,135 @@ define([
   'dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/Deferred',
-  'dojo/dom-geometry',
   'dojo/promise/all',
   './jspdf',
-  './html2canvas'
+  './CanvasToIMGL'
 ], function (
   declare,
   lang,
   Deferred,
-  domGeom,
   all,
   JSPDF,
-  html2canvas
+  CanvasToIMGL
 ) {
-return declare(null, {
+    return declare(null, {
 
-    canvasResults: [],
+        imgResults: [],
+        pdf: null,
+        margins: [],
 
-    constructor: function(options){
-        this.inherited(arguments);
+        constructor: function(options){
+            this.inherited(arguments);
+            lang.mixin(this, options);
+            const pdfHeight = 880;
+            this.pdf = new JSPDF.jsPDF("p", "pt", [610, pdfHeight]);
+            this.margins = { x: [20 , 20], y: [40, 20] };
+        },
 
-        lang.mixin(this, options);    
-    },
+        calRatio: function(pageSize, dViewSize) {
+            return (pageSize / dViewSize);
+        },
 
-    resolvePromise: function(deferred, elements, i){
-        let row = elements[i];
+        fitRatio: function(size, ratio) {
+            return (size * ratio);
+        },
+        
+        fitSizeView: function(pageSize, dViewSizeA, dViewSizeB) {
+            let ratio = 0;
+            if (dViewSizeA > pageSize) {
+              ratio = this.calRatio(pageSize, dViewSizeA);
+              dViewSizeA = this.fitRatio(dViewSizeA, ratio);
+            }
+        
+            if (ratio > 0) dViewSizeB = this.fitRatio(dViewSizeB, ratio);
+        
+            return { dViewSizeA, dViewSizeB };
+        },
+        
+        fitScale: function (pageSizeWidth, pageSizeHeight, dWidth, dHeight) {
+            let dView = this.fitSizeView(pageSizeWidth, dWidth, dHeight);
+            dWidth = dView.dViewSizeA;
+            dHeight = dView.dViewSizeB;
+            dView = this.fitSizeView(pageSizeHeight, dHeight, dWidth);
+            dWidth = dView.dViewSizeB;
+            dHeight = dView.dViewSizeA;
 
-        var contentBox = domGeom.getContentBox(row);
-        let height = (contentBox.h*750)/contentBox.w;
+            return { dWidth, dHeight };
+        },
 
-        html2canvas(row, {
-            windowWidth: 750,
-            windowHeight: height,
-            onrendered: lang.hitch(this, function(canvas){
-                this.canvasResults.push(canvas);
+        fitAreaEditing: function(pageSizeWidth, pageSizeHeight, margins) {
+
+            if (margins?.y) {
+              let value = 0;
+              if (margins.y.length > 1) {
+                value = pageSizeHeight - (margins.y[0] + margins.y[1]);
+              } else if (margins.y.length > 0) {
+                value = pageSizeHeight - margins.y[0];
+              }
+              if (!value < 1) {
+                pageSizeHeight = value;
+              } else {
+                console.error(new CustomError("size_height_img_error", 'height size image is less than 1'));
+              }
+            }
+        
+            if (margins?.x) {
+              let value = 0;
+              if (margins.x.length > 1) {
+                value = pageSizeWidth - (margins.x[0] + margins.x[1]);
+              } else if (margins.x.length > 0) {
+                value = pageSizeWidth - margins.x[0];
+              }
+              if (!value < 1) {
+                pageSizeWidth = value
+              } else {
+                console.error(new CustomError("size_width_img_error", 'width size image is less than 1'))
+              }
+            }
+            return { pageSizeWidth, pageSizeHeight };
+        },
+
+        resolvePromise: function(deferred, elements, i){
+            const row = elements[i];
+            const canvasToIMGL = new CanvasToIMGL(row);
+            canvasToIMGL.GetImageFile(i).then(lang.hitch(this, function(image){
+                //const positions = [/*First page -->*/20,78,176,235, /*Second page -->*/ 20,78];
+                const { pageSizeWidth, pageSizeHeight } = this.fitAreaEditing( this.pdf.internal.pageSize.getWidth(),  this.pdf.internal.pageSize.getHeight(), this.margins);
+                const { dWidth, dHeight } = this.fitScale(pageSizeWidth, pageSizeHeight, image.width, image.height);
+                const marginX = this.margins.x[0];
+                let marginY = this.margins.y[0];
+                if (marginY >= this.pdf.internal.pageSize.getHeight()) {
+                    this.pdf.addPage();
+                    this.margins = { x: [20 , 20], y: [40, 20] };
+                    marginY = this.margins.y[0];
+                }
+                this.pdf.addImage(image.src,'JPEG', marginX, marginY, dWidth, dHeight);
+                this.margins = { x: [20, 20], y: [ this.margins.y[0] + 20 + dHeight, 20] };
                 if(i < elements.length-1){
                     this.resolvePromise(deferred, elements, i+1);
                 } else {
-                    this.savePDF(deferred);
+                    this.pdf.save('Report Marketing Planning.pdf');
+                    deferred.resolve( this.pdf.output('blob', {
+                        filename: "Report Marketing Planning.pdf"
+                    }));
                 }
-
-            })
-        });        
-    },
-
-    savePDF: function(deferred){
-        let positions = [/*First page -->*/20,78,176,235, /*Second page -->*/ 20,78];
-
-        let doc = new JSPDF.jsPDF();
-
-        this.canvasResults.forEach((canvas, i) => {
-            // Calulate height
-            let width  = 750/3.7795275591;
-            let height = ((canvas.height * 750) /canvas.width) /3.7795275591;
-
-            //let img = canvas.toDataURL("image/png");
-
-            let postion = positions[i];
-    
-            doc.addImage(canvas,'JPEG', 5, postion, width, height);
-            
-            if(i == 3){
-                doc.addPage();
-            }
-        })
-
-        doc.save('Report Marketing Planning.pdf');
-
-        let file = doc.output('blob', {
-            filename: "Report Marketing Planning.pdf"
-        });
-
-        deferred.resolve(file);
-    },
-    
-    save: function(idContainer){
-        let deferred = new Deferred();
-
-        let rows = [
-            document.querySelector(`#${idContainer}`).children[3],
-            document.querySelector(`#${idContainer}`).children[5],
-            document.querySelector(`#${idContainer}`).children[7],
-            document.querySelector(`#${idContainer}`).children[9],
-            document.querySelector(`#${idContainer}`).children[11],
-            document.querySelector(`#${idContainer}`).children[13]
-        ];
-
-        //setTimeout(()=>{}, 5000);
-
-
-        this.resolvePromise(deferred, rows, 0);
-
-        /*let promises = rows.map((row)=> {
-            var contentBox = domGeom.getContentBox(row);
-            let height = (contentBox.h*750)/contentBox.w;
-
-            return html2canvas(row, {
-                windowWidth: 750,
-                windowHeight: height
-            });
-        })
-
-        all(promises).then((results)=>{
-            let doc = new JSPDF.jsPDF();
-
-            results.forEach((canvas, i) => {
-                // Calulate height
-                let width  = 750/3.7795275591;
-                let height = ((canvas.height * 750) /canvas.width) /3.7795275591;
-
-                //let img = canvas.toDataURL("image/png");
-
-                let postion = positions[i];
+            }), function(error) {
+                deferred.reject(error);   
+            });   
+        },
         
-                doc.addImage(canvas,'JPEG', 5, postion, width, height);
-                
-                if(i == 3){
-                    doc.addPage();
-                }
-            })
-
-            doc.save('Report Marketing Planning.pdf');
-
-            let file = doc.output('blob', {
-                filename: "Report Marketing Planning.pdf"
-            });
-
-            deferred.resolve(file);
-        });*/
-
-        return deferred;
-    } 
-});
+        save: function(idContainer){
+            let deferred = new Deferred();
+            let rows = [
+                document.querySelector(`#${idContainer}`).children[3],
+                document.querySelector(`#${idContainer}`).children[5],
+                document.querySelector(`#${idContainer}`).children[7],
+                document.querySelector(`#${idContainer}`).children[9],
+                document.querySelector(`#${idContainer}`).children[11],
+                document.querySelector(`#${idContainer}`).children[13]
+            ];
+            this.resolvePromise(deferred, rows, 0);
+            return deferred;
+        } 
+    });
 });

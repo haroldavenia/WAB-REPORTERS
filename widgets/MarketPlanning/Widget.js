@@ -95,6 +95,7 @@ define([
 		},
 
 		postCreate: function () {
+			this.loading = dojo.byId("main-loading")
 			this.charts1 = [], this.charts2 = [];
 
 			this.toDefaultSize();
@@ -196,6 +197,18 @@ define([
 			this.config.tabPanels.more ? domStyle.set(this.moreTab, "display", "block"): domStyle.set(this.moreTab, "display", "none");
 		},
 
+		showLoading: function() {
+			esri.show(this.loading);
+			this.map.disableMapNavigation();
+			this.map.hideZoomSlider();
+		},
+		
+		hideLoading: function(error) {
+			esri.hide(this.loading);
+			this.map.enableMapNavigation();
+			this.map.showZoomSlider();
+		},
+
 		insertFields: function(rows, container){
 			rows.forEach(lang.hitch(this, function(row){
                 //Create row
@@ -228,29 +241,31 @@ define([
                         case "NUMBER":
                             elementNode = this._createNumber(element);
                             break;
-                        /*case "CHECK":
+                        case "CHECK":
                             elementNode = this._createCheck(element);
-                            break;*/
+                            break;
                     }
+					
+					if (elementNode) {
+						let title = domConstruct.toDom(`<p class="form-header">${element.title}</p>`);
 
-					let title = domConstruct.toDom(`<p class="form-header">${element.title}</p>`);
-
-					if(element.help){
-						title = domConstruct.toDom(`<p class="form-header">
-							${element.title}
-							<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='${element.help}'></i>
-						</p>`);
-					}
-
-					let blockErrors = domConstruct.toDom('<div class="help-block with-errors"></div>');
-
-					let col = domConstruct.toDom(`<div class="col-${colSize} form-col"></div>`);
-
-					domConstruct.place(title, col);
-					domConstruct.place(elementNode, col);
-					domConstruct.place(blockErrors, col);
-
-					domConstruct.place(col, rowDom);                    
+						if(element.help){
+							title = domConstruct.toDom(`<p class="form-header">
+								${element.title}
+								<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-container='body' data-placement='top' title='${element.help}'></i>
+							</p>`);
+						}
+	
+						let blockErrors = domConstruct.toDom('<div class="help-block with-errors"></div>');
+	
+						let col = domConstruct.toDom(`<div class="col-${colSize} form-col"></div>`);
+	
+						domConstruct.place(title, col);
+						domConstruct.place(elementNode, col);
+						domConstruct.place(blockErrors, col);
+	
+						domConstruct.place(col, rowDom);   
+					}          
                 }))
             }));
 		},
@@ -269,38 +284,39 @@ define([
 
         _createSelect: function(element) {
 			let options = '';
+			let mySelect;
+			if (typeof element.values !== 'undefined') {
+				element.values.forEach(function(value){
+					let option = `<option value="${value.value}">${value.label}</option>`;
+	
+					if(value.selected){
+						option = `<option value="${value.value}" selected>${value.label}</option>`;
+						options += option;
+					}else{
+						options += option;
+					}
+				});
+	
+				mySelect = domConstruct.toDom(`<select class="form-select" name="${element.id}">${options}</select>`);
+	
+			} 
 
-			element.values.forEach(function(value){
-				let option = `<option value="${value.value}">${value.label}</option>`;
-
-				if(value.selected){
-					option = `<option value="${value.value}" selected>${value.label}</option>`;
-					options += option;
-				}else{
-					options += option;
-				}
-			});
-
-            let mySelect = domConstruct.toDom(`<select class="form-select" name="${element.id}">${options}</select>`);
-
-            return mySelect;
+			return mySelect;
+			
         },
 
         _createCheck: function(element) {
             var container = domConstruct.create("div");
             var myCheckBox = new CheckBox({
-                name: element.id,
+                name: element.id || "",
                 checked: (element.defaultValue) ? element.defaultValue : 0
             });
             domConstruct.place(myCheckBox.domNode, container);
-            domConstruct.create("label", {
+           /*  domConstruct.create("label", {
                 innerHTML: this.nls[element.text]
-            }, container);
+            }, container); */
             domClass.add(container, "padding-top");
             domClass.add(container, "width-check");
-            container = {
-                domNode: container
-            };
             return container;
         },		
 
@@ -310,7 +326,7 @@ define([
 
 			if(elem == null){
 				let modalHtmlStr = `
-					<div class="modal fade" data-keyboard="false" id="${this.modalId}" role="dialog" aria-labelledby="marketingModalLabel" aria-hidden="true" data-dojo-dataid="pid29" style="display: none;">
+					<div class="modal marketing fade" data-keyboard="false" id="${this.modalId}" role="dialog" aria-labelledby="marketingModalLabel" aria-hidden="true" data-dojo-dataid="pid29" style="display: none;">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -351,9 +367,10 @@ define([
 		},
 
 		generateReportClick: function(){
-			this.setModalInfo("Computing...", "Please wait while we run your model.");
-
+			this.btnGenerateReport.disabled = true;
+			this.setModalInfo("Generating PDF...", "Please wait while downloading the pdf.");
 			query(`#${this.modalId}`).modal('show');
+			this.showLoading();
 			
 			let rpdf = new ReportPDF();
 			
@@ -372,6 +389,7 @@ define([
 				
 				//Once it is saved, the download record is saved in the tracking table
 				fl.applyEdits([graphic]).then(lang.hitch(this, function(addResult){
+					this.setModalInfo("Saving PDF Attachment...", "Please wait while saving PDF at Arcgis Online Feature Layer.");
 					let objectId = addResult[0].objectId;
 					
 					let form = new FormData();
@@ -381,18 +399,26 @@ define([
 					fl.addAttachment(objectId, form).then(lang.hitch(this, function(){
 						// Success
 						query(`#${this.modalId}`).modal('hide');
+						this.hideLoading()
+						tthis.btnGenerateReport.disabled = false;
 					}), lang.hitch(this, function(error){
 						// Error
 						query(`#${this.modalId}`).modal('hide');
+						this.hideLoading()
+						this.btnGenerateReport.disabled = false;
 					}));
-				}), lang.hitch(this, function(error){
+				}), function(error){
 					// Error
 					query(`#${this.modalId}`).modal('hide');
-				}))
-			}), lang.hitch(this, function(error){
+					this.hideLoading()
+					this.btnGenerateReport.disabled = false;
+				})
+			}), function(error){
 				// Error
 				query(`#${this.modalId}`).modal('hide');
-			}));
+				this.hideLoading()
+				this.btnGenerateReport.disabled = false;
+			});
 		},
 
 		_onDrawPointClick: function () {

@@ -46,7 +46,7 @@ define({
     titleCheckLayer:"Show prior results",
     Sales:"Cannibalization",
     Analogs:"Store Name",
-    StoreIDs:"Store ID"
-
+    StoreIDs:"Store ID",
+    valuesFieldError: "Error saving widget fields"
   })
 });

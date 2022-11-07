@@ -229,7 +229,8 @@ return declare([BaseWidgetSetting], {
         domStyle.set(this.configFieldPanel, "display", "block");
 
         let fieldSetting = new FieldSetting({
-            config: config
+            config: config,
+            nls: this.nls
         });
         fieldSetting.placeAt(this.configFieldPanel);
         fieldSetting.startup();

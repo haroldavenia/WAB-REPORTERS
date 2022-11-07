@@ -142,10 +142,16 @@
   .jimu-widget-marketPlanning .btn {
     white-space: normal !important; }
 
-.map .tooltip {
-  width: 300px; }
+  .modal.marketing {
+      display: block;
+      top: 40%;
+      right: 0%;
+  }
+  .map .tooltip {
+    width: 300px; }
 
-.claro .dijitSelect .dijitArrowButton {
-  width: 20px !important; }
+  .claro .dijitSelect .dijitArrowButton {
+    width: 20px !important; 
+  }
 
 /*# sourceMappingURL=style.css.map */
