@@ -1,0 +1,4 @@
+{
+  "urlStreetViewService": "https://maps.google.com/maps?q=&layer=c&cbll=<LATITUD>,<LONGITUD>",
+  "urlGeometryService": "https://sig.catastrobogota.gov.co/arcgis/rest/services/Utilities/Geometry/GeometryServer"
+}

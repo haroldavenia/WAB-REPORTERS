@@ -1,0 +1,37 @@
+.generate-rings {
+  width: 100%;
+  height: 100%; }
+  .generate-rings h3 {
+    font-size: 1.2em; }
+  .generate-rings h3, .generate-rings p {
+    margin-top: 0; }
+  .generate-rings .point-button {
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    margin-bottom: 10px; }
+  .generate-rings .activate {
+    -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.9));
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.9)); }
+  .generate-rings .dgrid-scroller {
+    margin-top: 26px !important; }
+  .generate-rings .grid-container {
+    width: 100%;
+    height: calc(100% - 50px); }
+  .generate-rings .button-grid {
+    display: block;
+    width: 100%;
+    height: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer; }
+  .generate-rings .button-marker {
+    background-image: url(images/marker-icon.png); }
+  .generate-rings .button-delete {
+    background-image: url(images/delete.png); }
+  .generate-rings .dgrid-cell {
+    padding: 5px; }
+
+/*# sourceMappingURL=style.css.map */

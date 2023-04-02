@@ -1,0 +1,52 @@
+.generate-rings{
+  width: 100%;
+  height: 100%;
+
+  h3 {
+    font-size: 1.2em;
+  }
+  h3, p {
+    margin-top: 0;
+  }
+  .point-button{
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    margin-bottom: 10px;
+    
+  }
+  .activate{
+    -webkit-filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9)); 
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.9)); 
+  }
+
+  .dgrid-scroller{
+    margin-top: 26px !important;
+  }
+
+  .grid-container{
+    width: 100%;
+    height: calc(100% - 50px);
+  }
+
+  .button-grid{
+    display: block;
+    width: 100%;
+    height: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+  }
+
+  .button-marker{
+      background-image: url(images/marker-icon.png);
+  }
+  .button-delete{
+      background-image: url(images/delete.png);
+  }
+  .dgrid-cell{
+    padding: 5px;
+  }
+}

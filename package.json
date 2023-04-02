@@ -27,6 +27,6 @@
 		"grunt-sync": "^0.8.2"
 	},
 	"dependencies": {
-		"node-sass": "^7.0.1"
+		"node-sass": "^7.0.3"
 	}
 }

@@ -1,0 +1,26 @@
+{
+  "name": "GenerateRings",
+  "label": "Generate Rings",
+  "2D": true,
+  "3D": false,
+  "type": "widget",
+  "platform": "HTML",
+  "version": "0.0.1",
+  "wabVersion": "2.25",
+  "author": "David Garzón",
+  "description": "Widget that allows to generate rings of 2.5 and 5 miles from a point added on the map",
+  "copyright": "",
+  "license": "ISC",
+  "properties": {
+    "inPanel": true,
+    "hasLocale": true,
+    "hasStyle": true,
+    "hasConfig": true,
+    "hasUIFile": true,
+    "hasSettingPage": true,
+    "hasSettingUIFile": true,
+    "hasSettingLocale": true,
+    "hasSettingStyle": true,
+    "IsController": false
+  }
+}

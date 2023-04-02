@@ -1,0 +1,46 @@
+.generate-rings-setting {
+  /*.colorPickerEditor*/
+  /*left*/ }
+  .generate-rings-setting table {
+    width: 100%; }
+    .generate-rings-setting table td {
+      padding: 4px; }
+  .generate-rings-setting input {
+    width: 100%; }
+  .generate-rings-setting .colorPickerEditor .jimu-color-picker {
+    display: inline-block;
+    width: 30px;
+    height: 30px; }
+  .generate-rings-setting .colorPickerEditor .dijitSpinner.dijitNumberTextBox.dijitValidationTextBox {
+    width: 75px;
+    height: 30px; }
+  .generate-rings-setting .colorPickerEditor .trans {
+    font-family: "Avenir Light";
+    font-size: 12px;
+    padding: 0 10px 0 20px;
+    letter-spacing: 0.33px; }
+  .generate-rings-setting .dijitSliderImageHandleH {
+    top: -10px;
+    width: 20px;
+    height: 20px; }
+  .generate-rings-setting .dijitSliderImageHandle.dijitSliderImageHandleH {
+    background-image: url("images/sliderball.svg");
+    background-position: 0 0; }
+  .generate-rings-setting .dijitSliderThumbHover {
+    background-image: url("images/sliderball.svg");
+    background-position: 0 0; }
+  .generate-rings-setting .dijitSlider .dijitSliderProgressBarH,
+  .generate-rings-setting .dijitSlider .dijitSliderLeftBumper {
+    border-color: #000;
+    background-color: #000;
+    background-image: -webkit-linear-gradient(top, #000 0px, #000 1px, rgba(255, 255, 255, 0) 2px);
+    background-image: -o-linear-gradient(top, #000 0px, #000 1px, rgba(255, 255, 255, 0) 2px);
+    background-image: linear-gradient(top, #000 0px, #000 1px, rgba(255, 255, 255, 0) 2px); }
+  .generate-rings-setting .dijitSlider .dijitSliderRemainingBarH,
+  .generate-rings-setting .dijitSlider .dijitSliderRightBumper {
+    border-color: #d7d7d7;
+    background-color: #d7d7d7; }
+  .generate-rings-setting .sliderbar {
+    width: 80px; }
+
+/*# sourceMappingURL=style.css.map */
