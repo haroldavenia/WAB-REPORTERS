@@ -288,8 +288,8 @@ function(declare, lang, dom, domClass, domConstruct, domStyle, on, keys, CheckBo
     addGraphic: function(evt) {
       this.setStateTool(false);
 
-      // maxRings is multiplied by 3 because each one has 3 graphics, a point, a 2.5-mile ring, and a 5-mile ring.
-      if(this.graphicsLayer.graphics.length >= (this.config.maxRings * 3)) {
+      // maxRings is multiplied by 3 because each one has 3 graphics, a point, a 2.5-mile ring, a 5-mile ring, and text label graphic
+      if(this.graphicsLayer.graphics.length >= (this.config.maxRings * 4)) {
         new Message({message: "It is not allowed to add more than " + this.config.maxRings +" graphics"})
         return;
       }
