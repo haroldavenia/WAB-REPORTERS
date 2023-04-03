@@ -33,5 +33,27 @@
     background-image: url(images/delete.png); }
   .generate-rings .dgrid-cell {
     padding: 5px; }
+  .generate-rings .ring-name {
+    display: inline-block;
+    vertical-align: middle; }
+  .generate-rings .button-ring {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-left: 3px; }
+  .generate-rings .edit-button {
+    background-image: url(images/edit.png); }
+  .generate-rings .edit-label {
+    display: inline-block;
+    width: calc(100% - 20px);
+    vertical-align: middle; }
+  .generate-rings .ok-button {
+    background-image: url(images/ok.png);
+    height: 30px; }
 
 /*# sourceMappingURL=style.css.map */

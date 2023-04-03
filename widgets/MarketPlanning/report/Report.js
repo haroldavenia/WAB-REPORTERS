@@ -60,7 +60,7 @@ define([
 
         fitAreaEditing: function(pageSizeWidth, pageSizeHeight, margins) {
 
-            if (margins?.y) {
+            if (margings && margins.y) {
               let value = 0;
               if (margins.y.length > 1) {
                 value = pageSizeHeight - (margins.y[0] + margins.y[1]);
@@ -74,7 +74,7 @@ define([
               }
             }
         
-            if (margins?.x) {
+            if (margins && margins.x) {
               let value = 0;
               if (margins.x.length > 1) {
                 value = pageSizeWidth - (margins.x[0] + margins.x[1]);

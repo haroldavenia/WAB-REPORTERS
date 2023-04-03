@@ -6,6 +6,7 @@ define([
   'dojo/dom-construct',
   "dojo/dom-style",
   "dojo/on",
+  "dojo/keys",
   "dijit/form/CheckBox",
   'jimu/BaseWidget',
   'jimu/dijit/Message',
@@ -21,12 +22,13 @@ define([
   "esri/geometry/geometryEngine",
   "esri/layers/GraphicsLayer",
   "esri/toolbars/draw",
+  "esri/symbols/PictureMarkerSymbol",
   "esri/symbols/SimpleFillSymbol",
   "esri/symbols/SimpleLineSymbol",
-  "esri/symbols/PictureMarkerSymbol",
+  "esri/symbols/TextSymbol",
 ],
-function(declare, lang, dom, domClass, domConstruct, domStyle, on, CheckBox, BaseWidget, Message, _TemplatedMixin, _WidgetsInTemplateMixin, Memory, Trackable, OnDemandGrid, ColumnResizer, 
-  DijitRegistry, Color, Graphic, geometryEngine, GraphicsLayer, Draw, SimpleFillSymbol, SimpleLineSymbol, PictureMarkerSymbol) {
+function(declare, lang, dom, domClass, domConstruct, domStyle, on, keys, CheckBox, BaseWidget, Message, _TemplatedMixin, _WidgetsInTemplateMixin, Memory, Trackable, OnDemandGrid, ColumnResizer, 
+  DijitRegistry, Color, Graphic, geometryEngine, GraphicsLayer, Draw, PictureMarkerSymbol, SimpleFillSymbol, SimpleLineSymbol, TextSymbol) {
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -44,6 +46,7 @@ function(declare, lang, dom, domClass, domConstruct, domStyle, on, CheckBox, Bas
       console.log('GenerateRings::postCreate');
 
       this.graphicsLayer = new GraphicsLayer();
+
       this.map.addLayer(this.graphicsLayer);
 
       this.initToolbar();
@@ -98,27 +101,100 @@ function(declare, lang, dom, domClass, domConstruct, domStyle, on, CheckBox, Bas
       this.grid = new (declare([OnDemandGrid, ColumnResizer]))({
         className: "dgrid-autoheight",
         columns: [
-          { field: "ringName", label: "Ring", resizable: false, sortable: false },
-          { field: "zoom", label: "Locate", width: 70, resizable: false, sortable: false, renderCell: (attributes, data, td, options)=>{
-            var nodeButton = domConstruct.toDom('<a class="button-grid button-marker" title="Zoom to point"></a>');
-						domConstruct.place(nodeButton, td);				
+          { field: "ringName", label: "Ring", resizable: false, sortable: false, renderCell: (attributes, data, td, options) => {
+            
+            var editLabelInput = new dijit.form.TextBox({
+              name: "edit-label",
+              class: "edit-label",
+              value: attributes.ringName /* no or empty value! */,
+              placeHolder: "Edit ring label"
+            });
+            
+            var nodeRingName = domConstruct.toDom('<div class="ring-name">' + attributes.ringName + '</div>');
+            var nodeOkButton = domConstruct.toDom('<div class="button-ring ok-button"></div>');
+            var nodeEditButton = domConstruct.toDom('<div class="button-ring edit-button"></div>');            
+            
+						domConstruct.place(nodeRingName, td);
+						domConstruct.place(nodeEditButton, td);
+            
+						domConstruct.place(editLabelInput.domNode, td);
+						domConstruct.place(nodeOkButton, td);
+            
+            domStyle.set(editLabelInput.domNode, "display", "none");
+            domStyle.set(nodeOkButton, "display", "none");
 
-						on(nodeButton, "click", lang.hitch(this, function(){
-							this._onZoom(attributes);							
+            let editLabel = (attributes) => {
+              let graphic = this.graphicsLayer.graphics.find(lang.hitch(this, function(graphic) {
+                return graphic.attributes.uuid == attributes.uuid && graphic.attributes.type == 3;
+              }));
+
+              domStyle.set(editLabelInput.domNode, "display", "none");
+              domStyle.set(nodeOkButton, "display", "none");
+              
+              domStyle.set(nodeRingName, "display", "inline-block");
+              domStyle.set(nodeEditButton, "display", "inline-block");
+
+              let ringName = editLabelInput.get("value");
+
+              attributes.ringName = ringName;
+              nodeRingName.innerHTML = ringName;
+
+              let newGraphic = graphic.clone();
+
+              var txtSymbol = new TextSymbol({
+                text: ringName,
+                horizontalAlignment: "center",
+                haloColor: "white",
+                haloSize: 1,
+                yoffset: -10
+              });
+              newGraphic.symbol = txtSymbol;
+
+              this.graphicsLayer.remove(graphic);
+              this.graphicsLayer.add(newGraphic);
+            }
+
+            on(nodeEditButton, "click", lang.hitch(this, function() {
+              domStyle.set(editLabelInput.domNode, "display", "inline-block");
+              domStyle.set(nodeOkButton, "display", "inline-block");
+              
+              domStyle.set(nodeRingName, "display", "none");
+              domStyle.set(nodeEditButton, "display", "none");
+            }));
+            
+            
+            on(nodeOkButton, "click", lang.hitch(this, function() {
+              editLabel(attributes);
+						}));
+            
+            on(editLabelInput, "keydown", lang.hitch(this, function(event) {
+              if(event.keyCode === keys.ENTER){
+                editLabel(attributes);
+              }
+            }));
+          }},
+          { field: "zoom", label: "Locate", width: 50, resizable: false, sortable: false, renderCell: (attributes, data, td, options) => {
+            var nodeButton = domConstruct.toDom('<a class="button-grid button-marker" title="Zoom to point"></a>');
+						domConstruct.place(nodeButton, td);
+
+						on(nodeButton, "click", lang.hitch(this, function() {
+							this._onZoom(attributes);
 						}));
           }},
-          { field: "ring1", label: "2.5 mi", width: 70, resizable: false, sortable: false, renderCell: (attributes, data, td, options)=>{
+          { field: "ring1", label: "2.5 mi", width: 50, resizable: false, sortable: false, renderCell: (attributes, data, td, options) => {
             var cb = new CheckBox({
               name: "checkBox",
-              checked: true,
-              onChange: lang.hitch(this, function(b){
-                let graphic = this.graphicsLayer.graphics.find(lang.hitch(this, function(graphic){
+              checked: attributes.isSelect2_5,
+              onChange: lang.hitch(this, function(b) {
+                let graphic = this.graphicsLayer.graphics.find(lang.hitch(this, function(graphic) {
                   return graphic.attributes.uuid == attributes.uuid && graphic.attributes.type == 1;
                 }));
 
-                if(b){
+                if(b) {
+                  attributes.isSelect2_5 = true;
                   graphic.show();
-                }else{
+                } else {
+                  attributes.isSelect2_5 = false;
                   graphic.hide();
                 }
               })
@@ -126,18 +202,20 @@ function(declare, lang, dom, domClass, domConstruct, domStyle, on, CheckBox, Bas
 
             domConstruct.place(cb.domNode, td);
           }},
-          {field: "ring2", label: "5 mi", width: 70, resizable: false, sortable: false, renderCell: (attributes, data, td, options)=>{
+          {field: "ring2", label: "5 mi", width: 50, resizable: false, sortable: false, renderCell: (attributes, data, td, options) => {
             var cb = new CheckBox({
               name: "checkBox",
-              checked: true,
-              onChange: lang.hitch(this, function(b){
-                let graphic = this.graphicsLayer.graphics.find(lang.hitch(this, function(graphic){
+              checked: attributes.isSelect5,
+              onChange: lang.hitch(this, function(b) {
+                let graphic = this.graphicsLayer.graphics.find(lang.hitch(this, function(graphic) {
                   return graphic.attributes.uuid == attributes.uuid && graphic.attributes.type == 2;
                 }));
 
-                if(b){
+                if(b) {
+                  attributes.isSelect5 = true;
                   graphic.show();
-                }else{
+                } else {
+                  attributes.isSelect5 = false;
                   graphic.hide();
                 }
               })
@@ -145,11 +223,11 @@ function(declare, lang, dom, domClass, domConstruct, domStyle, on, CheckBox, Bas
 
             domConstruct.place(cb.domNode, td);
           }},
-          {field: "delete", label: "", width: 30, resizable: false, sortable: false, renderCell: (attributes, data, td, options)=>{
+          {field: "delete", label: "", width: 30, resizable: false, sortable: false, renderCell: (attributes, data, td, options) => {
             var nodeButton = domConstruct.toDom('<a class="button-grid button-delete" title="Delete"></a>');
             domConstruct.place(nodeButton, td);				
   
-            on(nodeButton, "click", lang.hitch(this, function(){
+            on(nodeButton, "click", lang.hitch(this, function() {
               this._onDelete(attributes);							
             }));
           }}
@@ -179,21 +257,21 @@ function(declare, lang, dom, domClass, domConstruct, domStyle, on, CheckBox, Bas
         return graphic.attributes.uuid == attributes.uuid;
       }));
       
-      graphics.forEach(lang.hitch(this, function(graphic){
-        if(graphic.attributes.uuid == attributes.uuid){
+      graphics.forEach(lang.hitch(this, function(graphic) {
+        if(graphic.attributes.uuid == attributes.uuid) {
           this.graphicsLayer.remove(graphic);
         }        
       }))
 
       let collection = this.grid.get("collection");
       
-      var index = collection.data.findIndex(function(attrs){
+      var index = collection.data.findIndex(function(attrs) {
         return attrs.uuid == attributes.uuid;
       })
 
       collection.data.splice(index, 1);
 
-      var data = collection.data.map(function(attrs, pos){
+      var data = collection.data.map(function(attrs, pos) {
         attrs.ringName = "Ring " + (pos + 1);
         return attrs;
       })
@@ -210,10 +288,13 @@ function(declare, lang, dom, domClass, domConstruct, domStyle, on, CheckBox, Bas
     addGraphic: function(evt) {
       this.setStateTool(false);
 
-      if(this.graphicsLayer.graphics.length >= 15){
-        new Message({message: "It is not allowed to add more than 5 graphics"})
+      // maxRings is multiplied by 3 because each one has 3 graphics, a point, a 2.5-mile ring, and a 5-mile ring.
+      if(this.graphicsLayer.graphics.length >= (this.config.maxRings * 3)) {
+        new Message({message: "It is not allowed to add more than " + this.config.maxRings +" graphics"})
         return;
       }
+
+      let collection = this.grid.get("collection");
 
       // figure out which symbol to use
       var symbol = new PictureMarkerSymbol('./widgets/GenerateRings/css/images/marker-icon.png', 25, 25);
@@ -225,16 +306,22 @@ function(declare, lang, dom, domClass, domConstruct, domStyle, on, CheckBox, Bas
         uuid: uuidGraphics
       };
 
-      let attrs1 = {
+      let attrs2_5 = {
         uuid: uuidGraphics,
         type: 1
       };
 
-      let attrs2 = {
+      let attrs5 = {
         uuid: uuidGraphics,
         type: 2
       };
+      
+      let attrsText = {
+        uuid: uuidGraphics,
+        type: 3
+      };
 
+      let ringName = "Ring " + (collection.data.length + 1);
       var point = new Graphic(evt.geometry, symbol, attrs);
 
       this.graphicsLayer.add(point);
@@ -252,23 +339,28 @@ function(declare, lang, dom, domClass, domConstruct, domStyle, on, CheckBox, Bas
         new Color(this.config.ring2.fill), 4), new Color(this.config.ring2.border)
       );
 
-      this.graphicsLayer.add(new Graphic(ring1, sfs1, attrs1));
-      this.graphicsLayer.add(new Graphic(ring2, sfs2, attrs2));
+      var txtSymbol = new TextSymbol({
+        text: ringName,
+        horizontalAlignment: "center",
+        haloColor: "white",
+        haloSize: 1,
+        yoffset: -10
+      });
 
-      let collection = this.grid.get("collection");
+      this.graphicsLayer.add(new Graphic(ring1, sfs1, attrs2_5));
+      this.graphicsLayer.add(new Graphic(ring2, sfs2, attrs5));
+      this.graphicsLayer.add(new Graphic(evt.geometry, txtSymbol, attrsText));
+
 
       collection.data.push({
         uuid: uuidGraphics,
-        ringName: "Ring"
+        ringName: ringName,
+        isSelect2_5: true,
+        isSelect5: true
       });
 
-      var data = collection.data.map(function(attrs, pos){
-        attrs.ringName = "Ring " + (pos + 1);
-        return attrs;
-      })
-
       let store = new (declare([Memory, Trackable]))({
-        data: data
+        data: collection.data
       });
 
       this.grid.set("collection", store);

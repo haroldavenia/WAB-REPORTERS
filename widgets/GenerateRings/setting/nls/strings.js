@@ -4,6 +4,8 @@ define({
     ring2: "Ring 5 mi",
     fill: "Fill ring",
     border: "Border ring",
+    maxRings: "Maximum number of rings",
+    general: "General",
     transparency: "Transparency"
   })
 });

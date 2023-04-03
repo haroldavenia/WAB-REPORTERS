@@ -4,6 +4,7 @@ define([
   'dijit/_WidgetsInTemplateMixin',
   'jimu/BaseWidgetSetting',
   './js/ColorPickerEditor',
+  'dijit/form/TextBox',
 ],
 function(declare, dojoColor, _WidgetsInTemplateMixin, BaseWidgetSetting, ColorPickerEditor) {
 
@@ -36,6 +37,8 @@ function(declare, dojoColor, _WidgetsInTemplateMixin, BaseWidgetSetting, ColorPi
       this.borderRing2.setValues({
         color: new dojoColor(config.ring2.border)
       });
+
+      this.maxRingsNode.set("value", this.config.maxRings);
     },
 
     getConfig: function(){
@@ -48,7 +51,8 @@ function(declare, dojoColor, _WidgetsInTemplateMixin, BaseWidgetSetting, ColorPi
         ring2: {
           fill: this.fillRing2.getValues(),
           border: this.borderRing2.getValues(),
-        }
+        },
+        maxRings: this.maxRingsNode.get("value")
       };
     },
 

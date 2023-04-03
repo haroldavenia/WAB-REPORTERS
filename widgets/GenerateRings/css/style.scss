@@ -43,10 +43,46 @@
   .button-marker{
       background-image: url(images/marker-icon.png);
   }
+
   .button-delete{
       background-image: url(images/delete.png);
   }
+
   .dgrid-cell{
     padding: 5px;
   }
+
+  .ring-name{
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .button-ring {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-left: 3px;
+  }
+  
+  .edit-button{
+    background-image: url(images/edit.png);
+  }
+
+  .edit-label{
+    display: inline-block;
+    width: calc(100% - 20px);
+    vertical-align: middle;
+  }
+
+  .ok-button{
+    background-image: url(images/ok.png);
+    height: 30px;
+  }
+
+  
 }
