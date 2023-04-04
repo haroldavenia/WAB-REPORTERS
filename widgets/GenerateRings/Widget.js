@@ -272,7 +272,6 @@ function(declare, lang, dom, domClass, domConstruct, domStyle, on, keys, CheckBo
       collection.data.splice(index, 1);
 
       var data = collection.data.map(function(attrs, pos) {
-        attrs.ringName = "Ring " + (pos + 1);
         return attrs;
       })
 
